@@ -6,21 +6,19 @@ namespace Core
     {
         private World world = new();
 
-        public void ApplyAction(Action action)
+        public bool ApplyAction(Action action)
         {
             Debug.Log($"Applying action {action} on world");
             switch (action)
             {
                 case KillAction killAction:
-                    world.KillWord(killAction.killed);
-                    break;
+                    return world.KillWord(killAction.killed);
                 case MakeAction makeAction:
-                    world.CreateWord(makeAction.maker);
-                    break;
+                    return world.CreateWord(makeAction.maker);
                 case TransformAction transformAction:
-                    world.TransformWord(transformAction.target, transformAction.transformationTarget);
-                    break;
+                    return world.TransformWord(transformAction.target, transformAction.transformationTarget);
             }
+            return false;
         }
 
         public void SetLawset(Word word, Lawset lawset)

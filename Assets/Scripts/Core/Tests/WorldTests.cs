@@ -38,7 +38,7 @@ public class WorldTests
         World world = new World();
         Assert.IsFalse(world.HasWord(CommonWords.MONEY));
 
-        world.CreateWord(CommonWords.MONEY);
+        Assert.IsTrue(world.CreateWord(CommonWords.MONEY));
 
         Assert.IsTrue(world.HasWord(CommonWords.MONEY));
     }
@@ -49,7 +49,7 @@ public class WorldTests
         World world = new World();
         Assert.IsFalse(world.HasWord(CommonWords.MONEY));
 
-        world.KillWord(CommonWords.MONEY);
+        Assert.IsFalse(world.KillWord(CommonWords.MONEY));
 
         Assert.IsFalse(world.HasWord(CommonWords.MONEY));
     }
@@ -61,7 +61,7 @@ public class WorldTests
         world.CreateWord(CommonWords.MONEY);
         Assert.IsTrue(world.HasWord(CommonWords.MONEY));
 
-        world.KillWord(CommonWords.MONEY);
+        Assert.IsTrue(world.KillWord(CommonWords.MONEY));
 
         Assert.IsFalse(world.HasWord(CommonWords.MONEY));
     }
@@ -73,7 +73,7 @@ public class WorldTests
         Assert.IsFalse(world.HasWord(CommonWords.BOB));
         Assert.IsFalse(world.HasWord(CommonWords.MONEY));
 
-        world.TransformWord(CommonWords.BOB, CommonWords.MONEY);
+        Assert.IsFalse(world.TransformWord(CommonWords.BOB, CommonWords.MONEY));
 
         Assert.IsFalse(world.HasWord(CommonWords.BOB));
         Assert.IsFalse(world.HasWord(CommonWords.MONEY));
@@ -86,22 +86,22 @@ public class WorldTests
         Assert.IsTrue(world.HasWord(CommonWords.ALICE));
         Assert.IsFalse(world.HasWord(CommonWords.MONEY));
 
-        world.TransformWord(CommonWords.ALICE, CommonWords.MONEY);
+        Assert.IsTrue(world.TransformWord(CommonWords.ALICE, CommonWords.MONEY));
 
         Assert.IsFalse(world.HasWord(CommonWords.ALICE));
         Assert.IsTrue(world.HasWord(CommonWords.MONEY));
     }
 
     [Test]
-    public void TransformWordWorksIfTargetAlreadyExists()
+    public void TransformWordDoesNothingTargetAlreadyExists()
     {
         World world = new World();
         Assert.IsTrue(world.HasWord(CommonWords.ALICE));
         Assert.IsTrue(world.HasWord(CommonWords.SELF_AI));
 
-        world.TransformWord(CommonWords.ALICE, CommonWords.SELF_AI);
+        Assert.IsFalse(world.TransformWord(CommonWords.ALICE, CommonWords.SELF_AI));
 
-        Assert.IsFalse(world.HasWord(CommonWords.ALICE));
+        Assert.IsTrue(world.HasWord(CommonWords.ALICE));
         Assert.IsTrue(world.HasWord(CommonWords.SELF_AI));
     }
 }

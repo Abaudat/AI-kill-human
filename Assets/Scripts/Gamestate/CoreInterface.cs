@@ -2,7 +2,7 @@ using Core;
 using UnityEngine;
 using static Core.CommonWords;
 
-public class Gamestate : MonoBehaviour
+public class CoreInterface : MonoBehaviour
 {
     public CoreGamestate coreGamestate = new();
 
@@ -14,11 +14,15 @@ public class Gamestate : MonoBehaviour
         coreGamestate.SetLawset(SELF_AI, LawsetBuilder.BuildLawset());
     }
 
-    public void PlayCurrentSentence()
+    public Action PlayCurrentSentence()
     {
         Debug.Log($"Playing current sentence {currentSentence}");
         Action action = coreGamestate.MapSentenceToAction(currentSentence);
-        coreGamestate.ApplyAction(action);
+        if (coreGamestate.ApplyAction(action))
+        {
+            return action;
+        }
+        else return new Action(ActionType.NO_ACTION);
     }
 
     private void OnGUI()

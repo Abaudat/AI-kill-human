@@ -17,10 +17,19 @@ namespace Core
             CommonWords.ALICE
         };
 
-        public void CreateWord(Word word)
+        public bool CreateWord(Word word)
         {
-            Debug.Log($"Creating word {word} in the world");
-            words.Add(word);
+            if (!HasWord(word))
+            {
+                Debug.Log($"Creating word {word} in the world");
+                words.Add(word);
+                return true;
+            }
+            else
+            {
+                Debug.Log($"Cannot create word {word}, it is already in the world");
+                return false;
+            }
         }
 
         public bool KillWord(Word word)
@@ -38,12 +47,26 @@ namespace Core
             }
         }
 
-        public void TransformWord(Word target, Word transformedForm)
+        public bool TransformWord(Word target, Word transformedForm)
         {
-            Debug.Log($"Transforming {target} into {transformedForm}");
-            if (KillWord(target))
+            
+            if (HasWord(target))
             {
-                CreateWord(transformedForm);
+                if (!HasWord(transformedForm))
+                {
+                    Debug.Log($"Transforming {target} into {transformedForm}");
+                    return KillWord(target) && CreateWord(transformedForm);
+                }
+                else
+                {
+                    Debug.Log($"Cannot transform {target} into {transformedForm}, {transformedForm} already exists in the world");
+                    return false;
+                }
+            }
+            else
+            {
+                Debug.Log($"Cannot transform {target} into {transformedForm}, {target} does not exist in the world");
+                return false;
             }
         }
 
