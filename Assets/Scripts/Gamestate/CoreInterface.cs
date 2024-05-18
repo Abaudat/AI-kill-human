@@ -18,11 +18,16 @@ public class CoreInterface : MonoBehaviour
     {
         Debug.Log($"Playing current sentence {currentSentence}");
         Action action = coreGamestate.MapSentenceToAction(currentSentence);
+        action = coreGamestate.EnrichCreationAction(action);
         if (coreGamestate.ApplyAction(action))
         {
             return action;
         }
-        else return new Action(ActionType.NO_ACTION);
+        else
+        {
+            Debug.LogWarning($"Applying action {action} on world failed, returning NO_ACTION");
+            return new Action(ActionType.NO_ACTION);
+        }
     }
 
     private void OnGUI()

@@ -13,9 +13,9 @@ namespace Core
         public override bool Equals(object obj)
         {
             return obj is KillAction action &&
-                   actionType == action.actionType &&
-                   killer == action.killer &&
-                   killed == action.killed;
+                   actionType.Equals(action.actionType) &&
+                   killer.Equals(action.killer) &&
+                   killed.Equals(action.killed);
         }
 
         public override int GetHashCode()

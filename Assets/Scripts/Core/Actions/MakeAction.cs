@@ -13,9 +13,9 @@ namespace Core
         public override bool Equals(object obj)
         {
             return obj is MakeAction action &&
-                   actionType == action.actionType &&
-                   maker == action.maker &&
-                   target == action.target;
+                   actionType.Equals(action.actionType) &&
+                   maker.Equals(action.maker) &&
+                   target.Equals(action.target);
         }
 
         public override int GetHashCode()

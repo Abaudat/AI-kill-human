@@ -27,6 +27,39 @@ namespace Core
             world.SetLawsetForWord(lawset, word);
         }
 
+        public Action EnrichCreationAction(Action action)
+        {
+            if (action is MakeAction)
+            {
+                MakeAction makeAction = (MakeAction)action;
+                if (world.HasWord(makeAction.target))
+                {
+                    Word target = makeAction.target;
+                    if (target is AiWord)
+                    {
+                        target = new AiWord(AiNameGenerator.GenerateAiName());
+                    }
+                    else if (target is HumanWord)
+                    {
+                        target = new AiWord(HumanNameGenerator.GenerateHumanName());
+                    }
+                    else
+                    {
+                        return action;
+                    }
+                    Action newAction = new MakeAction(makeAction.maker, target);
+                    Debug.Log($"Word {makeAction.target} already exists in the word, replacing {action} with {newAction}");
+                    return newAction;
+                }
+                else
+                {
+                    Debug.Log($"Word {makeAction.target} does not yet exist in the word, returning action {action} as-is");
+                    return action;
+                }
+            }
+            else return action;
+        }
+
         public Action MapSentenceToAction(Sentence sentence)
         {
             Debug.Log($"Executing sentence {sentence}");

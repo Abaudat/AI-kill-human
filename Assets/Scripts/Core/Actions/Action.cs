@@ -21,7 +21,7 @@ namespace Core
         public override bool Equals(object obj)
         {
             return obj is Action action &&
-                   actionType == action.actionType;
+                   actionType.Equals(action.actionType);
         }
 
         public override int GetHashCode()

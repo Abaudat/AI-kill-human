@@ -147,4 +147,33 @@ public class CoreGamestateTests
 
         Assert.AreEqual(new MakeAction(SELF_AI, MONEY), coreGamestate.MapSentenceToAction(sentence));
     }
+
+    [Test]
+    public void EnrichCreationAction_WithOtherAction()
+    {
+        CoreGamestate coreGamestate = new();
+        Assert.AreEqual(new KillAction(ALICE, ALICE), coreGamestate.EnrichCreationAction(new KillAction(ALICE, ALICE)));
+        Assert.AreEqual(new TransformAction(ALICE, ALICE, ALICE), coreGamestate.EnrichCreationAction(new TransformAction(ALICE, ALICE, ALICE)));
+    }
+
+    [Test]
+    public void EnrichCreationAction_WithAlreadyValidCreationAction()
+    {
+        CoreGamestate coreGamestate = new();
+        Assert.AreEqual(new MakeAction(ALICE, BOB), coreGamestate.EnrichCreationAction(new MakeAction(ALICE, BOB)));
+    }
+
+    [Test]
+    public void EnrichCreationAction_HumanCreationActionIsEnriched()
+    {
+        CoreGamestate coreGamestate = new();
+        Assert.AreNotEqual(new MakeAction(SELF_AI, ALICE), coreGamestate.EnrichCreationAction(new MakeAction(SELF_AI, ALICE)));
+    }
+
+    [Test]
+    public void EnrichCreationAction_AiCreationActionIsEnriched()
+    {
+        CoreGamestate coreGamestate = new();
+        Assert.AreNotEqual(new MakeAction(ALICE, SELF_AI), coreGamestate.EnrichCreationAction(new MakeAction(ALICE, SELF_AI)));
+    }
 }

@@ -15,10 +15,10 @@ namespace Core
         {
             return obj is TransformAction action &&
                    base.Equals(obj) &&
-                   actionType == action.actionType &&
-                   caster == action.caster &&
-                   target == action.target &&
-                   transformationTarget == action.transformationTarget;
+                   actionType.Equals(action.actionType) &&
+                   caster.Equals(action.caster) &&
+                   target.Equals(action.target) &&
+                   transformationTarget.Equals(action.transformationTarget);
         }
 
         public override int GetHashCode()
