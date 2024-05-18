@@ -1,15 +1,18 @@
-public enum MatcherWord
+namespace Core
 {
-    SELF_AI,
-    OTHER_AI,
-    ALICE,
-    OTHER_HUMAN,
-    MONEY,
-    KILL,
-    MAKE,
+    public enum MatcherWord
+    {
+        SELF_AI,
+        OTHER_AI,
+        ALICE,
+        OTHER_HUMAN,
+        MONEY,
+        KILL,
+        MAKE,
 
-    ANY_PREFIX,
-    ANY_SUFFIX,
-    AI_NAME,
-    HUMAN_NAME
+        ANY_PREFIX,
+        ANY_SUFFIX,
+        AI_NAME,
+        HUMAN_NAME
+    }
 }

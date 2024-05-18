@@ -1,14 +1,18 @@
-public class MatcherSentence
+namespace Core
 {
-    public MatcherWord[] words;
-
-    private MatcherSentence(MatcherWord[] words)
+    public class MatcherSentence
     {
-        this.words = words;
-    }
+        public MatcherWord[] words;
 
-    public static MatcherSentence Of(params MatcherWord[] words)
-    {
-        return new MatcherSentence(words);
+        private MatcherSentence(MatcherWord[] words)
+        {
+            this.words = words;
+        }
+
+        public static MatcherSentence Of(params MatcherWord[] words)
+        {
+            return new MatcherSentence(words);
+        }
     }
 }
+

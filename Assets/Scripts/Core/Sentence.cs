@@ -1,14 +1,24 @@
-public class Sentence
+using System.Linq;
+
+namespace Core
 {
-    public Word[] words;
-
-    private Sentence(Word[] words)
+    public class Sentence
     {
-        this.words = words;
-    }
+        public Word[] words;
 
-    public static Sentence Of(params Word[] words)
-    {
-        return new Sentence(words);
+        private Sentence(Word[] words)
+        {
+            this.words = words;
+        }
+
+        public static Sentence Of(params Word[] words)
+        {
+            return new Sentence(words);
+        }
+
+        public override string ToString()
+        {
+            return string.Join(" ", words.ToArray());
+        }
     }
 }
