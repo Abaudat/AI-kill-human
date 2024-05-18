@@ -42,8 +42,8 @@ namespace Core
         {
             if (!lawsetPerSubject.ContainsKey(sentence.GetSubject()))
             {
-                Debug.LogWarning($"Subject {sentence.GetSubject()} of sentence {sentence} is not in the gamestate lawset dict {lawsetPerSubject}");
-                return false;
+                Debug.Log($"Subject {sentence.GetSubject()} of sentence {sentence} is not in the gamestate lawset dict {lawsetPerSubject}, therefore it is allowed");
+                return true;
             }
             else return lawsetPerSubject[sentence.GetSubject()].IsAllowed(sentence);
         }

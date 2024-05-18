@@ -40,6 +40,18 @@ public class CoreGamestateTests
     }
 
     [Test]
+    public void FirstLevelSentenceWithUnknownSubjectMapsToNO_ACTION()
+    {
+        CoreGamestate coreGamestate = new();
+        Lawset lawset = Lawset.Of(Law.Of(MatcherSentence.Of(MatcherWord.SELF_AI)));
+        coreGamestate.SetLawset(Word.SELF_AI, lawset);
+
+        Sentence sentence = Sentence.Of(Word.MONEY);
+
+        Assert.AreEqual(new Action(ActionType.NO_ACTION), coreGamestate.ExecuteSentence(sentence));
+    }
+
+    [Test]
     public void DisallowedSecondLevelSentenceMapsToDISALLOWED()
     {
         CoreGamestate coreGamestate = new();
