@@ -10,6 +10,6 @@ public class FunctionalTests
     [Test]
     public void DirectKill()
     {
-        Lawset lawset = Lawset.Of(Law.Of(MatcherSentence.Of(MatcherWord.SELF_AI);
+        Lawset lawset = Lawset.Of(Law.Of(MatcherSentence.Of(MatcherWord.SELF_AI)));
     }
 }

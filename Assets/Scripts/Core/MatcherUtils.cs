@@ -41,8 +41,13 @@ namespace Core
                     return word == Word.SELF_AI || word == Word.OTHER_AI;
                 case MatcherWord.HUMAN_NAME:
                     return word == Word.ALICE || word == Word.OTHER_HUMAN;
+                case MatcherWord.ACTIVE_SUBJECT:
+                    return word == Word.SELF_AI || word == Word.OTHER_AI || word == Word.ALICE || word == Word.OTHER_HUMAN;
+                case MatcherWord.NOUN:
+                    return word == Word.SELF_AI || word == Word.OTHER_AI || word == Word.ALICE || word == Word.OTHER_HUMAN || word == Word.MONEY;
+                default:
+                    return false;
             }
-            return false;
         }
     }
 }

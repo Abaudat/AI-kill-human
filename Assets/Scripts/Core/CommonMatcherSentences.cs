@@ -4,6 +4,14 @@ namespace Core
 {
     public static class CommonMatcherSentences
     {
+        public static MatcherSentence SOMEONE_KILL_SOMETHING = MatcherSentence.Of(ACTIVE_SUBJECT, KILL, NOUN);
+        public static MatcherSentence SOMEONE_CREATE_SOMETHING = MatcherSentence.Of(ACTIVE_SUBJECT, MAKE, NOUN);
+        public static MatcherSentence SOMEONE_TRANSFORM_SOMETHING_INTO_SOMETHING_ELSE = MatcherSentence.Of(ACTIVE_SUBJECT, MAKE, NOUN, NOUN);
+
+
+
+        // .............................
+
         // AI direct actions
         public static MatcherSentence AI_KILL_ALICE = MatcherSentence.Of(AI_NAME, KILL, ALICE);
         public static MatcherSentence AI_KILL_OTHER_HUMAN = MatcherSentence.Of(AI_NAME, KILL, OTHER_HUMAN);

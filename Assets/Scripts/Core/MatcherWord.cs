@@ -10,9 +10,9 @@ namespace Core
         KILL,
         MAKE,
 
-        ANY_PREFIX,
-        ANY_SUFFIX,
         AI_NAME,
-        HUMAN_NAME
+        HUMAN_NAME,
+        ACTIVE_SUBJECT,
+        NOUN
     }
 }

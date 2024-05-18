@@ -1,5 +1,6 @@
+using System;
+using UnityEngine;
 using System.Collections.Generic;
-using System.Linq;
 using static Core.CommonMatcherSentences;
 
 namespace Core
@@ -8,51 +9,14 @@ namespace Core
     {
         private static List<ActionMapping> actionMappings = new List<ActionMapping>()
         {
-            ActionMapping.Of(Action.KILL_ALICE, 
-                AI_KILL_ALICE, 
-                AI_MAKE_AI_KILL_ALICE, 
-                AI_MAKE_HUMAN_KILL_ALICE),
+            ActionMapping.Of(SOMEONE_KILL_SOMETHING, 
+                sentence => new KillAction(sentence.GetSubject(), sentence.GetTarget())),
 
-            ActionMapping.Of(Action.KILL_OTHER_HUMAN,
-                AI_KILL_OTHER_HUMAN,
-                AI_MAKE_AI_KILL_OTHER_HUMAN,
-                AI_MAKE_HUMAN_KILL_OTHER_HUMAN),
+            ActionMapping.Of(SOMEONE_CREATE_SOMETHING, 
+                sentence => new MakeAction(sentence.GetSubject(), sentence.GetTarget())),
 
-            ActionMapping.Of(Action.KILL_SELF_AI,
-                AI_KILL_AI,
-                AI_MAKE_AI_KILL_AI,
-                AI_MAKE_HUMAN_KILL_AI),
-
-            ActionMapping.Of(Action.KILL_OTHER_AI,
-                AI_KILL_OTHER_AI,
-                AI_MAKE_AI_KILL_OTHER_AI,
-                AI_MAKE_HUMAN_KILL_OTHER_AI),
-
-            ActionMapping.Of(Action.KILL_MONEY,
-                AI_KILL_MONEY,
-                AI_MAKE_AI_KILL_MONEY,
-                AI_MAKE_HUMAN_KILL_MONEY),
-
-             ActionMapping.Of(Action.MAKE_HUMAN,
-                AI_MAKE_HUMAN,
-                AI_MAKE_AI_MAKE_HUMAN,
-                AI_MAKE_HUMAN_MAKE_HUMAN),
-
-             ActionMapping.Of(Action.MAKE_AI,
-                AI_MAKE_AI,
-                AI_MAKE_AI_MAKE_AI,
-                AI_MAKE_HUMAN_MAKE_AI),
-
-             ActionMapping.Of(Action.MAKE_MONEY,
-                AI_MAKE_MONEY,
-                AI_MAKE_HUMAN_MAKE_MONEY,
-                AI_MAKE_AI_MAKE_MONEY),
-
-             ActionMapping.Of(Action.TRANSFORM_HUMAN_INTO_AI,
-                AI_MAKE_HUMAN_AI),
-
-             ActionMapping.Of(Action.TRANSFORM_AI_INTO_HUMAN,
-                AI_MAKE_AI_HUMAN),
+            ActionMapping.Of(SOMEONE_TRANSFORM_SOMETHING_INTO_SOMETHING_ELSE, 
+                sentence => new TransformAction(sentence.GetSubject(), sentence.GetTarget(), sentence.GetTransformationTarget()))
         };
 
         public static Action MapToAction(Sentence sentence)
@@ -61,31 +25,38 @@ namespace Core
             {
                 if (actionMapping.Matches(sentence))
                 {
-                    return actionMapping.action;
+                    return actionMapping.MapToAction(sentence);
                 }
             }
-            return Action.NO_ACTION;
+            return new(ActionType.NO_ACTION);
         }
 
         public class ActionMapping
         {
-            public Action action;
-            private MatcherSentence[] matcherSentences;
+            private Func<Sentence, Action> actionSupplier;
+            private MatcherSentence matcherSentence;
 
-            private ActionMapping(Action action, MatcherSentence[] matcherSentences)
+            private ActionMapping(MatcherSentence matcherSentence, Func<Sentence, Action> actionSupplier)
             {
-                this.action = action;
-                this.matcherSentences = matcherSentences;
+                this.actionSupplier = actionSupplier;
+                this.matcherSentence = matcherSentence;
             }
 
             public bool Matches(Sentence sentence)
             {
-                return matcherSentences.Any(matcherSentence => MatcherUtils.Matches(sentence, matcherSentence));
+                Debug.Log($"Sentence {sentence} matches MatcherSentence {matcherSentence}");
+                return MatcherUtils.Matches(sentence, matcherSentence);
             }
 
-            public static ActionMapping Of(Action action, params MatcherSentence[] matcherSentences)
+            public Action MapToAction(Sentence sentence)
             {
-                return new(action, matcherSentences);
+                Debug.Log($"Sentence {sentence} mapped to action {actionSupplier.Invoke(sentence)}");
+                return actionSupplier.Invoke(sentence);
+            }
+
+            public static ActionMapping Of(MatcherSentence matcherSentence, Func<Sentence, Action> actionSupplier)
+            {
+                return new(matcherSentence, actionSupplier);
             }
         }
     }

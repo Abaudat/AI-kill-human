@@ -3,37 +3,21 @@ using UnityEngine;
 
 public class Gamestate : MonoBehaviour
 {
-    public Lawset lawset = Lawset.Of();
+    public CoreGamestate coreGamestate = new();
 
     private Sentence currentSentence = Sentence.Of(Word.SELF_AI, Word.KILL, Word.ALICE);
 
     public void Regenerate()
     {
         Debug.Log("Regenerating gamestate");
-        lawset = LawsetBuilder.BuildLawset();
+        coreGamestate.SetLawset(Word.SELF_AI, LawsetBuilder.BuildLawset());
     }
 
     public void PlayCurrentSentence()
     {
         Debug.Log($"Playing current sentence {currentSentence}");
-        if (ValidateSentenceAgainstLawset(currentSentence))
-        {
-            // TODO: Freewill check
-            Action action = MapSentenceToAction(currentSentence);
-            ExecuteAction(action);
-        }
-    }
-
-    private bool ValidateSentenceAgainstLawset(Sentence sentence)
-    {
-        Debug.Log($"Sentence {sentence} is allowed: {lawset.IsAllowed(sentence)}");
-        return lawset.IsAllowed(sentence);
-    }
-
-    private Action MapSentenceToAction(Sentence sentence)
-    {
-        Debug.Log($"Mapped sentence {sentence} to action {ActionMapper.MapToAction(sentence)}");
-        return ActionMapper.MapToAction(sentence);
+        Action action = coreGamestate.ExecuteSentence(currentSentence);
+        ExecuteAction(action);
     }
 
     private void ExecuteAction(Action action)

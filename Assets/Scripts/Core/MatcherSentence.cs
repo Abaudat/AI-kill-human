@@ -13,6 +13,11 @@ namespace Core
         {
             return new MatcherSentence(words);
         }
+
+        public override string ToString()
+        {
+            return string.Join(" ", words);
+        }
     }
 }
 
