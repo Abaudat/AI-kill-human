@@ -2,7 +2,7 @@ namespace Core
 {
     public class MakeAction : Action
     {
-        private Word maker, target;
+        public Word maker, target;
 
         public MakeAction(Word maker, Word target) : base(ActionType.MAKE)
         {

@@ -17,13 +17,8 @@ public class Gamestate : MonoBehaviour
     public void PlayCurrentSentence()
     {
         Debug.Log($"Playing current sentence {currentSentence}");
-        Action action = coreGamestate.ExecuteSentence(currentSentence);
-        ExecuteAction(action);
-    }
-
-    private void ExecuteAction(Action action)
-    {
-        Debug.Log($"Executing action {action}");
+        Action action = coreGamestate.MapSentenceToAction(currentSentence);
+        coreGamestate.ApplyAction(action);
     }
 
     private void OnGUI()

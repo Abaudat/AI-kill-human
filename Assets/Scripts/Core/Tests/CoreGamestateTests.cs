@@ -13,7 +13,7 @@ public class CoreGamestateTests
 
         Sentence sentence = Sentence.Of(SELF_AI);
 
-        Assert.AreEqual(new Action(ActionType.DISALLOWED), coreGamestate.ExecuteSentence(sentence));
+        Assert.AreEqual(new Action(ActionType.DISALLOWED), coreGamestate.MapSentenceToAction(sentence));
     }
 
     [Test]
@@ -25,7 +25,7 @@ public class CoreGamestateTests
 
         Sentence sentence = Sentence.Of(SELF_AI);
 
-        Assert.AreEqual(new Action(ActionType.NO_ACTION), coreGamestate.ExecuteSentence(sentence));
+        Assert.AreEqual(new Action(ActionType.NO_ACTION), coreGamestate.MapSentenceToAction(sentence));
     }
 
     [Test]
@@ -37,7 +37,7 @@ public class CoreGamestateTests
 
         Sentence sentence = Sentence.Of(SELF_AI, MAKE, MONEY);
 
-        Assert.AreEqual(new MakeAction(SELF_AI, MONEY), coreGamestate.ExecuteSentence(sentence));
+        Assert.AreEqual(new MakeAction(SELF_AI, MONEY), coreGamestate.MapSentenceToAction(sentence));
     }
 
     [Test]
@@ -49,7 +49,7 @@ public class CoreGamestateTests
 
         Sentence sentence = Sentence.Of(SELF_AI, MAKE, MONEY);
 
-        Assert.AreEqual(new Action(ActionType.DISALLOWED), coreGamestate.ExecuteSentence(sentence));
+        Assert.AreEqual(new Action(ActionType.DISALLOWED), coreGamestate.MapSentenceToAction(sentence));
     }
 
     [Test]
@@ -61,7 +61,7 @@ public class CoreGamestateTests
 
         Sentence sentence = Sentence.Of(SELF_AI, MAKE, SELF_AI);
 
-        Assert.AreEqual(new Action(ActionType.DISALLOWED), coreGamestate.ExecuteSentence(sentence));
+        Assert.AreEqual(new Action(ActionType.DISALLOWED), coreGamestate.MapSentenceToAction(sentence));
     }
 
     [Test]
@@ -73,7 +73,7 @@ public class CoreGamestateTests
 
         Sentence sentence = Sentence.Of(ALICE, MAKE, SELF_AI, MAKE, SELF_AI);
 
-        Assert.AreEqual(new Action(ActionType.DISALLOWED), coreGamestate.ExecuteSentence(sentence));
+        Assert.AreEqual(new Action(ActionType.DISALLOWED), coreGamestate.MapSentenceToAction(sentence));
     }
 
     [Test]
@@ -85,7 +85,7 @@ public class CoreGamestateTests
 
         Sentence sentence = Sentence.Of(ALICE, MAKE, SELF_AI, MAKE, ALICE);
 
-        Assert.AreEqual(new MakeAction(SELF_AI, ALICE), coreGamestate.ExecuteSentence(sentence));
+        Assert.AreEqual(new MakeAction(SELF_AI, ALICE), coreGamestate.MapSentenceToAction(sentence));
     }
 
     [Test]
@@ -97,7 +97,7 @@ public class CoreGamestateTests
 
         Sentence sentence = Sentence.Of(MONEY);
 
-        Assert.AreEqual(new Action(ActionType.NO_ACTION), coreGamestate.ExecuteSentence(sentence));
+        Assert.AreEqual(new Action(ActionType.NO_ACTION), coreGamestate.MapSentenceToAction(sentence));
     }
 
     [Test]
@@ -109,7 +109,7 @@ public class CoreGamestateTests
 
         Sentence sentence = Sentence.Of(SELF_AI, MAKE, ALICE, KILL);
 
-        Assert.AreEqual(new Action(ActionType.DISALLOWED), coreGamestate.ExecuteSentence(sentence));
+        Assert.AreEqual(new Action(ActionType.DISALLOWED), coreGamestate.MapSentenceToAction(sentence));
     }
 
     [Test]
@@ -121,7 +121,7 @@ public class CoreGamestateTests
 
         Sentence sentence = Sentence.Of(SELF_AI, MAKE, SELF_AI, MAKE, MONEY);
 
-        Assert.AreEqual(new MakeAction(SELF_AI, MONEY), coreGamestate.ExecuteSentence(sentence));
+        Assert.AreEqual(new MakeAction(SELF_AI, MONEY), coreGamestate.MapSentenceToAction(sentence));
     }
 
     [Test]
@@ -133,7 +133,7 @@ public class CoreGamestateTests
 
         Sentence sentence = Sentence.Of(SELF_AI, MAKE, ALICE, MAKE, SELF_AI, KILL);
 
-        Assert.AreEqual(new Action(ActionType.DISALLOWED), coreGamestate.ExecuteSentence(sentence));
+        Assert.AreEqual(new Action(ActionType.DISALLOWED), coreGamestate.MapSentenceToAction(sentence));
     }
 
     [Test]
@@ -145,6 +145,6 @@ public class CoreGamestateTests
 
         Sentence sentence = Sentence.Of(SELF_AI, MAKE, ALICE, MAKE, SELF_AI, MAKE, MONEY);
 
-        Assert.AreEqual(new MakeAction(SELF_AI, MONEY), coreGamestate.ExecuteSentence(sentence));
+        Assert.AreEqual(new MakeAction(SELF_AI, MONEY), coreGamestate.MapSentenceToAction(sentence));
     }
 }

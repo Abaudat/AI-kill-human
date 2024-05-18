@@ -2,7 +2,7 @@ namespace Core
 {
     public class TransformAction : Action
     {
-        private Word caster, target, transformationTarget;
+        public Word caster, target, transformationTarget;
 
         public TransformAction(Word caster, Word target, Word transformationTarget) : base(ActionType.TRANSFORM)
         {

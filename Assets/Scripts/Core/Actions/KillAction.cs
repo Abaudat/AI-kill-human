@@ -2,7 +2,7 @@ namespace Core
 {
     public class KillAction : Action
     {
-        private Word killer, killed;
+        public Word killer, killed;
 
         public KillAction(Word killer, Word killed) : base(ActionType.KILL)
         {

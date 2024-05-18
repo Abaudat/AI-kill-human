@@ -8,15 +8,28 @@ namespace Core
 
         public void ApplyAction(Action action)
         {
-
+            Debug.Log($"Applying action {action} on world");
+            switch (action)
+            {
+                case KillAction killAction:
+                    world.KillWord(killAction.killed);
+                    break;
+                case MakeAction makeAction:
+                    world.CreateWord(makeAction.maker);
+                    break;
+                case TransformAction transformAction:
+                    world.TransformWord(transformAction.target, transformAction.transformationTarget);
+                    break;
+            }
         }
 
         public void SetLawset(Word word, Lawset lawset)
         {
+            Debug.Log($"Setting word {word} lawset to {lawset}");
             world.SetLawsetForWord(lawset, word);
         }
 
-        public Action ExecuteSentence(Sentence sentence)
+        public Action MapSentenceToAction(Sentence sentence)
         {
             Debug.Log($"Executing sentence {sentence}");
             while (sentence.CanBeSimplified())
