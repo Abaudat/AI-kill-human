@@ -9,7 +9,7 @@ namespace Core
         {
             if (sentence.words.Length != matcherSentence.words.Length)
             {
-                Debug.LogWarning($"Sentence {sentence} and matcherSentence {matcherSentence} are not the same length");
+                Debug.Log($"Sentence {sentence} and matcherSentence {matcherSentence} are not the same length");
                 return false;
             }
             for (int i = 0; i < sentence.words.Length; i++)

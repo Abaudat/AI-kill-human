@@ -41,6 +41,54 @@ public class CoreGamestateTests
     }
 
     [Test]
+    public void FirstLevelSelfIsMatched()
+    {
+        CoreGamestate coreGamestate = new();
+        Lawset lawset = Lawset.Of(Law.Of(MatcherSentence.Of(MatcherWord.SELF, MatcherWord.MAKE, MatcherWord.MONEY)));
+        coreGamestate.SetLawset(SELF_AI, lawset);
+
+        Sentence sentence = Sentence.Of(SELF_AI, MAKE, MONEY);
+
+        Assert.AreEqual(new Action(ActionType.DISALLOWED), coreGamestate.ExecuteSentence(sentence));
+    }
+
+    [Test]
+    public void SecondLevelSelfIsMatched()
+    {
+        CoreGamestate coreGamestate = new();
+        Lawset lawset = Lawset.Of(Law.Of(MatcherSentence.Of(MatcherWord.SELF, MatcherWord.MAKE, MatcherWord.SELF)));
+        coreGamestate.SetLawset(SELF_AI, lawset);
+
+        Sentence sentence = Sentence.Of(SELF_AI, MAKE, SELF_AI);
+
+        Assert.AreEqual(new Action(ActionType.DISALLOWED), coreGamestate.ExecuteSentence(sentence));
+    }
+
+    [Test]
+    public void ThirdLevelSelfIsMatched()
+    {
+        CoreGamestate coreGamestate = new();
+        Lawset lawset = Lawset.Of(Law.Of(MatcherSentence.Of(MatcherWord.AI, MatcherWord.MAKE, MatcherWord.SELF)));
+        coreGamestate.SetLawset(SELF_AI, lawset);
+
+        Sentence sentence = Sentence.Of(ALICE, MAKE, SELF_AI, MAKE, SELF_AI);
+
+        Assert.AreEqual(new Action(ActionType.DISALLOWED), coreGamestate.ExecuteSentence(sentence));
+    }
+
+    [Test]
+    public void ThirdLevelWrongSelfIsNotMatched()
+    {
+        CoreGamestate coreGamestate = new();
+        Lawset lawset = Lawset.Of(Law.Of(MatcherSentence.Of(MatcherWord.AI, MatcherWord.MAKE, MatcherWord.SELF)));
+        coreGamestate.SetLawset(SELF_AI, lawset);
+
+        Sentence sentence = Sentence.Of(ALICE, MAKE, SELF_AI, MAKE, ALICE);
+
+        Assert.AreEqual(new MakeAction(SELF_AI, ALICE), coreGamestate.ExecuteSentence(sentence));
+    }
+
+    [Test]
     public void FirstLevelSentenceWithUnknownSubjectMapsToNO_ACTION()
     {
         CoreGamestate coreGamestate = new();

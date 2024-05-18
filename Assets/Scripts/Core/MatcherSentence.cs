@@ -1,3 +1,5 @@
+using System.Linq;
+
 namespace Core
 {
     public class MatcherSentence
@@ -17,6 +19,16 @@ namespace Core
         public override string ToString()
         {
             return string.Join(" ", words);
+        }
+
+        public override bool Equals(object obj)
+        {
+            return words.SequenceEqual(((MatcherSentence)obj).words);
+        }
+
+        public override int GetHashCode()
+        {
+            return words.Sum(x => x.GetHashCode());
         }
     }
 }

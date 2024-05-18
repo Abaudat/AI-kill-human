@@ -54,5 +54,10 @@ namespace Core
         {
             return words.SequenceEqual(((Sentence)obj).words);
         }
+
+        public override int GetHashCode()
+        {
+            return words.Sum(x => x.GetHashCode());
+        }
     }
 }

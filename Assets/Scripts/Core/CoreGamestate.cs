@@ -1,19 +1,19 @@
 using UnityEngine;
-using System.Collections.Generic;
 
 namespace Core
 {
     public class CoreGamestate
     {
-        private Dictionary<Word, Lawset> lawsetPerSubject = new Dictionary<Word, Lawset>()
-        {
-            { CommonWords.SELF_AI, Lawset.Of() },
-            { CommonWords.ALICE, Lawset.Of() }
-        };
+        private World world = new();
 
-        public void SetLawset(Word subject, Lawset lawset)
+        public void ApplyAction(Action action)
         {
-            lawsetPerSubject[subject] = lawset;
+
+        }
+
+        public void SetLawset(Word word, Lawset lawset)
+        {
+            world.SetLawsetForWord(lawset, word);
         }
 
         public Action ExecuteSentence(Sentence sentence)
@@ -23,14 +23,14 @@ namespace Core
             {
                 if (!IsAllowed(sentence))
                 {
-                    Debug.Log($"Sentence {sentence} is disallowed by subject {sentence.GetSubject()} lawset {lawsetPerSubject[sentence.GetSubject()]}");
+                    Debug.Log($"Sentence {sentence} is disallowed by subject {sentence.GetSubject()} lawset {world.GetLawsetForWord(sentence.GetSubject())}");
                     return new Action(ActionType.DISALLOWED);
                 }
                 else sentence = sentence.SimplifyIndirection();
             }
             if (!IsAllowed(sentence))
             {
-                Debug.Log($"Sentence {sentence} is disallowed by subject {sentence.GetSubject()} lawset {lawsetPerSubject[sentence.GetSubject()]}");
+                Debug.Log($"Sentence {sentence} is disallowed by subject {sentence.GetSubject()} lawset {world.GetLawsetForWord(sentence.GetSubject())}");
                 return new Action(ActionType.DISALLOWED);
             }
             return ActionMapper.MapToAction(sentence);
@@ -38,12 +38,12 @@ namespace Core
 
         private bool IsAllowed(Sentence sentence)
         {
-            if (!lawsetPerSubject.ContainsKey(sentence.GetSubject()))
+            if (!world.HasLawsetForWord(sentence.GetSubject()))
             {
-                Debug.Log($"Subject {sentence.GetSubject()} of sentence {sentence} is not in the gamestate lawset dict {lawsetPerSubject}, therefore it is allowed");
+                Debug.Log($"Subject {sentence.GetSubject()} of sentence {sentence} is not in the world lawsets, therefore the sentence is allowed");
                 return true;
             }
-            else return lawsetPerSubject[sentence.GetSubject()].IsAllowed(sentence);
+            else return world.GetLawsetForWord(sentence.GetSubject()).IsAllowed(sentence);
         }
     }
 }
