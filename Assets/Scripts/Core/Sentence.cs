@@ -47,7 +47,7 @@ namespace Core
 
         public override string ToString()
         {
-            return string.Join(" ", words.ToArray());
+            return string.Join(" ", words.ToList());
         }
 
         public override bool Equals(object obj)

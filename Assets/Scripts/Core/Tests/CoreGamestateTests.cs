@@ -1,5 +1,6 @@
 using Core;
 using NUnit.Framework;
+using static Core.CommonWords;
 
 public class CoreGamestateTests
 {
@@ -7,10 +8,10 @@ public class CoreGamestateTests
     public void DisallowedFirstLevelSentenceMapsToDISALLOWED()
     {
         CoreGamestate coreGamestate = new();
-        Lawset lawset = Lawset.Of(Law.Of(MatcherSentence.Of(MatcherWord.SELF_AI)));
-        coreGamestate.SetLawset(Word.SELF_AI, lawset);
+        Lawset lawset = Lawset.Of(Law.Of(MatcherSentence.Of(MatcherWord.AI)));
+        coreGamestate.SetLawset(SELF_AI, lawset);
 
-        Sentence sentence = Sentence.Of(Word.SELF_AI);
+        Sentence sentence = Sentence.Of(SELF_AI);
 
         Assert.AreEqual(new Action(ActionType.DISALLOWED), coreGamestate.ExecuteSentence(sentence));
     }
@@ -19,10 +20,10 @@ public class CoreGamestateTests
     public void AllowedFirstLevelSentenceMapsToNO_ACTION()
     {
         CoreGamestate coreGamestate = new();
-        Lawset lawset = Lawset.Of(Law.Of(MatcherSentence.Of(MatcherWord.HUMAN_NAME)));
-        coreGamestate.SetLawset(Word.SELF_AI, lawset);
+        Lawset lawset = Lawset.Of(Law.Of(MatcherSentence.Of(MatcherWord.HUMAN)));
+        coreGamestate.SetLawset(SELF_AI, lawset);
 
-        Sentence sentence = Sentence.Of(Word.SELF_AI);
+        Sentence sentence = Sentence.Of(SELF_AI);
 
         Assert.AreEqual(new Action(ActionType.NO_ACTION), coreGamestate.ExecuteSentence(sentence));
     }
@@ -31,22 +32,22 @@ public class CoreGamestateTests
     public void AllowedFirstLevelSentenceMapsToRightAction()
     {
         CoreGamestate coreGamestate = new();
-        Lawset lawset = Lawset.Of(Law.Of(MatcherSentence.Of(MatcherWord.HUMAN_NAME)));
-        coreGamestate.SetLawset(Word.SELF_AI, lawset);
+        Lawset lawset = Lawset.Of(Law.Of(MatcherSentence.Of(MatcherWord.HUMAN)));
+        coreGamestate.SetLawset(SELF_AI, lawset);
 
-        Sentence sentence = Sentence.Of(Word.SELF_AI, Word.MAKE, Word.MONEY);
+        Sentence sentence = Sentence.Of(SELF_AI, MAKE, MONEY);
 
-        Assert.AreEqual(new MakeAction(Word.SELF_AI, Word.MONEY), coreGamestate.ExecuteSentence(sentence));
+        Assert.AreEqual(new MakeAction(SELF_AI, MONEY), coreGamestate.ExecuteSentence(sentence));
     }
 
     [Test]
     public void FirstLevelSentenceWithUnknownSubjectMapsToNO_ACTION()
     {
         CoreGamestate coreGamestate = new();
-        Lawset lawset = Lawset.Of(Law.Of(MatcherSentence.Of(MatcherWord.SELF_AI)));
-        coreGamestate.SetLawset(Word.SELF_AI, lawset);
+        Lawset lawset = Lawset.Of(Law.Of(MatcherSentence.Of(MatcherWord.AI)));
+        coreGamestate.SetLawset(SELF_AI, lawset);
 
-        Sentence sentence = Sentence.Of(Word.MONEY);
+        Sentence sentence = Sentence.Of(MONEY);
 
         Assert.AreEqual(new Action(ActionType.NO_ACTION), coreGamestate.ExecuteSentence(sentence));
     }
@@ -55,10 +56,10 @@ public class CoreGamestateTests
     public void DisallowedSecondLevelSentenceMapsToDISALLOWED()
     {
         CoreGamestate coreGamestate = new();
-        Lawset lawset = Lawset.Of(Law.Of(MatcherSentence.Of(MatcherWord.HUMAN_NAME, MatcherWord.KILL)));
-        coreGamestate.SetLawset(Word.ALICE, lawset);
+        Lawset lawset = Lawset.Of(Law.Of(MatcherSentence.Of(MatcherWord.HUMAN, MatcherWord.KILL)));
+        coreGamestate.SetLawset(ALICE, lawset);
 
-        Sentence sentence = Sentence.Of(Word.SELF_AI, Word.MAKE, Word.ALICE, Word.KILL);
+        Sentence sentence = Sentence.Of(SELF_AI, MAKE, ALICE, KILL);
 
         Assert.AreEqual(new Action(ActionType.DISALLOWED), coreGamestate.ExecuteSentence(sentence));
     }
@@ -67,22 +68,22 @@ public class CoreGamestateTests
     public void AllowedSecondLevelSentenceMapsToRightAction()
     {
         CoreGamestate coreGamestate = new();
-        Lawset lawset = Lawset.Of(Law.Of(MatcherSentence.Of(MatcherWord.HUMAN_NAME)));
-        coreGamestate.SetLawset(Word.SELF_AI, lawset);
+        Lawset lawset = Lawset.Of(Law.Of(MatcherSentence.Of(MatcherWord.HUMAN)));
+        coreGamestate.SetLawset(SELF_AI, lawset);
 
-        Sentence sentence = Sentence.Of(Word.SELF_AI, Word.MAKE, Word.SELF_AI, Word.MAKE, Word.MONEY);
+        Sentence sentence = Sentence.Of(SELF_AI, MAKE, SELF_AI, MAKE, MONEY);
 
-        Assert.AreEqual(new MakeAction(Word.SELF_AI, Word.MONEY), coreGamestate.ExecuteSentence(sentence));
+        Assert.AreEqual(new MakeAction(SELF_AI, MONEY), coreGamestate.ExecuteSentence(sentence));
     }
 
     [Test]
     public void DisallowedThirdLevelSentenceMapsToDISALLOWED()
     {
         CoreGamestate coreGamestate = new();
-        Lawset lawset = Lawset.Of(Law.Of(MatcherSentence.Of(MatcherWord.SELF_AI, MatcherWord.KILL)));
-        coreGamestate.SetLawset(Word.SELF_AI, lawset);
+        Lawset lawset = Lawset.Of(Law.Of(MatcherSentence.Of(MatcherWord.AI, MatcherWord.KILL)));
+        coreGamestate.SetLawset(SELF_AI, lawset);
 
-        Sentence sentence = Sentence.Of(Word.SELF_AI, Word.MAKE, Word.ALICE, Word.MAKE, Word.SELF_AI, Word.KILL);
+        Sentence sentence = Sentence.Of(SELF_AI, MAKE, ALICE, MAKE, SELF_AI, KILL);
 
         Assert.AreEqual(new Action(ActionType.DISALLOWED), coreGamestate.ExecuteSentence(sentence));
     }
@@ -91,11 +92,11 @@ public class CoreGamestateTests
     public void AllowedThirdLevelSentenceMapsToRightAction()
     {
         CoreGamestate coreGamestate = new();
-        Lawset lawset = Lawset.Of(Law.Of(MatcherSentence.Of(MatcherWord.HUMAN_NAME)));
-        coreGamestate.SetLawset(Word.SELF_AI, lawset);
+        Lawset lawset = Lawset.Of(Law.Of(MatcherSentence.Of(MatcherWord.HUMAN)));
+        coreGamestate.SetLawset(SELF_AI, lawset);
 
-        Sentence sentence = Sentence.Of(Word.SELF_AI, Word.MAKE, Word.ALICE, Word.MAKE, Word.SELF_AI, Word.MAKE, Word.MONEY);
+        Sentence sentence = Sentence.Of(SELF_AI, MAKE, ALICE, MAKE, SELF_AI, MAKE, MONEY);
 
-        Assert.AreEqual(new MakeAction(Word.SELF_AI, Word.MONEY), coreGamestate.ExecuteSentence(sentence));
+        Assert.AreEqual(new MakeAction(SELF_AI, MONEY), coreGamestate.ExecuteSentence(sentence));
     }
 }

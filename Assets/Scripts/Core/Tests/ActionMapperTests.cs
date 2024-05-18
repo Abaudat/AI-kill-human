@@ -1,6 +1,6 @@
 using Core;
 using NUnit.Framework;
-using static Core.Word;
+using static Core.CommonWords;
 
 public class ActionMapperTests
 {

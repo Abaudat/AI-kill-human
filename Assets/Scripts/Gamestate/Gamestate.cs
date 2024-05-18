@@ -1,16 +1,17 @@
 using Core;
 using UnityEngine;
+using static Core.CommonWords;
 
 public class Gamestate : MonoBehaviour
 {
     public CoreGamestate coreGamestate = new();
 
-    private Sentence currentSentence = Sentence.Of(Word.SELF_AI, Word.KILL, Word.ALICE);
+    private Sentence currentSentence = Sentence.Of(SELF_AI, KILL, ALICE);
 
     public void Regenerate()
     {
         Debug.Log("Regenerating gamestate");
-        coreGamestate.SetLawset(Word.SELF_AI, LawsetBuilder.BuildLawset());
+        coreGamestate.SetLawset(SELF_AI, LawsetBuilder.BuildLawset());
     }
 
     public void PlayCurrentSentence()
@@ -33,12 +34,12 @@ public class Gamestate : MonoBehaviour
         }
         if (GUI.Button(new Rect(10, 70, 50, 50), "-Money"))
         {
-            currentSentence = Sentence.Of(Word.SELF_AI, Word.KILL, Word.MONEY);
+            currentSentence = Sentence.Of(SELF_AI, KILL, MONEY);
             PlayCurrentSentence();
         }
         if (GUI.Button(new Rect(10, 130, 50, 50), "+Money"))
         {
-            currentSentence = Sentence.Of(Word.SELF_AI, Word.MAKE, Word.MONEY);
+            currentSentence = Sentence.Of(SELF_AI, MAKE, MONEY);
             PlayCurrentSentence();
         }
         if (GUI.Button(new Rect(70, 10, 50, 50), "Regenerate"))

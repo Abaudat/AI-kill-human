@@ -1,3 +1,5 @@
+using UnityEngine;
+
 namespace Core
 {
     public static class MatcherUtils
@@ -7,12 +9,27 @@ namespace Core
         {
             if (sentence.words.Length != matcherSentence.words.Length)
             {
-                return false; // TODO: Remove and implement regex matcher
+                Debug.LogWarning($"Sentence {sentence} and matcherSentence {matcherSentence} are not the same length");
+                return false;
             }
             for (int i = 0; i < sentence.words.Length; i++)
             {
-                if (!Matches(sentence.words[i], matcherSentence.words[i]))
+                if (matcherSentence.words[i] == MatcherWord.SELF)
                 {
+                    if (sentence.CanBeSimplified())
+                    {
+                        Debug.Log($"Encountered SELF in simplifiable sentence {sentence}. Ignoring and continuing");
+                        continue;
+                    }
+                    if (!sentence.GetSubject().Equals(sentence.words[i]))
+                    {
+                        Debug.Log($"Word {sentence.words[i]} (index {i}) of sentence {sentence} does not match the sentence subject {sentence.GetSubject()}");
+                        return false;
+                    }
+                }
+                else if (!Matches(sentence.words[i], matcherSentence.words[i]))
+                {
+                    Debug.Log($"Word {sentence.words[i]} (index {i}) of sentence {sentence} does not match the matcher {matcherSentence.words[i]} of sentence matcher {matcherSentence}");
                     return false;
                 }
             }
@@ -23,30 +40,26 @@ namespace Core
         {
             switch (matcherWord)
             {
-                case MatcherWord.SELF_AI:
-                    return word == Word.SELF_AI;
-                case MatcherWord.OTHER_AI:
-                    return word == Word.OTHER_AI;
-                case MatcherWord.ALICE:
-                    return word == Word.ALICE;
-                case MatcherWord.OTHER_HUMAN:
-                    return word == Word.OTHER_HUMAN;
+                case MatcherWord.AI:
+                    return word.IsAi();
+                case MatcherWord.HUMAN:
+                    return word.IsHuman();
                 case MatcherWord.MONEY:
-                    return word == Word.MONEY;
+                    return word is MoneyWord;
                 case MatcherWord.KILL:
-                    return word == Word.KILL;
+                    return word is KillWord;
                 case MatcherWord.MAKE:
-                    return word == Word.MAKE;
-                case MatcherWord.AI_NAME:
-                    return word == Word.SELF_AI || word == Word.OTHER_AI;
-                case MatcherWord.HUMAN_NAME:
-                    return word == Word.ALICE || word == Word.OTHER_HUMAN;
+                    return word.IsMake();
                 case MatcherWord.ACTIVE_SUBJECT:
-                    return word == Word.SELF_AI || word == Word.OTHER_AI || word == Word.ALICE || word == Word.OTHER_HUMAN;
+                    return word.IsActiveSubject();
                 case MatcherWord.NOUN:
-                    return word == Word.SELF_AI || word == Word.OTHER_AI || word == Word.ALICE || word == Word.OTHER_HUMAN || word == Word.MONEY;
+                    return word.IsNoun();
+                case MatcherWord.SELF:
+                    Debug.LogError("Called Matches with a MatcherWord of SELF. This shouldn't happen.");
+                    return true;
                 default:
-                    return false;
+                    Debug.LogWarning($"No switch case for MatcherWord {matcherWord}, returning true");
+                    return true;
             }
         }
     }

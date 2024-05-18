@@ -7,10 +7,8 @@ namespace Core
     {
         private Dictionary<Word, Lawset> lawsetPerSubject = new Dictionary<Word, Lawset>()
         {
-            { Word.SELF_AI, Lawset.Of() },
-            { Word.OTHER_AI, Lawset.Of() },
-            { Word.ALICE, Lawset.Of() },
-            { Word.OTHER_HUMAN, Lawset.Of() }
+            { CommonWords.SELF_AI, Lawset.Of() },
+            { CommonWords.ALICE, Lawset.Of() }
         };
 
         public void SetLawset(Word subject, Lawset lawset)
