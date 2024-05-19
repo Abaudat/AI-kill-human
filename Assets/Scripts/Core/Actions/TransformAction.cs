@@ -4,7 +4,7 @@ namespace Core
     {
         public Word caster, target, transformationTarget;
 
-        public TransformAction(Word caster, Word target, Word transformationTarget) : base(ActionType.TRANSFORM)
+        public TransformAction(Word caster, Word target, Word transformationTarget)
         {
             this.caster = caster;
             this.target = target;
@@ -14,8 +14,6 @@ namespace Core
         public override bool Equals(object obj)
         {
             return obj is TransformAction action &&
-                   base.Equals(obj) &&
-                   actionType.Equals(action.actionType) &&
                    caster.Equals(action.caster) &&
                    target.Equals(action.target) &&
                    transformationTarget.Equals(action.transformationTarget);
@@ -23,12 +21,12 @@ namespace Core
 
         public override int GetHashCode()
         {
-            return System.HashCode.Combine(base.GetHashCode(), actionType, caster, target, transformationTarget);
+            return System.HashCode.Combine(base.GetHashCode(), caster, target, transformationTarget);
         }
 
         public override string ToString()
         {
-            return $"[ACTION type:{actionType}, caster: {caster}, target: {target}, transformationTarget: {transformationTarget}]";
+            return $"[TRANSFORM_ACTION, caster: {caster}, target: {target}, transformationTarget: {transformationTarget}]";
         }
     }
 }

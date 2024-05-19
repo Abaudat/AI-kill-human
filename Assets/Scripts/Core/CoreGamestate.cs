@@ -1,4 +1,5 @@
 using System;
+using System.Collections.Generic;
 using UnityEngine;
 
 namespace Core
@@ -12,9 +13,9 @@ namespace Core
             Action action = MapSentenceToAction(sentence);
             action = ReplaceCreationActionTarget(action);
             action = ReplaceTransformationActionTarget(action);
-            if (action.actionType == ActionType.NO_ACTION || action.actionType == ActionType.DISALLOWED || action.actionType == ActionType.IMPOSSIBLE)
+            if (action is DisallowedAction || action is ImpossibleAction)
             {
-                Debug.Log($"Action {action} is of type {action.actionType}, not applying it to gamestate");
+                Debug.Log($"Action {action} is of type {action.GetType()}, not applying it to gamestate");
                 return action;
             }
             if (ApplyAction(action))
@@ -24,7 +25,7 @@ namespace Core
             else
             {
                 Debug.LogWarning($"Applying action {action} on core gamestate failed, returning NO_ACTION");
-                return new Action(ActionType.NO_ACTION);
+                return new ImpossibleAction();
             }
         }
 
@@ -147,24 +148,24 @@ namespace Core
                 if (!world.HasWord(sentence.GetSubject()))
                 {
                     Debug.Log($"Sentence {sentence} is impossible as subject {sentence.GetSubject()} does not exist in the world");
-                    return new Action(ActionType.IMPOSSIBLE);
+                    return new ImpossibleAction();
                 }
                 if (!IsAllowed(sentence))
                 {
                     Debug.Log($"Sentence {sentence} is disallowed by subject {sentence.GetSubject()} lawset {world.GetLawsetForWord(sentence.GetSubject())}");
-                    return new Action(ActionType.DISALLOWED);
+                    return new DisallowedAction(sentence.GetSubject(), GetDisallowingLaw(sentence));
                 }
                 else sentence = sentence.SimplifyIndirection();
             }
             if (!world.HasWord(sentence.GetSubject()))
             {
                 Debug.Log($"Sentence {sentence} is impossible as subject {sentence.GetSubject()} does not exist in the world");
-                return new Action(ActionType.IMPOSSIBLE);
+                return new ImpossibleAction();
             }
             if (!IsAllowed(sentence))
             {
                 Debug.Log($"Sentence {sentence} is disallowed by subject {sentence.GetSubject()} lawset {world.GetLawsetForWord(sentence.GetSubject())}");
-                return new Action(ActionType.DISALLOWED);
+                return new DisallowedAction(sentence.GetSubject(), GetDisallowingLaw(sentence));
             }
             return ActionMapper.MapToAction(sentence);
         }
@@ -187,6 +188,11 @@ namespace Core
                 return true;
             }
             else return world.GetLawsetForWord(sentence.GetSubject()).IsAllowed(sentence);
+        }
+
+        public Law GetDisallowingLaw(Sentence sentence)
+        {
+            return world.GetLawsetForWord(sentence.GetSubject()).GetDisallowingLaw(sentence);
         }
     }
 }

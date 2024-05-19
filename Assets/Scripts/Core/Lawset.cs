@@ -19,6 +19,11 @@ namespace Core
             return isAllowed;
         }
 
+        public Law GetDisallowingLaw(Sentence sentence)
+        {
+            return laws.First(law => !law.IsAllowed(sentence));
+        }
+
         public static Lawset Of(params Law[] laws)
         {
             return new Lawset(laws);

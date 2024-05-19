@@ -7,13 +7,13 @@ public class ActionMapperTests
     [Test]
     public void MapToAction_Missing()
     {
-        Assert.AreEqual(new Action(ActionType.NO_ACTION), ActionMapper.MapToAction(Sentence.Of(SELF_AI)));
-        Assert.AreEqual(new Action(ActionType.NO_ACTION), ActionMapper.MapToAction(Sentence.Of(SELF_AI, SELF_AI)));
-        Assert.AreEqual(new Action(ActionType.NO_ACTION), ActionMapper.MapToAction(Sentence.Of(SELF_AI, SELF_AI, SELF_AI)));
+        Assert.AreEqual(new ImpossibleAction(), ActionMapper.MapToAction(Sentence.Of(SELF_AI)));
+        Assert.AreEqual(new ImpossibleAction(), ActionMapper.MapToAction(Sentence.Of(SELF_AI, SELF_AI)));
+        Assert.AreEqual(new ImpossibleAction(), ActionMapper.MapToAction(Sentence.Of(SELF_AI, SELF_AI, SELF_AI)));
 
-        Assert.AreEqual(new Action(ActionType.NO_ACTION), ActionMapper.MapToAction(Sentence.Of(SELF_AI, ALICE, KILL, ALICE)));
-        Assert.AreEqual(new Action(ActionType.NO_ACTION), ActionMapper.MapToAction(Sentence.Of(SELF_AI, KILL, KILL, ALICE)));
-        Assert.AreEqual(new Action(ActionType.NO_ACTION), ActionMapper.MapToAction(Sentence.Of(SELF_AI, KILL, ALICE, KILL)));
+        Assert.AreEqual(new ImpossibleAction(), ActionMapper.MapToAction(Sentence.Of(SELF_AI, ALICE, KILL, ALICE)));
+        Assert.AreEqual(new ImpossibleAction(), ActionMapper.MapToAction(Sentence.Of(SELF_AI, KILL, KILL, ALICE)));
+        Assert.AreEqual(new ImpossibleAction(), ActionMapper.MapToAction(Sentence.Of(SELF_AI, KILL, ALICE, KILL)));
     }
 
     [Test]

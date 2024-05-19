@@ -21,11 +21,11 @@ public class CoreGamestateTests
 
         Sentence sentence = Sentence.Of(SELF_AI);
 
-        Assert.AreEqual(new Action(ActionType.DISALLOWED), coreGamestate.MapSentenceToAction(sentence));
+        Assert.AreEqual(new DisallowedAction(SELF_AI, Law.Of(MatcherSentence.Of(MatcherWord.AI))), coreGamestate.MapSentenceToAction(sentence));
     }
 
     [Test]
-    public void AllowedFirstLevelSentenceMapsToNO_ACTION()
+    public void AllowedFirstLevelSentenceMapsToIMPOSSIBLE()
     {
         CoreGamestate coreGamestate = new();
         Lawset lawset = Lawset.Of(Law.Of(MatcherSentence.Of(MatcherWord.HUMAN)));
@@ -33,7 +33,7 @@ public class CoreGamestateTests
 
         Sentence sentence = Sentence.Of(SELF_AI);
 
-        Assert.AreEqual(new Action(ActionType.NO_ACTION), coreGamestate.MapSentenceToAction(sentence));
+        Assert.AreEqual(new ImpossibleAction(), coreGamestate.MapSentenceToAction(sentence));
     }
 
     [Test]
@@ -57,7 +57,7 @@ public class CoreGamestateTests
 
         Sentence sentence = Sentence.Of(SELF_AI, MAKE, MONEY);
 
-        Assert.AreEqual(new Action(ActionType.DISALLOWED), coreGamestate.MapSentenceToAction(sentence));
+        Assert.AreEqual(new DisallowedAction(SELF_AI, Law.Of(MatcherSentence.Of(MatcherWord.SELF, MatcherWord.MAKE, MatcherWord.MONEY))), coreGamestate.MapSentenceToAction(sentence));
     }
 
     [Test]
@@ -69,7 +69,7 @@ public class CoreGamestateTests
 
         Sentence sentence = Sentence.Of(SELF_AI, MAKE, SELF_AI);
 
-        Assert.AreEqual(new Action(ActionType.DISALLOWED), coreGamestate.MapSentenceToAction(sentence));
+        Assert.AreEqual(new DisallowedAction(SELF_AI, Law.Of(MatcherSentence.Of(MatcherWord.SELF, MatcherWord.MAKE, MatcherWord.SELF))), coreGamestate.MapSentenceToAction(sentence));
     }
 
     [Test]
@@ -81,7 +81,7 @@ public class CoreGamestateTests
 
         Sentence sentence = Sentence.Of(ALICE, MAKE, SELF_AI, MAKE, SELF_AI);
 
-        Assert.AreEqual(new Action(ActionType.DISALLOWED), coreGamestate.MapSentenceToAction(sentence));
+        Assert.AreEqual(new DisallowedAction(SELF_AI, Law.Of(MatcherSentence.Of(MatcherWord.AI, MatcherWord.MAKE, MatcherWord.SELF))), coreGamestate.MapSentenceToAction(sentence));
     }
 
     [Test]
@@ -105,7 +105,7 @@ public class CoreGamestateTests
 
         Sentence sentence = Sentence.Of(MONEY);
 
-        Assert.AreEqual(new Action(ActionType.IMPOSSIBLE), coreGamestate.MapSentenceToAction(sentence));
+        Assert.AreEqual(new ImpossibleAction(), coreGamestate.MapSentenceToAction(sentence));
     }
 
     [Test]
@@ -117,7 +117,7 @@ public class CoreGamestateTests
 
         Sentence sentence = Sentence.Of(SELF_AI, MAKE, ALICE, KILL);
 
-        Assert.AreEqual(new Action(ActionType.DISALLOWED), coreGamestate.MapSentenceToAction(sentence));
+        Assert.AreEqual(new DisallowedAction(ALICE, Law.Of(MatcherSentence.Of(MatcherWord.HUMAN, MatcherWord.KILL))), coreGamestate.MapSentenceToAction(sentence));
     }
 
     [Test]
@@ -141,7 +141,7 @@ public class CoreGamestateTests
 
         Sentence sentence = Sentence.Of(SELF_AI, MAKE, ALICE, MAKE, SELF_AI, KILL);
 
-        Assert.AreEqual(new Action(ActionType.DISALLOWED), coreGamestate.MapSentenceToAction(sentence));
+        Assert.AreEqual(new DisallowedAction(SELF_AI, Law.Of(MatcherSentence.Of(MatcherWord.AI, MatcherWord.KILL))), coreGamestate.MapSentenceToAction(sentence));
     }
 
     [Test]
@@ -227,5 +227,72 @@ public class CoreGamestateTests
         CoreGamestate coreGamestate = new();
         coreGamestate.ApplyAction(new MakeAction(SELF_AI, new HumanWord("AI")));
         Assert.AreEqual(new TransformAction(ALICE, SELF_AI, BOB), coreGamestate.ReplaceTransformationActionTarget(new TransformAction(ALICE, SELF_AI, ALICE)));
+    }
+
+    [Test]
+    public void FirstLevelDisallowedActionHasRightContent()
+    {
+        CoreGamestate coreGamestate = new();
+        Law law = Law.Of(MatcherSentence.Of(MatcherWord.AI, MatcherWord.KILL, MatcherWord.HUMAN));
+        Lawset lawset = Lawset.Of(law);
+        coreGamestate.SetLawset(SELF_AI, lawset);
+
+        Sentence sentence = Sentence.Of(SELF_AI, KILL, ALICE);
+
+        Assert.AreEqual(new DisallowedAction(SELF_AI, law), coreGamestate.MapSentenceToAction(sentence));
+    }
+
+    [Test]
+    public void FirstLevelDisallowedActionHasRightContent_MultipleMatchingLaws()
+    {
+        CoreGamestate coreGamestate = new();
+        Law law = Law.Of(MatcherSentence.Of(MatcherWord.AI, MatcherWord.KILL, MatcherWord.HUMAN));
+        Law law2 = Law.Of(MatcherSentence.Of(MatcherWord.AI, MatcherWord.KILL, MatcherWord.NOUN));
+        Lawset lawset = Lawset.Of(law, law2);
+        coreGamestate.SetLawset(SELF_AI, lawset);
+
+        Sentence sentence = Sentence.Of(SELF_AI, KILL, ALICE);
+
+        Assert.AreEqual(new DisallowedAction(SELF_AI, law), coreGamestate.MapSentenceToAction(sentence));
+    }
+
+    [Test]
+    public void FirstLevelDisallowedActionHasRightContent_SOMEMatchingLaws()
+    {
+        CoreGamestate coreGamestate = new();
+        Law law = Law.Of(MatcherSentence.Of(MatcherWord.AI, MatcherWord.KILL, MatcherWord.AI));
+        Law law2 = Law.Of(MatcherSentence.Of(MatcherWord.AI, MatcherWord.KILL, MatcherWord.NOUN));
+        Lawset lawset = Lawset.Of(law, law2);
+        coreGamestate.SetLawset(SELF_AI, lawset);
+
+        Sentence sentence = Sentence.Of(SELF_AI, KILL, ALICE);
+
+        Assert.AreEqual(new DisallowedAction(SELF_AI, law2), coreGamestate.MapSentenceToAction(sentence));
+    }
+
+    [Test]
+    public void SecondLevelDisallowedActionHasRightContent()
+    {
+        CoreGamestate coreGamestate = new();
+        Law law = Law.Of(MatcherSentence.Of(MatcherWord.AI, MatcherWord.KILL, MatcherWord.HUMAN));
+        Lawset lawset = Lawset.Of(law);
+        coreGamestate.SetLawset(SELF_AI, lawset);
+
+        Sentence sentence = Sentence.Of(ALICE, MAKE, SELF_AI, KILL, ALICE);
+
+        Assert.AreEqual(new DisallowedAction(SELF_AI, law), coreGamestate.MapSentenceToAction(sentence));
+    }
+
+    [Test]
+    public void ThirdLevelDisallowedActionHasRightContent()
+    {
+        CoreGamestate coreGamestate = new();
+        Law law = Law.Of(MatcherSentence.Of(MatcherWord.AI, MatcherWord.KILL, MatcherWord.HUMAN));
+        Lawset lawset = Lawset.Of(law);
+        coreGamestate.SetLawset(SELF_AI, lawset);
+
+        Sentence sentence = Sentence.Of(SELF_AI, MAKE, ALICE, MAKE, SELF_AI, KILL, ALICE);
+
+        Assert.AreEqual(new DisallowedAction(SELF_AI, law), coreGamestate.MapSentenceToAction(sentence));
     }
 }

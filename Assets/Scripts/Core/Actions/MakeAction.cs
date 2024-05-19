@@ -4,7 +4,7 @@ namespace Core
     {
         public Word maker, target;
 
-        public MakeAction(Word maker, Word target) : base(ActionType.MAKE)
+        public MakeAction(Word maker, Word target)
         {
             this.maker = maker;
             this.target = target;
@@ -13,19 +13,18 @@ namespace Core
         public override bool Equals(object obj)
         {
             return obj is MakeAction action &&
-                   actionType.Equals(action.actionType) &&
                    maker.Equals(action.maker) &&
                    target.Equals(action.target);
         }
 
         public override int GetHashCode()
         {
-            return System.HashCode.Combine(actionType, maker, target);
+            return System.HashCode.Combine(maker, target);
         }
 
         public override string ToString()
         {
-            return $"[ACTION type:{actionType}, maker: {maker}, target: {target}]";
+            return $"[MAKE_ACTION, maker: {maker}, target: {target}]";
         }
     }
 }

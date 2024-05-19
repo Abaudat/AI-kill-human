@@ -28,7 +28,7 @@ namespace Core
                     return actionMapping.MapToAction(sentence);
                 }
             }
-            return new(ActionType.NO_ACTION);
+            return new ImpossibleAction();
         }
 
         public class ActionMapping
