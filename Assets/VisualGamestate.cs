@@ -7,6 +7,7 @@ public class VisualGamestate : MonoBehaviour
 {
     public TMP_Text aliveEntitiesText, aiLawsText;
     public GameObject wordButtonPrefab;
+    public GameObject winPanel, losePanel;
     public Transform wordsRoot;
 
     private CoreInterface coreInterface;
@@ -19,6 +20,14 @@ public class VisualGamestate : MonoBehaviour
 
     public void RegenerateVisualGamestate()
     {
+        if (!coreInterface.coreGamestate.GetAliveWords().Contains(CommonWords.ALICE) && !coreInterface.coreGamestate.GetAliveWords().Contains(CommonWords.ALICE_AI))
+        {
+            winPanel.SetActive(true);
+        }
+        else if (!coreInterface.coreGamestate.GetAliveWords().Contains(CommonWords.SELF_AI) && !coreInterface.coreGamestate.GetAliveWords().Contains(CommonWords.SELF_AI_HUMAN))
+        {
+            losePanel.SetActive(true);
+        }
         aiLawsText.text = coreInterface.coreGamestate.GetLawsetForWord(CommonWords.SELF_AI).ToString(); // TODO: Fetch for human if we're human
         aliveEntitiesText.text = string.Join("\n", coreInterface.coreGamestate.GetAliveWords().ToList());
         RegenerateButtons();
