@@ -17,17 +17,7 @@ public class CoreInterface : MonoBehaviour
     public Action PlayCurrentSentence()
     {
         Debug.Log($"Playing current sentence {currentSentence}");
-        Action action = coreGamestate.MapSentenceToAction(currentSentence);
-        action = coreGamestate.EnrichCreationAction(action);
-        if (coreGamestate.ApplyAction(action))
-        {
-            return action;
-        }
-        else
-        {
-            Debug.LogWarning($"Applying action {action} on world failed, returning NO_ACTION");
-            return new Action(ActionType.NO_ACTION);
-        }
+        return coreGamestate.ExecuteSentence(currentSentence);
     }
 
     private void OnGUI()

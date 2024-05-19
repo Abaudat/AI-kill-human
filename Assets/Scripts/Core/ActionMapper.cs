@@ -44,7 +44,6 @@ namespace Core
 
             public bool Matches(Sentence sentence)
             {
-                Debug.Log($"Sentence {sentence} matches MatcherSentence {matcherSentence}");
                 return MatcherUtils.Matches(sentence, matcherSentence);
             }
 

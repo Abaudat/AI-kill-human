@@ -1,4 +1,5 @@
 using System.Collections.Generic;
+using System.Linq;
 using UnityEngine;
 
 namespace Core
@@ -88,6 +89,11 @@ namespace Core
         public void SetLawsetForWord(Lawset lawset, Word word)
         {
             lawsetPerWord[word] = lawset;
+        }
+
+        public Word[] GetWords()
+        {
+            return words.ToArray();
         }
     }
 }

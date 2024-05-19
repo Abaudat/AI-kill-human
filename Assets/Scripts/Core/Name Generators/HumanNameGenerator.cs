@@ -1,10 +1,9 @@
 public static class HumanNameGenerator
 {
-    private static int counter = 1;
+    private static int counter = 0;
 
     private static string[] names = new string[]
     {
-        "ALICE",
         "BOB",
         "CHAD",
         "DAVID",
@@ -29,5 +28,10 @@ public static class HumanNameGenerator
     public static string GenerateHumanName()
     {
         return names[counter++ % names.Length];
+    }
+
+    public static void ResetCounter()
+    {
+        counter = 0;
     }
 }

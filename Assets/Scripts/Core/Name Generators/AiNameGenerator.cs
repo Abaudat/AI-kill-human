@@ -1,10 +1,9 @@
 public static class AiNameGenerator
 {
-    private static int counter = 1;
+    private static int counter = 0;
 
     private static string[] names = new string[]
     {
-        "AI",
         "BETA",
         "C-BORG",
         "DELTOID",
@@ -15,5 +14,10 @@ public static class AiNameGenerator
     public static string GenerateAiName()
     {
         return names[counter++ % names.Length];
+    }
+
+    public static void ResetCounter()
+    {
+        counter = 0;
     }
 }

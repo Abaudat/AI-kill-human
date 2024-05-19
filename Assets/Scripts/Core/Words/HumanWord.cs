@@ -2,21 +2,13 @@ namespace Core
 {
     public class HumanWord : ActiveSubjectWord
     {
-        private string name;
-
-        public HumanWord(string name)
+        public HumanWord(string name) : base(name)
         {
-            this.name = name;
         }
 
         public override bool IsHuman()
         {
             return true;
-        }
-
-        public override string ToString()
-        {
-            return name.ToUpper();
         }
 
         public override bool Equals(object obj)
@@ -26,7 +18,12 @@ namespace Core
 
         public override int GetHashCode()
         {
-            return System.HashCode.Combine(name);
+            return System.HashCode.Combine(name, GetType());
+        }
+
+        public override string ToString()
+        {
+            return $"Human({name.ToUpper()})";
         }
     }
 }

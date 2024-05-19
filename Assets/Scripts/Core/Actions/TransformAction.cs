@@ -28,7 +28,7 @@ namespace Core
 
         public override string ToString()
         {
-            return $"[ACTION type:{actionType}, caster: {caster}, target: {target}, transformationTarger: {transformationTarget}]";
+            return $"[ACTION type:{actionType}, caster: {caster}, target: {target}, transformationTarget: {transformationTarget}]";
         }
     }
 }
