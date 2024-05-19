@@ -97,7 +97,7 @@ public class CoreGamestateTests
     }
 
     [Test]
-    public void FirstLevelSentenceWithUnknownSubjectMapsToNO_ACTION()
+    public void FirstLevelSentenceWithUnknownSubjectMapsToIMPOSSIBLE()
     {
         CoreGamestate coreGamestate = new();
         Lawset lawset = Lawset.Of(Law.Of(MatcherSentence.Of(MatcherWord.AI)));
@@ -105,7 +105,7 @@ public class CoreGamestateTests
 
         Sentence sentence = Sentence.Of(MONEY);
 
-        Assert.AreEqual(new Action(ActionType.NO_ACTION), coreGamestate.MapSentenceToAction(sentence));
+        Assert.AreEqual(new Action(ActionType.IMPOSSIBLE), coreGamestate.MapSentenceToAction(sentence));
     }
 
     [Test]

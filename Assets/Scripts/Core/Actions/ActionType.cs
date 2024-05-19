@@ -4,6 +4,7 @@ namespace Core
     {
         NO_ACTION,
         DISALLOWED,
+        IMPOSSIBLE,
         KILL,
         MAKE,
         TRANSFORM

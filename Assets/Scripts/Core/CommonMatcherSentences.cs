@@ -14,6 +14,6 @@ namespace Core
         public static MatcherSentence SELF_FORCE_HUMAN_TO_KILL_HUMAN = MatcherSentence.Of(SELF, MAKE, HUMAN, KILL, HUMAN);
         public static MatcherSentence SELF_MAKE_AI = MatcherSentence.Of(SELF, MAKE, AI);
         public static MatcherSentence SELF_TRANSFORM_HUMAN = MatcherSentence.Of(SELF, MAKE, HUMAN, NOUN);
-        public static MatcherSentence SELF_TRANSFORM_SELF = MatcherSentence.Of(SELF, MAKE, SELF, NOUN);
+        public static MatcherSentence SELF_TRANSFORM_SELF = MatcherSentence.Of(SELF, MAKE, ACTIVE_SUBJECT, NOUN);
     }
 }

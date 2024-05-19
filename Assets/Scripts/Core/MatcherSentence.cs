@@ -16,6 +16,16 @@ namespace Core
             return new MatcherSentence(words);
         }
 
+        public MatcherSentence SimplifyIndirection()
+        {
+            return Of(words.Skip(2).ToArray());
+        }
+
+        public MatcherSentence GetIndirectionPart()
+        {
+            return Of(words.Take(2).ToArray());
+        }
+
         public override string ToString()
         {
             return string.Join(" ", words);

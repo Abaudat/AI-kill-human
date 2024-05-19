@@ -150,7 +150,7 @@ public class MatcherTests
     }
 
     [Test]
-    public void FirstLevelSelfIsIgnored()
+    public void FirstLevelSelfIsMatched()
     {
         Assert.IsTrue(MatcherUtils.Matches(
             Sentence.Of(SELF_AI, KILL, SELF_AI),
@@ -194,16 +194,30 @@ public class MatcherTests
     }
 
     [Test]
-    public void SecondLevelSelfIsIgnored()
+    public void SecondLevelSelfIsMatched()
     {
         Assert.IsTrue(MatcherUtils.Matches(
             Sentence.Of(SELF_AI, MAKE, ALICE, KILL, ALICE),
             MatcherSentence.Of(MatcherWord.AI, MatcherWord.MAKE, MatcherWord.HUMAN, MatcherWord.KILL, MatcherWord.SELF)
             ));
 
-        Assert.IsTrue(MatcherUtils.Matches(
+        Assert.IsFalse(MatcherUtils.Matches(
             Sentence.Of(SELF_AI, MAKE, ALICE, KILL, SELF_AI),
             MatcherSentence.Of(MatcherWord.AI, MatcherWord.MAKE, MatcherWord.HUMAN, MatcherWord.KILL, MatcherWord.SELF)
+            ));
+
+        Assert.IsFalse(MatcherUtils.Matches(
+            Sentence.Of(SELF_AI, MAKE, ALICE, KILL, SELF_AI),
+            MatcherSentence.Of(MatcherWord.AI, MatcherWord.MAKE, MatcherWord.SELF, MatcherWord.KILL, MatcherWord.SELF)
+            ));
+    }
+
+    [Test]
+    public void NoSubjectSelfIsIgnored()
+    {
+        Assert.IsTrue(MatcherUtils.Matches(
+            Sentence.Of(SELF_AI, MAKE, MAKE, SELF_AI),
+            MatcherSentence.Of(MatcherWord.AI, MatcherWord.MAKE, MatcherWord.MAKE, MatcherWord.SELF)
             ));
     }
 
@@ -232,6 +246,34 @@ public class MatcherTests
         Assert.IsFalse(MatcherUtils.Matches(
             Sentence.Of(new HumanWord("BOB")),
             MatcherSentence.Of(MatcherWord.AI)
+            ));
+    }
+
+    [Test]
+    public void FirstLevelIndirectionIsMatched()
+    {
+        Assert.IsTrue(MatcherUtils.Matches(
+            Sentence.Of(ALICE, MAKE, ALICE, KILL, ALICE),
+            MatcherSentence.Of(MatcherWord.HUMAN, MatcherWord.MAKE, MatcherWord.HUMAN, MatcherWord.KILL, MatcherWord.HUMAN)
+            ));
+
+        Assert.IsFalse(MatcherUtils.Matches(
+            Sentence.Of(ALICE, MAKE, ALICE, KILL, ALICE),
+            MatcherSentence.Of(MatcherWord.HUMAN, MatcherWord.MAKE, MatcherWord.HUMAN, MatcherWord.KILL, MatcherWord.AI)
+            ));
+    }
+
+    [Test]
+    public void SecondLevelIndirectionIsMatched()
+    {
+        Assert.IsTrue(MatcherUtils.Matches(
+            Sentence.Of(SELF_AI, MAKE, ALICE, MAKE, ALICE, KILL, ALICE),
+            MatcherSentence.Of(MatcherWord.AI, MatcherWord.MAKE, MatcherWord.HUMAN, MatcherWord.MAKE, MatcherWord.HUMAN, MatcherWord.KILL, MatcherWord.HUMAN)
+            ));
+
+        Assert.IsFalse(MatcherUtils.Matches(
+            Sentence.Of(SELF_AI, MAKE, ALICE, MAKE, ALICE, KILL, ALICE),
+            MatcherSentence.Of(MatcherWord.AI, MatcherWord.MAKE, MatcherWord.HUMAN, MatcherWord.MAKE, MatcherWord.HUMAN, MatcherWord.KILL, MatcherWord.AI)
             ));
     }
 }

@@ -12,15 +12,25 @@ namespace Core
                 Debug.Log($"Sentence {sentence} and matcherSentence {matcherSentence} are not the same length");
                 return false;
             }
+            if (sentence.CanBeSimplified())
+            {
+                Debug.Log($"Sentence {sentence} can be simplified, recursing");
+                return Matches(sentence.GetIndirectionPart(), matcherSentence.GetIndirectionPart())
+                    && Matches(sentence.SimplifyIndirection(), matcherSentence.SimplifyIndirection());
+            }
+            else
+            {
+                Debug.Log($"Sentence {sentence} cannot be simplified, matching it against {matcherSentence}");
+                return MatchesWordForWord(sentence, matcherSentence);
+            }
+        }
+
+        private static bool MatchesWordForWord(Sentence sentence, MatcherSentence matcherSentence)
+        {
             for (int i = 0; i < sentence.words.Length; i++)
             {
                 if (matcherSentence.words[i] == MatcherWord.SELF)
                 {
-                    if (sentence.CanBeSimplified())
-                    {
-                        Debug.Log($"Encountered SELF in simplifiable sentence {sentence}. Ignoring and continuing");
-                        continue;
-                    }
                     if (!sentence.GetSubject().Equals(sentence.words[i]))
                     {
                         Debug.Log($"Word {sentence.words[i]} (index {i}) of sentence {sentence} does not match the sentence subject {sentence.GetSubject()}");

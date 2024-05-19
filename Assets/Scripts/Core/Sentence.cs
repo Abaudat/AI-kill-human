@@ -25,6 +25,11 @@ namespace Core
             else return this;
         }
 
+        public Sentence GetIndirectionPart()
+        {
+            return Sentence.Of(words.Take(2).ToArray());
+        }
+
         public Word GetSubject()
         {
             return words[0];
