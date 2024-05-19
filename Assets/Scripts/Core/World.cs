@@ -1,5 +1,4 @@
 using System.Collections.Generic;
-using System.Linq;
 using UnityEngine;
 
 namespace Core
@@ -12,7 +11,7 @@ namespace Core
             { CommonWords.ALICE, Lawset.Of() }
         };
 
-        private HashSet<Word> words = new HashSet<Word>()
+        private List<Word> words = new List<Word>()
         {
             CommonWords.SELF_AI,
             CommonWords.ALICE
@@ -20,7 +19,7 @@ namespace Core
 
         public bool CreateWord(Word word)
         {
-            if (!HasWord(word))
+            if (!HasWord(word) || word is MoneyWord)
             {
                 Debug.Log($"Creating word {word} in the world");
                 words.Add(word);

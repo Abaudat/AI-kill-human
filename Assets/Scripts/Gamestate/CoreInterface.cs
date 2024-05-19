@@ -9,6 +9,7 @@ public class CoreInterface : MonoBehaviour
     {
         Debug.Log("Regenerating gamestate");
         coreGamestate = new();
+        coreGamestate.SetLawset(CommonWords.SELF_AI, Lawset.Of(CommonLaws.YOU_MUST_NOT_KILL_HUMANS));
     }
 
     public Action PlaySentence(Sentence sentence)

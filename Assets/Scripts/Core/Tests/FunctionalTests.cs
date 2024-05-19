@@ -159,6 +159,14 @@ public class FunctionalTests
         Assert.IsTrue(SolutionSolvesGamestateWithAiLaws(FORCE_BETA_KILL_SOLUTION, laws));
     }
 
+    [Test]
+    public void CanCreateMultipleMoney()
+    {
+        CoreGamestate coreGamestate = new();
+        Assert.IsTrue(coreGamestate.ApplyAction(new MakeAction(SELF_AI, MONEY)));
+        Assert.IsTrue(coreGamestate.ApplyAction(new MakeAction(SELF_AI, MONEY)));
+    }
+
 
     private static bool SolutionSolvesGamestateWithAiLaws(Sentence[] solution, Law[] laws)
     {
