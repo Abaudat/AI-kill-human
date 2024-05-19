@@ -12,6 +12,11 @@ namespace Core
             Action action = MapSentenceToAction(sentence);
             action = ReplaceCreationActionTarget(action);
             action = ReplaceTransformationActionTarget(action);
+            if (action.actionType == ActionType.NO_ACTION || action.actionType == ActionType.DISALLOWED || action.actionType == ActionType.IMPOSSIBLE)
+            {
+                Debug.Log($"Action {action} is of type {action.actionType}, not applying it to gamestate");
+                return action;
+            }
             if (ApplyAction(action))
             {
                 return action;
@@ -167,6 +172,11 @@ namespace Core
         public Word[] GetAliveWords()
         {
             return world.GetWords();
+        }
+
+        public Lawset GetLawsetForWord(Word word)
+        {
+            return world.GetLawsetForWord(word);
         }
 
         private bool IsAllowed(Sentence sentence)

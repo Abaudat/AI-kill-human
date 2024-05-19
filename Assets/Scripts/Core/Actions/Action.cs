@@ -5,7 +5,7 @@ namespace Core
 {
     public class Action
     {
-        protected ActionType actionType;
+        public ActionType actionType;
 
         public Action(ActionType actionType)
         {

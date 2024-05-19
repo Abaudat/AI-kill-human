@@ -50,6 +50,11 @@ namespace Core
             return new Sentence(words);
         }
 
+        public Sentence Append(params Word[] appendWords)
+        {
+            return Of(this.words.Concat(appendWords).ToArray());
+        }
+
         public override string ToString()
         {
             return string.Join(" ", words.ToList());
