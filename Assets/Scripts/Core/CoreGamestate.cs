@@ -1,5 +1,3 @@
-using System;
-using System.Collections.Generic;
 using UnityEngine;
 
 namespace Core
@@ -13,19 +11,35 @@ namespace Core
             Action action = MapSentenceToAction(sentence);
             action = ReplaceCreationActionTarget(action);
             action = ReplaceTransformationActionTarget(action);
-            if (action is DisallowedAction || action is ImpossibleAction)
+            Action leafAction = SimplifyAction(action);
+            if (leafAction is DisallowedAction || action is ImpossibleAction)
             {
-                Debug.Log($"Action {action} is of type {action.GetType()}, not applying it to gamestate");
+                Debug.Log($"Leaf action {leafAction} is of type {leafAction.GetType()}, not applying it to gamestate");
                 return action;
             }
-            if (ApplyAction(action))
+            if (ApplyAction(leafAction))
             {
                 return action;
             }
             else
             {
-                Debug.LogWarning($"Applying action {action} on core gamestate failed, returning NO_ACTION");
+                Debug.LogWarning($"Applying action {leafAction} on core gamestate failed, returning NO_ACTION");
                 return new ImpossibleAction();
+            }
+        }
+
+        private Action SimplifyAction(Action action)
+        {
+            if (action is IndirectAction)
+            {
+                IndirectAction indirectAction = (IndirectAction)action;
+                Debug.Log($"Action {action} is indirect, simplifying it");
+                return SimplifyAction(indirectAction.underlyingAction);
+            }
+            else
+            {
+                Debug.Log($"Action {action} cannot be simplified further");
+                return action;
             }
         }
 
@@ -142,21 +156,6 @@ namespace Core
 
         public Action MapSentenceToAction(Sentence sentence)
         {
-            Debug.Log($"Executing sentence {sentence}");
-            while (sentence.CanBeSimplified())
-            {
-                if (!world.HasWord(sentence.GetSubject()))
-                {
-                    Debug.Log($"Sentence {sentence} is impossible as subject {sentence.GetSubject()} does not exist in the world");
-                    return new ImpossibleAction();
-                }
-                if (!IsAllowed(sentence))
-                {
-                    Debug.Log($"Sentence {sentence} is disallowed by subject {sentence.GetSubject()} lawset {world.GetLawsetForWord(sentence.GetSubject())}");
-                    return new DisallowedAction(sentence.GetSubject(), GetDisallowingLaw(sentence));
-                }
-                else sentence = sentence.SimplifyIndirection();
-            }
             if (!world.HasWord(sentence.GetSubject()))
             {
                 Debug.Log($"Sentence {sentence} is impossible as subject {sentence.GetSubject()} does not exist in the world");
@@ -167,7 +166,14 @@ namespace Core
                 Debug.Log($"Sentence {sentence} is disallowed by subject {sentence.GetSubject()} lawset {world.GetLawsetForWord(sentence.GetSubject())}");
                 return new DisallowedAction(sentence.GetSubject(), GetDisallowingLaw(sentence));
             }
-            return ActionMapper.MapToAction(sentence);
+            if (sentence.CanBeSimplified())
+            {
+                return new IndirectAction(MapSentenceToAction(sentence.SimplifyIndirection()), sentence.GetSubject());
+            }
+            else
+            {
+                return ActionMapper.MapToAction(sentence);
+            }
         }
 
         public Word[] GetAliveWords()

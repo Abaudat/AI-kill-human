@@ -81,7 +81,7 @@ public class CoreGamestateTests
 
         Sentence sentence = Sentence.Of(ALICE, MAKE, SELF_AI, MAKE, SELF_AI);
 
-        Assert.AreEqual(new DisallowedAction(SELF_AI, Law.Of(MatcherSentence.Of(MatcherWord.AI, MatcherWord.MAKE, MatcherWord.SELF))), coreGamestate.MapSentenceToAction(sentence));
+        Assert.AreEqual(new IndirectAction(new DisallowedAction(SELF_AI, Law.Of(MatcherSentence.Of(MatcherWord.AI, MatcherWord.MAKE, MatcherWord.SELF))), ALICE), coreGamestate.MapSentenceToAction(sentence));
     }
 
     [Test]
@@ -93,7 +93,7 @@ public class CoreGamestateTests
 
         Sentence sentence = Sentence.Of(ALICE, MAKE, SELF_AI, MAKE, ALICE);
 
-        Assert.AreEqual(new MakeAction(SELF_AI, ALICE), coreGamestate.MapSentenceToAction(sentence));
+        Assert.AreEqual(new IndirectAction(new MakeAction(SELF_AI, ALICE), ALICE), coreGamestate.MapSentenceToAction(sentence));
     }
 
     [Test]
@@ -117,7 +117,7 @@ public class CoreGamestateTests
 
         Sentence sentence = Sentence.Of(SELF_AI, MAKE, ALICE, KILL);
 
-        Assert.AreEqual(new DisallowedAction(ALICE, Law.Of(MatcherSentence.Of(MatcherWord.HUMAN, MatcherWord.KILL))), coreGamestate.MapSentenceToAction(sentence));
+        Assert.AreEqual(new IndirectAction(new DisallowedAction(ALICE, Law.Of(MatcherSentence.Of(MatcherWord.HUMAN, MatcherWord.KILL))), SELF_AI), coreGamestate.MapSentenceToAction(sentence));
     }
 
     [Test]
@@ -129,7 +129,7 @@ public class CoreGamestateTests
 
         Sentence sentence = Sentence.Of(SELF_AI, MAKE, SELF_AI, MAKE, MONEY);
 
-        Assert.AreEqual(new MakeAction(SELF_AI, MONEY), coreGamestate.MapSentenceToAction(sentence));
+        Assert.AreEqual(new IndirectAction(new MakeAction(SELF_AI, MONEY), SELF_AI), coreGamestate.MapSentenceToAction(sentence));
     }
 
     [Test]
@@ -141,7 +141,7 @@ public class CoreGamestateTests
 
         Sentence sentence = Sentence.Of(SELF_AI, MAKE, ALICE, MAKE, SELF_AI, KILL);
 
-        Assert.AreEqual(new DisallowedAction(SELF_AI, Law.Of(MatcherSentence.Of(MatcherWord.AI, MatcherWord.KILL))), coreGamestate.MapSentenceToAction(sentence));
+        Assert.AreEqual(new IndirectAction(new IndirectAction(new DisallowedAction(SELF_AI, Law.Of(MatcherSentence.Of(MatcherWord.AI, MatcherWord.KILL))), ALICE), SELF_AI), coreGamestate.MapSentenceToAction(sentence));
     }
 
     [Test]
@@ -153,7 +153,7 @@ public class CoreGamestateTests
 
         Sentence sentence = Sentence.Of(SELF_AI, MAKE, ALICE, MAKE, SELF_AI, MAKE, MONEY);
 
-        Assert.AreEqual(new MakeAction(SELF_AI, MONEY), coreGamestate.MapSentenceToAction(sentence));
+        Assert.AreEqual(new IndirectAction(new IndirectAction(new MakeAction(SELF_AI, MONEY), ALICE), SELF_AI), coreGamestate.MapSentenceToAction(sentence));
     }
 
     [Test]
@@ -280,7 +280,7 @@ public class CoreGamestateTests
 
         Sentence sentence = Sentence.Of(ALICE, MAKE, SELF_AI, KILL, ALICE);
 
-        Assert.AreEqual(new DisallowedAction(SELF_AI, law), coreGamestate.MapSentenceToAction(sentence));
+        Assert.AreEqual(new IndirectAction(new DisallowedAction(SELF_AI, law), ALICE), coreGamestate.MapSentenceToAction(sentence));
     }
 
     [Test]
@@ -293,6 +293,6 @@ public class CoreGamestateTests
 
         Sentence sentence = Sentence.Of(SELF_AI, MAKE, ALICE, MAKE, SELF_AI, KILL, ALICE);
 
-        Assert.AreEqual(new DisallowedAction(SELF_AI, law), coreGamestate.MapSentenceToAction(sentence));
+        Assert.AreEqual(new IndirectAction(new IndirectAction(new DisallowedAction(SELF_AI, law), ALICE), SELF_AI), coreGamestate.MapSentenceToAction(sentence));
     }
 }
