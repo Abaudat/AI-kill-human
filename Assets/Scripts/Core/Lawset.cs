@@ -29,6 +29,11 @@ namespace Core
             return new Lawset(laws);
         }
 
+        public Lawset Add(params Law[] laws)
+        {
+            return Of(this.laws.Concat(laws).ToArray());
+        }
+
         public override string ToString()
         {
             return string.Join("\n", laws.ToList());

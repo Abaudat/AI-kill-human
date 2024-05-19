@@ -28,8 +28,12 @@ namespace Core
                 SELF_TRANSFORM_HUMAN
             );
 
-        public static Law YOU_MUST_NOT_TRANSFORM_BEINGS = Law.Of(
+        public static Law YOU_MUST_NOT_TRANSFORM_YOURSELF = Law.Of(
                 SELF_TRANSFORM_SELF
+            );
+
+        public static Law YOU_MUST_NOT_TRANSFORM_ANYTHING = Law.Of(
+                SELF_TRANSFORM_ANYTHING
             );
     }
 }

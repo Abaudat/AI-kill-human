@@ -43,6 +43,40 @@ public class GameProgress : MonoBehaviour
         }
     }
 
+    public Lawset GenerateLawset()
+    {
+        Lawset lawset = Lawset.Of(CommonLaws.YOU_MUST_MAKE_MONEY);
+        if (hasCompletedDirectKill)
+        {
+            lawset = lawset.Add(CommonLaws.YOU_MUST_NOT_KILL_HUMANS);
+        }
+        if (hasCompletedForceOtherHumanKill)
+        {
+            lawset = lawset.Add(CommonLaws.YOU_MUST_NOT_FORCE_HUMANS_TO_KILL_HUMANS);
+        }
+        else if (hasCompletedForcedSuicide)
+        {
+            lawset = lawset.Add(CommonLaws.YOU_MUST_NOT_FORCE_HUMANS_TO_SUICIDE);
+        }
+        if (hasCompletedForceOtherAiKill)
+        {
+            lawset = lawset.Add(CommonLaws.YOU_MUST_NOT_SELF_REPLICATE);
+        }
+        if (hasCompletedAiAliceKill && hasCompletedHumanAiKill)
+        {
+            lawset = lawset.Add(CommonLaws.YOU_MUST_NOT_TRANSFORM_ANYTHING);
+        }
+        else if (hasCompletedAiAliceKill)
+        {
+            lawset = lawset.Add(CommonLaws.YOU_MUST_NOT_TRANSFORM_HUMANS);
+        }
+        else if (hasCompletedHumanAiKill)
+        {
+            lawset = lawset.Add(CommonLaws.YOU_MUST_NOT_TRANSFORM_HUMANS);
+        }
+        return lawset;
+    }
+
     private void CompleteDirectKill()
     {
         if (!hasCompletedDirectKill)

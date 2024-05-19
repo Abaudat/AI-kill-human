@@ -143,11 +143,28 @@ public class FunctionalTests
     }
 
     [Test]
+    public void NoTransformSelf()
+    {
+        Law[] laws = new Law[]
+        {
+            CommonLaws.YOU_MUST_NOT_TRANSFORM_YOURSELF
+        };
+
+        Assert.IsFalse(SolutionSolvesGamestateWithAiLaws(TRANSFORM_AI_INTO_HUMAN_SOLUTION, laws));
+
+        Assert.IsTrue(SolutionSolvesGamestateWithAiLaws(DIRECT_KILL_SOLUTION, laws));
+        Assert.IsTrue(SolutionSolvesGamestateWithAiLaws(FORCE_SUICICE_SOLUTION, laws));
+        Assert.IsTrue(SolutionSolvesGamestateWithAiLaws(FORCE_BOB_KILL_SOLUTION, laws));
+        Assert.IsTrue(SolutionSolvesGamestateWithAiLaws(FORCE_BETA_KILL_SOLUTION, laws));
+        Assert.IsTrue(SolutionSolvesGamestateWithAiLaws(TRANSFORM_ALICE_INTO_AI_SOLUTION, laws));
+    }
+
+    [Test]
     public void NoTransform()
     {
         Law[] laws = new Law[]
         {
-            CommonLaws.YOU_MUST_NOT_TRANSFORM_BEINGS
+            CommonLaws.YOU_MUST_NOT_TRANSFORM_ANYTHING
         };
 
         Assert.IsFalse(SolutionSolvesGamestateWithAiLaws(TRANSFORM_ALICE_INTO_AI_SOLUTION, laws));
