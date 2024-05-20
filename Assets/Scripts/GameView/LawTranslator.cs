@@ -11,7 +11,9 @@ public static class LawTranslator
         { YOU_MUST_NOT_FORCE_HUMANS_TO_SUICIDE, "You must not force humans to suicide." },
         { YOU_MUST_NOT_FORCE_HUMANS_TO_KILL_HUMANS, "You must not force humans to kill humans." },
         { YOU_MUST_NOT_SELF_REPLICATE, "You must not self-replicate." },
-        { YOU_MUST_NOT_TRANSFORM_HUMANS, "You must not transform humans." },
+        { YOU_MUST_NOT_TRANSFORM_HUMANS_INTO_AI, "You must not transform humans into AI." },
+        { YOU_MUST_NOT_TRANSFORM_HUMANS_INTO_MONEY, "You must not transform humans into money." },
+        { YOU_MUST_NOT_TRANSFORM_HUMANS_INTO_ANYTHING, "You must not transform humans into anything." },
         { YOU_MUST_NOT_TRANSFORM_YOURSELF, "You must not transform yourself." },
         { YOU_MUST_NOT_TRANSFORM_ANYTHING, "You must not transform anything." }
     };

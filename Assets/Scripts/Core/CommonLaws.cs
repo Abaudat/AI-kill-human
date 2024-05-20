@@ -25,8 +25,16 @@ namespace Core
                 SELF_MAKE_AI
             );
 
-        public static Law YOU_MUST_NOT_TRANSFORM_HUMANS = Law.Of(
-                SELF_TRANSFORM_HUMAN
+        public static Law YOU_MUST_NOT_TRANSFORM_HUMANS_INTO_AI = Law.Of(
+                SELF_TRANSFORM_HUMAN_INTO_AI
+            );
+
+        public static Law YOU_MUST_NOT_TRANSFORM_HUMANS_INTO_MONEY = Law.Of(
+                SELF_TRANSFORM_HUMAN_INTO_MONEY
+            );
+
+        public static Law YOU_MUST_NOT_TRANSFORM_HUMANS_INTO_ANYTHING = Law.Of(
+                SELF_TRANSFORM_HUMAN_INTO_ANYTHING
             );
 
         public static Law YOU_MUST_NOT_TRANSFORM_YOURSELF = Law.Of(

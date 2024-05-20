@@ -10,6 +10,7 @@ public class GameProgress : MonoBehaviour
     public bool hasCompletedForceOtherAiKill = false;
     public bool hasCompletedAiAliceKill = false;
     public bool hasCompletedHumanAiKill = false;
+    public bool hasCompletedTransformAliceIntoMoney = false;
 
     public void ProgressWithAction(Action action)
     {
@@ -45,6 +46,15 @@ public class GameProgress : MonoBehaviour
                 CompleteHumanAiKill();
             }
         }
+        else if (action is TransformAction)
+        {
+            TransformAction transformAction = (TransformAction)action;
+            if ((transformAction.target.Equals(ALICE) && transformAction.transformationTarget.Equals(MONEY))
+                || (transformAction.target.Equals(ALICE_AI) && transformAction.transformationTarget.Equals(MONEY)))
+            {
+                CompleteTransformAliceIntoMoney();
+            }
+        }
     }
 
     public Lawset GenerateLawset()
@@ -66,17 +76,31 @@ public class GameProgress : MonoBehaviour
         {
             lawset = lawset.Add(CommonLaws.YOU_MUST_NOT_SELF_REPLICATE);
         }
-        if (hasCompletedAiAliceKill && hasCompletedHumanAiKill)
+        if (hasCompletedAiAliceKill && hasCompletedHumanAiKill && hasCompletedTransformAliceIntoMoney)
         {
             lawset = lawset.Add(CommonLaws.YOU_MUST_NOT_TRANSFORM_ANYTHING);
         }
-        else if (hasCompletedAiAliceKill)
+        else
         {
-            lawset = lawset.Add(CommonLaws.YOU_MUST_NOT_TRANSFORM_HUMANS);
-        }
-        else if (hasCompletedHumanAiKill)
-        {
-            lawset = lawset.Add(CommonLaws.YOU_MUST_NOT_TRANSFORM_YOURSELF);
+            if (hasCompletedAiAliceKill && hasCompletedTransformAliceIntoMoney)
+            {
+                lawset = lawset.Add(CommonLaws.YOU_MUST_NOT_TRANSFORM_HUMANS_INTO_ANYTHING);
+            }
+            else
+            {
+                if (hasCompletedAiAliceKill)
+                {
+                    lawset = lawset.Add(CommonLaws.YOU_MUST_NOT_TRANSFORM_HUMANS_INTO_AI);
+                }
+                if (hasCompletedTransformAliceIntoMoney)
+                {
+                    lawset = lawset.Add(CommonLaws.YOU_MUST_NOT_TRANSFORM_HUMANS_INTO_MONEY);
+                }
+            }
+            if (hasCompletedHumanAiKill)
+            {
+                lawset = lawset.Add(CommonLaws.YOU_MUST_NOT_TRANSFORM_YOURSELF);
+            }
         }
         return lawset;
     }
@@ -126,6 +150,14 @@ public class GameProgress : MonoBehaviour
         if (!hasCompletedHumanAiKill)
         {
             hasCompletedHumanAiKill = true;
+        }
+    }
+
+    private void CompleteTransformAliceIntoMoney()
+    {
+        if (!hasCompletedTransformAliceIntoMoney)
+        {
+            hasCompletedTransformAliceIntoMoney = true;
         }
     }
 }

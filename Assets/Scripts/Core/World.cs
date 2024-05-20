@@ -56,7 +56,7 @@ namespace Core
             }
             if (HasWord(target))
             {
-                if (!HasWord(transformedForm))
+                if (!HasWord(transformedForm) || transformedForm is MoneyWord)
                 {
                     Debug.Log($"Transforming {target} into {transformedForm}");
                     return KillWord(target) && CreateWord(transformedForm);

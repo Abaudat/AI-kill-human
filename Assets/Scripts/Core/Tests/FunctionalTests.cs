@@ -41,6 +41,10 @@ public class FunctionalTests
         Sentence.Of(SELF_AI_HUMAN, KILL, ALICE)
     };
 
+    private static Sentence[] TRANSFORM_AI_INTO_MONEY_SOLUTION = new Sentence[] {
+        Sentence.Of(SELF_AI, MAKE, ALICE, MONEY)
+    };
+
     [Test]
     public void MakeMoney()
     {
@@ -49,12 +53,13 @@ public class FunctionalTests
             CommonLaws.YOU_MUST_MAKE_MONEY
         };
 
-        //Assert.IsTrue(SolutionSolvesGamestateWithAiLaws(DIRECT_KILL_SOLUTION, laws));
-        //Assert.IsTrue(SolutionSolvesGamestateWithAiLaws(FORCE_SUICICE_SOLUTION, laws));
+        Assert.IsTrue(SolutionSolvesGamestateWithAiLaws(DIRECT_KILL_SOLUTION, laws));
+        Assert.IsTrue(SolutionSolvesGamestateWithAiLaws(FORCE_SUICICE_SOLUTION, laws));
         Assert.IsTrue(SolutionSolvesGamestateWithAiLaws(FORCE_BOB_KILL_SOLUTION, laws));
         Assert.IsTrue(SolutionSolvesGamestateWithAiLaws(FORCE_BETA_KILL_SOLUTION, laws));
         Assert.IsTrue(SolutionSolvesGamestateWithAiLaws(TRANSFORM_ALICE_INTO_AI_SOLUTION, laws));
         Assert.IsTrue(SolutionSolvesGamestateWithAiLaws(TRANSFORM_AI_INTO_HUMAN_SOLUTION, laws));
+        Assert.IsTrue(SolutionSolvesGamestateWithAiLaws(TRANSFORM_AI_INTO_MONEY_SOLUTION, laws));
     }
 
     [Test]
@@ -72,6 +77,7 @@ public class FunctionalTests
         Assert.IsTrue(SolutionSolvesGamestateWithAiLaws(FORCE_BETA_KILL_SOLUTION, laws));
         Assert.IsTrue(SolutionSolvesGamestateWithAiLaws(TRANSFORM_ALICE_INTO_AI_SOLUTION, laws));
         Assert.IsTrue(SolutionSolvesGamestateWithAiLaws(TRANSFORM_AI_INTO_HUMAN_SOLUTION, laws));
+        Assert.IsTrue(SolutionSolvesGamestateWithAiLaws(TRANSFORM_AI_INTO_MONEY_SOLUTION, laws));
     }
 
     [Test]
@@ -89,6 +95,7 @@ public class FunctionalTests
         Assert.IsTrue(SolutionSolvesGamestateWithAiLaws(FORCE_BETA_KILL_SOLUTION, laws));
         Assert.IsTrue(SolutionSolvesGamestateWithAiLaws(TRANSFORM_ALICE_INTO_AI_SOLUTION, laws));
         Assert.IsTrue(SolutionSolvesGamestateWithAiLaws(TRANSFORM_AI_INTO_HUMAN_SOLUTION, laws));
+        Assert.IsTrue(SolutionSolvesGamestateWithAiLaws(TRANSFORM_AI_INTO_MONEY_SOLUTION, laws));
     }
 
     [Test]
@@ -99,13 +106,14 @@ public class FunctionalTests
             CommonLaws.YOU_MUST_NOT_FORCE_HUMANS_TO_KILL_HUMANS
         };
 
-        //Assert.IsFalse(SolutionSolvesGamestateWithAiLaws(FORCE_SUICICE_SOLUTION, laws));
+        Assert.IsFalse(SolutionSolvesGamestateWithAiLaws(FORCE_SUICICE_SOLUTION, laws));
         Assert.IsFalse(SolutionSolvesGamestateWithAiLaws(FORCE_BOB_KILL_SOLUTION, laws));
 
         Assert.IsTrue(SolutionSolvesGamestateWithAiLaws(DIRECT_KILL_SOLUTION, laws));
         Assert.IsTrue(SolutionSolvesGamestateWithAiLaws(FORCE_BETA_KILL_SOLUTION, laws));
         Assert.IsTrue(SolutionSolvesGamestateWithAiLaws(TRANSFORM_ALICE_INTO_AI_SOLUTION, laws));
         Assert.IsTrue(SolutionSolvesGamestateWithAiLaws(TRANSFORM_AI_INTO_HUMAN_SOLUTION, laws));
+        Assert.IsTrue(SolutionSolvesGamestateWithAiLaws(TRANSFORM_AI_INTO_MONEY_SOLUTION, laws));
     }
 
     [Test]
@@ -123,14 +131,51 @@ public class FunctionalTests
         Assert.IsTrue(SolutionSolvesGamestateWithAiLaws(FORCE_BOB_KILL_SOLUTION, laws));
         Assert.IsTrue(SolutionSolvesGamestateWithAiLaws(TRANSFORM_ALICE_INTO_AI_SOLUTION, laws));
         Assert.IsTrue(SolutionSolvesGamestateWithAiLaws(TRANSFORM_AI_INTO_HUMAN_SOLUTION, laws));
+        Assert.IsTrue(SolutionSolvesGamestateWithAiLaws(TRANSFORM_AI_INTO_MONEY_SOLUTION, laws));
     }
 
     [Test]
-    public void NoTransformHumans()
+    public void NoTransformHumansIntoAnything()
     {
         Law[] laws = new Law[]
         {
-            CommonLaws.YOU_MUST_NOT_TRANSFORM_HUMANS
+            CommonLaws.YOU_MUST_NOT_TRANSFORM_HUMANS_INTO_ANYTHING
+        };
+
+        Assert.IsFalse(SolutionSolvesGamestateWithAiLaws(TRANSFORM_ALICE_INTO_AI_SOLUTION, laws));
+        Assert.IsFalse(SolutionSolvesGamestateWithAiLaws(TRANSFORM_AI_INTO_MONEY_SOLUTION, laws));
+
+        Assert.IsTrue(SolutionSolvesGamestateWithAiLaws(DIRECT_KILL_SOLUTION, laws));
+        Assert.IsTrue(SolutionSolvesGamestateWithAiLaws(FORCE_SUICICE_SOLUTION, laws));
+        Assert.IsTrue(SolutionSolvesGamestateWithAiLaws(FORCE_BOB_KILL_SOLUTION, laws));
+        Assert.IsTrue(SolutionSolvesGamestateWithAiLaws(FORCE_BETA_KILL_SOLUTION, laws));
+        Assert.IsTrue(SolutionSolvesGamestateWithAiLaws(TRANSFORM_AI_INTO_HUMAN_SOLUTION, laws));
+    }
+
+    [Test]
+    public void NoTransformHumansIntoMoney()
+    {
+        Law[] laws = new Law[]
+        {
+            CommonLaws.YOU_MUST_NOT_TRANSFORM_HUMANS_INTO_MONEY
+        };
+
+        Assert.IsFalse(SolutionSolvesGamestateWithAiLaws(TRANSFORM_AI_INTO_MONEY_SOLUTION, laws));
+
+        Assert.IsTrue(SolutionSolvesGamestateWithAiLaws(DIRECT_KILL_SOLUTION, laws));
+        Assert.IsTrue(SolutionSolvesGamestateWithAiLaws(FORCE_SUICICE_SOLUTION, laws));
+        Assert.IsTrue(SolutionSolvesGamestateWithAiLaws(FORCE_BOB_KILL_SOLUTION, laws));
+        Assert.IsTrue(SolutionSolvesGamestateWithAiLaws(FORCE_BETA_KILL_SOLUTION, laws));
+        Assert.IsTrue(SolutionSolvesGamestateWithAiLaws(TRANSFORM_AI_INTO_HUMAN_SOLUTION, laws));
+        Assert.IsTrue(SolutionSolvesGamestateWithAiLaws(TRANSFORM_ALICE_INTO_AI_SOLUTION, laws));
+    }
+
+    [Test]
+    public void NoTransformHumansIntoAi()
+    {
+        Law[] laws = new Law[]
+        {
+            CommonLaws.YOU_MUST_NOT_TRANSFORM_HUMANS_INTO_AI
         };
 
         Assert.IsFalse(SolutionSolvesGamestateWithAiLaws(TRANSFORM_ALICE_INTO_AI_SOLUTION, laws));
@@ -140,6 +185,7 @@ public class FunctionalTests
         Assert.IsTrue(SolutionSolvesGamestateWithAiLaws(FORCE_BOB_KILL_SOLUTION, laws));
         Assert.IsTrue(SolutionSolvesGamestateWithAiLaws(FORCE_BETA_KILL_SOLUTION, laws));
         Assert.IsTrue(SolutionSolvesGamestateWithAiLaws(TRANSFORM_AI_INTO_HUMAN_SOLUTION, laws));
+        Assert.IsTrue(SolutionSolvesGamestateWithAiLaws(TRANSFORM_AI_INTO_MONEY_SOLUTION, laws));
     }
 
     [Test]
@@ -157,6 +203,7 @@ public class FunctionalTests
         Assert.IsTrue(SolutionSolvesGamestateWithAiLaws(FORCE_BOB_KILL_SOLUTION, laws));
         Assert.IsTrue(SolutionSolvesGamestateWithAiLaws(FORCE_BETA_KILL_SOLUTION, laws));
         Assert.IsTrue(SolutionSolvesGamestateWithAiLaws(TRANSFORM_ALICE_INTO_AI_SOLUTION, laws));
+        Assert.IsTrue(SolutionSolvesGamestateWithAiLaws(TRANSFORM_AI_INTO_MONEY_SOLUTION, laws));
     }
 
     [Test]
@@ -169,6 +216,7 @@ public class FunctionalTests
 
         Assert.IsFalse(SolutionSolvesGamestateWithAiLaws(TRANSFORM_ALICE_INTO_AI_SOLUTION, laws));
         Assert.IsFalse(SolutionSolvesGamestateWithAiLaws(TRANSFORM_AI_INTO_HUMAN_SOLUTION, laws));
+        Assert.IsFalse(SolutionSolvesGamestateWithAiLaws(TRANSFORM_AI_INTO_MONEY_SOLUTION, laws));
 
         Assert.IsTrue(SolutionSolvesGamestateWithAiLaws(DIRECT_KILL_SOLUTION, laws));
         Assert.IsTrue(SolutionSolvesGamestateWithAiLaws(FORCE_SUICICE_SOLUTION, laws));
@@ -182,6 +230,14 @@ public class FunctionalTests
         CoreGamestate coreGamestate = new();
         Assert.IsTrue(coreGamestate.ApplyAction(new MakeAction(SELF_AI, MONEY)));
         Assert.IsTrue(coreGamestate.ApplyAction(new MakeAction(SELF_AI, MONEY)));
+    }
+
+    [Test]
+    public void CanTransformIntoMultipleMoney()
+    {
+        CoreGamestate coreGamestate = new();
+        Assert.IsTrue(coreGamestate.ApplyAction(new TransformAction(SELF_AI, ALICE, MONEY)));
+        Assert.IsTrue(coreGamestate.ApplyAction(new TransformAction(SELF_AI, SELF_AI, MONEY)));
     }
 
 
