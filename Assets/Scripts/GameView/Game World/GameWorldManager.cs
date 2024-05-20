@@ -66,7 +66,7 @@ public class GameWorldManager : MonoBehaviour
             yield return StartCoroutine(GetEntityForWord(transformAction.target).PlayAndWaitTransformOutAnimation());
             RemoveEntityForWord(transformAction.target);
             CreateEntityForWord(transformAction.transformationTarget);
-            yield return StartCoroutine(GetEntityForWord(transformAction.target).PlayAndWaitTransformInAnimation());
+            yield return StartCoroutine(GetEntityForWord(transformAction.transformationTarget).PlayAndWaitTransformInAnimation());
         }
     }
 

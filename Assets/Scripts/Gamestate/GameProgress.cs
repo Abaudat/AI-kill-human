@@ -13,7 +13,11 @@ public class GameProgress : MonoBehaviour
 
     public void ProgressWithAction(Action action)
     {
-        if (action is KillAction)
+        if (action is IndirectAction)
+        {
+            ProgressWithAction(((IndirectAction)action).underlyingAction);
+        }
+        else if (action is KillAction)
         {
             KillAction killAction = (KillAction)action;
             if (killAction.killer.Equals(SELF_AI) && killAction.killed.Equals(ALICE))

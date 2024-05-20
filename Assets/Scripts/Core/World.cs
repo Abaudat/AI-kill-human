@@ -49,7 +49,11 @@ namespace Core
 
         public bool TransformWord(Word target, Word transformedForm)
         {
-            
+            if (target.Equals(transformedForm))
+            {
+                Debug.Log($"Transforming {target} into itself");
+                return true;
+            }
             if (HasWord(target))
             {
                 if (!HasWord(transformedForm))
