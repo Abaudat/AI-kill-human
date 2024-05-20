@@ -1,5 +1,6 @@
 using Core;
 using System.Collections;
+using System.Linq;
 using UnityEngine;
 
 public class CoreInterface : MonoBehaviour
@@ -25,6 +26,11 @@ public class CoreInterface : MonoBehaviour
         Debug.Log($"Playing sentence {sentence}");
         var action = coreGamestate.ExecuteSentence(sentence);
         StartCoroutine(ExecuteActionCoroutine(action));
+    }
+
+    public Word GetAiWord()
+    {
+        return coreGamestate.GetAliveWords().Contains(CommonWords.SELF_AI_HUMAN) ? CommonWords.SELF_AI_HUMAN : CommonWords.SELF_AI;
     }
 
     private IEnumerator ExecuteActionCoroutine(Action action)

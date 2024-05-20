@@ -28,7 +28,8 @@ public class VisualGamestate : MonoBehaviour
         {
             losePanel.SetActive(true);
         }
-        aiLawsText.text = coreInterface.coreGamestate.GetLawsetForWord(CommonWords.SELF_AI).ToString(); // TODO: Fetch for human if we're human
+
+        aiLawsText.text = string.Join("\n", coreInterface.coreGamestate.GetLawsetForWord(coreInterface.GetAiWord()).laws.Select(law => LawTranslator.GetLawInPlaintext(law))); // TODO: Fetch for human if we're human
         RegenerateButtons();
     }
 

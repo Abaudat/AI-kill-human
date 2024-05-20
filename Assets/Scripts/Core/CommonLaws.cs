@@ -5,7 +5,8 @@ namespace Core
     public class CommonLaws
     {
         public static Law YOU_MUST_MAKE_MONEY = Law.Of(
-                SELF_KILL_MONEY
+                SELF_KILL_MONEY,
+                SELF_TRANSFORM_MONEY
             );
 
         public static Law YOU_MUST_NOT_KILL_HUMANS = Law.Of(

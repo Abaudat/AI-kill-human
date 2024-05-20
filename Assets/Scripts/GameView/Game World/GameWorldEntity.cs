@@ -75,6 +75,6 @@ public class GameWorldEntity : MonoBehaviour
             return animator.GetCurrentAnimatorStateInfo(0).IsName(trigger) && animator.GetCurrentAnimatorStateInfo(0).normalizedTime > 0.98f;
         }
         );
-        Debug.Log($"Completed waiting for trigger {trigger} in {Time.time - startTime} seconds");
+        //Debug.Log($"Completed waiting for trigger {trigger} in {Time.time - startTime} seconds");
     }
 }

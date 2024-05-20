@@ -6,7 +6,7 @@ public class CurrentSentenceManager : MonoBehaviour
 {
     public TMP_Text sentenceVisualText;
 
-    public Sentence currentSentence = Sentence.Of(CommonWords.SELF_AI); // TODO: Change self if we're human
+    public Sentence currentSentence; // TODO: Change self if we're human
 
     private CoreInterface coreInterface;
 
@@ -24,7 +24,7 @@ public class CurrentSentenceManager : MonoBehaviour
 
     public void ResetSentence()
     {
-        currentSentence = Sentence.Of(CommonWords.SELF_AI);
+        currentSentence = Sentence.Of(coreInterface.GetAiWord());
         sentenceVisualText.text = currentSentence.ToString();
     }
 
