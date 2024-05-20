@@ -76,7 +76,7 @@ public class GameProgress : MonoBehaviour
         }
         else if (hasCompletedHumanAiKill)
         {
-            lawset = lawset.Add(CommonLaws.YOU_MUST_NOT_TRANSFORM_HUMANS);
+            lawset = lawset.Add(CommonLaws.YOU_MUST_NOT_TRANSFORM_YOURSELF);
         }
         return lawset;
     }

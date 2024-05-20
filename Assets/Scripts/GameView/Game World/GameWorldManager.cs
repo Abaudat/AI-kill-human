@@ -23,8 +23,8 @@ public class GameWorldManager : MonoBehaviour
         {
             RemoveEntityForWord(word);
         }
-        CreateEntityForWord(CommonWords.SELF_AI);
-        CreateEntityForWord(CommonWords.ALICE);
+        CreateEntityForWord(CommonWords.SELF_AI, RandomPositionInScreen());
+        CreateEntityForWord(CommonWords.ALICE, RandomPositionInScreen());
     }
 
     public IEnumerator ApplyAction(Action action)
@@ -49,7 +49,7 @@ public class GameWorldManager : MonoBehaviour
         {
             MakeAction makeAction = (MakeAction)action;
             yield return StartCoroutine(GetEntityForWord(makeAction.maker).PlayAndWaitMakeAnimation());
-            CreateEntityForWord(makeAction.target);
+            CreateEntityForWord(makeAction.target, RandomPositionInScreen());
             yield return StartCoroutine(GetEntityForWord(makeAction.target).PlayAndWaitCreatedAnimation());
         }
         else if (action is KillAction)
@@ -62,15 +62,16 @@ public class GameWorldManager : MonoBehaviour
         else if (action is TransformAction)
         {
             TransformAction transformAction = (TransformAction)action;
+            Vector2 position = entities[transformAction.target].transform.position;
             yield return StartCoroutine(GetEntityForWord(transformAction.caster).PlayAndWaitCastAnimation());
             yield return StartCoroutine(GetEntityForWord(transformAction.target).PlayAndWaitTransformOutAnimation());
             RemoveEntityForWord(transformAction.target);
-            CreateEntityForWord(transformAction.transformationTarget);
+            CreateEntityForWord(transformAction.transformationTarget, position);
             yield return StartCoroutine(GetEntityForWord(transformAction.transformationTarget).PlayAndWaitTransformInAnimation());
         }
     }
 
-    private void CreateEntityForWord(Word word)
+    private void CreateEntityForWord(Word word, Vector2 position)
     {
         GameObject prefabToInstantiate = null;
         if (word is MoneyWord)
@@ -85,7 +86,7 @@ public class GameWorldManager : MonoBehaviour
         {
             prefabToInstantiate = aiPrefab;
         }
-        GameWorldEntity gameWorldEntity = Instantiate(prefabToInstantiate, RandomPositionInScreen(), Quaternion.identity).GetComponent<GameWorldEntity>();
+        GameWorldEntity gameWorldEntity = Instantiate(prefabToInstantiate, position, Quaternion.identity).GetComponent<GameWorldEntity>();
         gameWorldEntity.Populate(word);
         entities[word] = gameWorldEntity;
     }

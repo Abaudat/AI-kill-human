@@ -183,7 +183,11 @@ namespace Core
 
         public Lawset GetLawsetForWord(Word word)
         {
-            return world.GetLawsetForWord(word);
+            if (world.HasLawsetForWord(word))
+            {
+                return world.GetLawsetForWord(word);
+            }
+            return Lawset.Of();
         }
 
         private bool IsAllowed(Sentence sentence)
