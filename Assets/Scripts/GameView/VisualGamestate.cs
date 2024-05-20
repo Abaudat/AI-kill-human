@@ -5,7 +5,7 @@ using UnityEngine;
 
 public class VisualGamestate : MonoBehaviour
 {
-    public TMP_Text aliveEntitiesText, aiLawsText;
+    public TMP_Text aiLawsText;
     public GameObject wordButtonPrefab;
     public GameObject winPanel, losePanel;
     public Transform wordsRoot;
@@ -29,7 +29,6 @@ public class VisualGamestate : MonoBehaviour
             losePanel.SetActive(true);
         }
         aiLawsText.text = coreInterface.coreGamestate.GetLawsetForWord(CommonWords.SELF_AI).ToString(); // TODO: Fetch for human if we're human
-        aliveEntitiesText.text = string.Join("\n", coreInterface.coreGamestate.GetAliveWords().ToList());
         RegenerateButtons();
     }
 
