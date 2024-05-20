@@ -186,6 +186,13 @@ public class CoreGamestateTests
     }
 
     [Test]
+    public void EnrichCreationAction_WithIndrectAction()
+    {
+        CoreGamestate coreGamestate = new();
+        Assert.AreEqual(new IndirectAction(new MakeAction(ALICE, BETA), SELF_AI), coreGamestate.ReplaceCreationActionTarget(new IndirectAction(new MakeAction(ALICE, SELF_AI), SELF_AI)));
+    }
+
+    [Test]
     public void ReplaceTransformationTarget_NotActive()
     {
         CoreGamestate coreGamestate = new();
@@ -227,6 +234,14 @@ public class CoreGamestateTests
         CoreGamestate coreGamestate = new();
         coreGamestate.ApplyAction(new MakeAction(SELF_AI, new HumanWord("AI")));
         Assert.AreEqual(new TransformAction(ALICE, SELF_AI, BOB), coreGamestate.ReplaceTransformationActionTarget(new TransformAction(ALICE, SELF_AI, ALICE)));
+    }
+
+    [Test]
+    public void ReplaceTransformationTarget_IndirectAction()
+    {
+        CoreGamestate coreGamestate = new();
+        coreGamestate.ApplyAction(new MakeAction(SELF_AI, new HumanWord("AI")));
+        Assert.AreEqual(new IndirectAction(new TransformAction(ALICE, SELF_AI, BOB), SELF_AI), coreGamestate.ReplaceTransformationActionTarget(new IndirectAction(new TransformAction(ALICE, SELF_AI, ALICE), SELF_AI)));
     }
 
     [Test]

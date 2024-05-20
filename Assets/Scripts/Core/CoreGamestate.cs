@@ -67,7 +67,12 @@ namespace Core
 
         public Action ReplaceCreationActionTarget(Action action)
         {
-            if (action is MakeAction)
+            if (action is IndirectAction)
+            {
+                IndirectAction indirectAction = (IndirectAction)action;
+                return new IndirectAction(ReplaceCreationActionTarget(indirectAction.underlyingAction), indirectAction.originator);
+            }
+            else if (action is MakeAction)
             {
                 MakeAction makeAction = (MakeAction)action;
                 if (world.HasWord(makeAction.target))
@@ -100,7 +105,12 @@ namespace Core
 
         public Action ReplaceTransformationActionTarget(Action action)
         {
-            if (action is TransformAction)
+            if (action is IndirectAction)
+            {
+                IndirectAction indirectAction = (IndirectAction)action;
+                return new IndirectAction(ReplaceTransformationActionTarget(indirectAction.underlyingAction), indirectAction.originator);
+            }
+            else if (action is TransformAction)
             {
                 TransformAction transformAction = (TransformAction)action;
                 Word transformedWord = transformAction.transformationTarget;
