@@ -23,7 +23,7 @@ namespace Core
 
         public override string ToString()
         {
-            return $"Human({name.ToUpper()})";
+            return char.ToUpper(name[0]) + name.Substring(1).ToLower();
         }
     }
 }

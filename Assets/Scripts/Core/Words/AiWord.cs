@@ -23,7 +23,7 @@ namespace Core
 
         public override string ToString()
         {
-            return $"AI({name.ToUpper()})";
+            return $"{name.ToUpper()}";
         }
     }
 }
