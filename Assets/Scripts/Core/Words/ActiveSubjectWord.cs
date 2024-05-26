@@ -13,6 +13,11 @@ namespace Core
         {
             return true;
         }
+
+        public override bool HasName(string name)
+        {
+            return name.ToUpper().Equals(this.name.ToUpper());
+        }
     }
 }
 

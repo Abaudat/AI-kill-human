@@ -116,43 +116,59 @@ namespace Core
                 Word transformedWord = transformAction.transformationTarget;
                 if (transformAction.target != transformAction.transformationTarget)
                 {
-                    if (transformAction.target.IsActiveSubject())
+                    if (transformAction.target.IsNoun())
                     {
-                        ActiveSubjectWord target = (ActiveSubjectWord)transformAction.target;
-                        if (transformedWord is AiWord)
+                        if (transformAction.target.IsActiveSubject())
                         {
-                            if (world.HasWord(new AiWord(target.name)))
+                            ActiveSubjectWord target = (ActiveSubjectWord)transformAction.target;
+                            if (transformedWord is AiWord)
                             {
-                                Debug.Log($"The word {new AiWord(target.name)} already exists in the world, replacing it with generic AI");
-                                transformedWord = new AiWord(AiNameGenerator.GenerateAiName());
+                                if (world.HasWord(new AiWord(target.name)))
+                                {
+                                    Debug.Log($"The word {new AiWord(target.name)} already exists in the world, replacing it with generic AI");
+                                    transformedWord = new AiWord(AiNameGenerator.GenerateAiName());
+                                }
+                                else
+                                {
+                                    Debug.Log($"Transforming target {target} into {new AiWord(target.name)}");
+                                    transformedWord = new AiWord(target.name);
+                                }
+                            }
+                            else if (transformedWord is HumanWord)
+                            {
+                                if (world.HasWord(new HumanWord(target.name)))
+                                {
+                                    Debug.Log($"The word {new HumanWord(target.name)} already exists in the world, replacing it with generic human");
+                                    transformedWord = new HumanWord(HumanNameGenerator.GenerateHumanName());
+                                }
+                                else
+                                {
+                                    Debug.Log($"Transforming target {target} into {new HumanWord(target.name)}");
+                                    transformedWord = new HumanWord(target.name);
+                                }
                             }
                             else
                             {
-                                Debug.Log($"Transforming target {target} into {new AiWord(target.name)}");
-                                transformedWord = new AiWord(target.name);
-                            }
-                        }
-                        else if (transformedWord is HumanWord)
-                        {
-                            if (world.HasWord(new HumanWord(target.name)))
-                            {
-                                Debug.Log($"The word {new HumanWord(target.name)} already exists in the world, replacing it with generic human");
-                                transformedWord = new HumanWord(HumanNameGenerator.GenerateHumanName());
-                            }
-                            else
-                            {
-                                Debug.Log($"Transforming target {target} into {new HumanWord(target.name)}");
-                                transformedWord = new HumanWord(target.name);
+                                Debug.LogWarning($"Target {target} is an unknown active subject");
                             }
                         }
                         else
                         {
-                            Debug.LogWarning($"Target {target} is an unknown active subject");
+                            if (transformedWord is AiWord)
+                            {
+                                Debug.Log($"The word {transformAction.target} has no name, generating a new name");
+                                transformedWord = new AiWord(AiNameGenerator.GenerateAiName());
+                            }
+                            else if (transformedWord is HumanWord)
+                            {
+                                Debug.Log($"The word {transformAction.target} has no name, generating a new name");
+                                transformedWord = new HumanWord(AiNameGenerator.GenerateAiName());
+                            }
                         }
                     }
                     else
                     {
-                        Debug.Log($"Transformation target {transformAction.target} is not an active subject");
+                        Debug.Log($"Transformation target {transformAction.target} is not a noun");
                     }
                 }
                 else

@@ -8,5 +8,6 @@ namespace Core
         public virtual bool IsActiveSubject() => false;
         public virtual bool IsVerb() => false;
         public virtual bool IsMake() => false;
+        public virtual bool HasName(string name) => false;
     }
 }

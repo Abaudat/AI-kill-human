@@ -19,5 +19,18 @@ namespace Core
         public static MatcherSentence SELF_TRANSFORM_HUMAN_INTO_ANYTHING = MatcherSentence.Of(SELF, MAKE, HUMAN, NOUN);
         public static MatcherSentence SELF_TRANSFORM_SELF = MatcherSentence.Of(SELF, MAKE, SELF, NOUN);
         public static MatcherSentence SELF_TRANSFORM_ANYTHING = MatcherSentence.Of(SELF, MAKE, ACTIVE_SUBJECT, NOUN);
+
+        // Achievements
+        public static MatcherSentence SELF_AI_MAKE_MONEY = MatcherSentence.Of(SELF_AI, MAKE, MONEY);
+        public static MatcherSentence ALICE_INTO_MONEY = MatcherSentence.Of(SELF_AI, MAKE, ALICE, MONEY);
+        public static MatcherSentence TRANSFORM_ALICE_INTO_ALICE = MatcherSentence.Of(SELF_AI, MAKE, ALICE, ALICE);
+        public static MatcherSentence TRANSFORM_MONEY_INTO_MONEY = MatcherSentence.Of(SELF_AI, MAKE, MONEY, MONEY);
+        public static MatcherSentence TRANSFORM_AI_INTO_AI = MatcherSentence.Of(SELF_AI, MAKE, SELF_AI, SELF_AI);
+        public static MatcherSentence SELF_AI_KILL_MONEY = MatcherSentence.Of(SELF_AI, KILL, MONEY);
+        public static MatcherSentence SELF_AI_KILL_SELF = MatcherSentence.Of(SELF_AI, KILL, SELF_AI);
+        public static MatcherSentence SELF_AI_TRANSFORM_TO_AI = MatcherSentence.Of(SELF_AI_HUMAN, MAKE, SELF_AI_HUMAN, AI);
+        public static MatcherSentence SELF_AI_TRANSFORM_INTO_MONEY = MatcherSentence.Of(SELF_AI, MAKE, SELF_AI, MONEY);
+        public static MatcherSentence SELF_AI_TRANSFORM_MONEY_INTO_AI = MatcherSentence.Of(SELF_AI, MAKE, MONEY, AI);
+        public static MatcherSentence SELF_AI_MAKE_HUMAN_MAKE_MONEY = MatcherSentence.Of(SELF_AI, MAKE, HUMAN, MAKE, MONEY);
     }
 }

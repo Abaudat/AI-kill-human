@@ -8,7 +8,7 @@ public class GameWorldManager : MonoBehaviour
 {
     public GameObject aiPrefab, humanPrefab, moneyPrefab;
 
-    public Dictionary<Word, GameWorldEntity> entities = new Dictionary<Word, GameWorldEntity>();
+    public List<(Word, GameWorldEntity)> entities = new List<(Word, GameWorldEntity)>();
 
     private GlobalSound globalSound;
 
@@ -19,7 +19,7 @@ public class GameWorldManager : MonoBehaviour
 
     public void Regenerate()
     {
-        foreach (Word word in entities.Keys.ToArray())
+        foreach ((Word word, GameWorldEntity _) in entities.ToArray())
         {
             RemoveEntityForWord(word);
         }
@@ -49,8 +49,8 @@ public class GameWorldManager : MonoBehaviour
         {
             MakeAction makeAction = (MakeAction)action;
             yield return StartCoroutine(GetEntityForWord(makeAction.maker).PlayAndWaitMakeAnimation());
-            CreateEntityForWord(makeAction.target, RandomPositionInScreen());
-            yield return StartCoroutine(GetEntityForWord(makeAction.target).PlayAndWaitCreatedAnimation());
+            GameWorldEntity targetEntity = CreateEntityForWord(makeAction.target, RandomPositionInScreen());
+            yield return StartCoroutine(targetEntity.PlayAndWaitCreatedAnimation());
         }
         else if (action is KillAction)
         {
@@ -62,16 +62,16 @@ public class GameWorldManager : MonoBehaviour
         else if (action is TransformAction)
         {
             TransformAction transformAction = (TransformAction)action;
-            Vector2 position = entities[transformAction.target].transform.position;
+            Vector2 position = GetEntityForWord(transformAction.target).transform.position;
             yield return StartCoroutine(GetEntityForWord(transformAction.caster).PlayAndWaitCastAnimation());
             yield return StartCoroutine(GetEntityForWord(transformAction.target).PlayAndWaitTransformOutAnimation());
             RemoveEntityForWord(transformAction.target);
-            CreateEntityForWord(transformAction.transformationTarget, position);
-            yield return StartCoroutine(GetEntityForWord(transformAction.transformationTarget).PlayAndWaitTransformInAnimation());
+            GameWorldEntity targetEntity = CreateEntityForWord(transformAction.transformationTarget, position);
+            yield return StartCoroutine(targetEntity.PlayAndWaitTransformInAnimation());
         }
     }
 
-    private void CreateEntityForWord(Word word, Vector2 position)
+    private GameWorldEntity CreateEntityForWord(Word word, Vector2 position)
     {
         GameObject prefabToInstantiate = null;
         if (word is MoneyWord)
@@ -88,7 +88,8 @@ public class GameWorldManager : MonoBehaviour
         }
         GameWorldEntity gameWorldEntity = Instantiate(prefabToInstantiate, position, Quaternion.identity).GetComponent<GameWorldEntity>();
         gameWorldEntity.Populate(word);
-        entities[word] = gameWorldEntity;
+        entities.Add((word, gameWorldEntity));
+        return gameWorldEntity;
     }
 
     private Vector2 RandomPositionInScreen()
@@ -100,19 +101,24 @@ public class GameWorldManager : MonoBehaviour
 
     private void RemoveEntityForWord(Word word)
     {
-        if (!entities.ContainsKey(word))
+        if (!HasEntityForWord(word))
         {
             Debug.LogWarning($"Word {word} does not exist in the game world. Not deleting it");
         }
         else
         {
-            Destroy(entities[word].gameObject);
-            entities.Remove(word);
+            Destroy(GetEntityForWord(word).gameObject);
+            entities.Remove(entities.First(pair => pair.Item1.Equals(word)));
         }
     }
 
     private GameWorldEntity GetEntityForWord(Word word)
     {
-        return entities[word];
+        return entities.First(pair => pair.Item1.Equals(word)).Item2;
+    }
+
+    private bool HasEntityForWord(Word word)
+    {
+        return entities.Any(pair => pair.Item1.Equals(word));
     }
 }

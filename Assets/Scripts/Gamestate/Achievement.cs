@@ -39,11 +39,14 @@ public class Achievement : MonoBehaviour, IPointerEnterHandler, IPointerExitHand
 
     public void Unlock()
     {
-        Debug.Log($"Achivement {achivementName} unlocked");
-        image.color = Color.white;
-        backgroundImage.color = Color.white;
-        isUnlocked = true;
-        achievementUnlockedDisplay.QueueAchivement(image.sprite, achivementName);
+        if (!isUnlocked)
+        {
+            Debug.Log($"Achivement {achivementName} unlocked");
+            image.color = Color.white;
+            backgroundImage.color = Color.white;
+            isUnlocked = true;
+            achievementUnlockedDisplay.QueueAchivement(image.sprite, achivementName);
+        }
     }
 
     public void OnPointerEnter(PointerEventData eventData)

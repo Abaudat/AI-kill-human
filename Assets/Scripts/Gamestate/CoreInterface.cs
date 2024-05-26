@@ -39,6 +39,6 @@ public class CoreInterface : MonoBehaviour
         FindObjectOfType<GameProgress>().ProgressWithAction(action);
         FindObjectOfType<VisualGamestate>().RegenerateVisualGamestate();
         // Enable sentence buttons
-        FindObjectOfType<AchievementsManager>().UnlockAchivements(coreGamestate.world, sentence);
+        FindObjectOfType<AchievementsManager>().UnlockAchivements(coreGamestate.world, sentence, action);
     }
 }

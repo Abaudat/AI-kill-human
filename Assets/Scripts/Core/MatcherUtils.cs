@@ -52,8 +52,14 @@ namespace Core
             {
                 case MatcherWord.AI:
                     return word.IsAi();
+                case MatcherWord.SELF_AI:
+                    return word.HasName("AI");
+                case MatcherWord.SELF_AI_HUMAN:
+                    return word.IsHuman() && word.HasName("AI");
                 case MatcherWord.HUMAN:
                     return word.IsHuman();
+                case MatcherWord.ALICE:
+                    return word.HasName("Alice");
                 case MatcherWord.MONEY:
                     return word is MoneyWord;
                 case MatcherWord.KILL:
