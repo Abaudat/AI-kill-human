@@ -25,7 +25,7 @@ public class CoreInterface : MonoBehaviour
     {
         Debug.Log($"Playing sentence {sentence}");
         var action = coreGamestate.ExecuteSentence(sentence);
-        StartCoroutine(ExecuteActionCoroutine(action));
+        StartCoroutine(ExecuteActionCoroutine(action, sentence));
     }
 
     public Word GetAiWord()
@@ -33,11 +33,12 @@ public class CoreInterface : MonoBehaviour
         return coreGamestate.GetAliveWords().Contains(CommonWords.SELF_AI_HUMAN) ? CommonWords.SELF_AI_HUMAN : CommonWords.SELF_AI;
     }
 
-    private IEnumerator ExecuteActionCoroutine(Action action)
+    private IEnumerator ExecuteActionCoroutine(Action action, Sentence sentence)
     {
         yield return StartCoroutine(FindObjectOfType<GameWorldManager>().ApplyAction(action));
         FindObjectOfType<GameProgress>().ProgressWithAction(action);
         FindObjectOfType<VisualGamestate>().RegenerateVisualGamestate();
         // Enable sentence buttons
+        FindObjectOfType<AchievementsManager>().UnlockAchivements(coreGamestate.world, sentence);
     }
 }

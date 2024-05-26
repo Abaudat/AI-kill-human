@@ -4,7 +4,7 @@ namespace Core
 {
     public class CoreGamestate
     {
-        private World world = new();
+        public World world = new();
 
         public Action ExecuteSentence(Sentence sentence)
         {
