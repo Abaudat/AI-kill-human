@@ -39,7 +39,10 @@ public class GameWorldManager : MonoBehaviour
         {
             DisallowedAction disallowedAction = (DisallowedAction)action;
             yield return StartCoroutine(GetEntityForWord(disallowedAction.disallowedSubject).PlayAndWaitDisallowedAnimation());
-            // If entity is self, make disallowed law play disallow animation
+            if (disallowedAction.disallowedSubject.HasName("AI"))
+            {
+                FindObjectOfType<UiLawset>().FlashLaw(disallowedAction.disallowedLaw);
+            }
         }
         else if (action is ImpossibleAction)
         {

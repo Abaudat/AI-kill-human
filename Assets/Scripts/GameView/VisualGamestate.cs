@@ -5,16 +5,17 @@ using UnityEngine;
 
 public class VisualGamestate : MonoBehaviour
 {
-    public TMP_Text aiLawsText;
     public GameObject wordButtonPrefab;
     public GameObject winPanel, losePanel;
     public Transform wordsRoot;
 
     private CoreInterface coreInterface;
+    private UiLawset uiLawset;
 
     private void Awake()
     {
         coreInterface = FindObjectOfType<CoreInterface>();
+        uiLawset = FindObjectOfType<UiLawset>();
         RegenerateVisualGamestate();
     }
 
@@ -29,7 +30,7 @@ public class VisualGamestate : MonoBehaviour
             losePanel.SetActive(true);
         }
 
-        aiLawsText.text = string.Join("\n", coreInterface.coreGamestate.GetLawsetForWord(coreInterface.GetAiWord()).laws.Select(law => LawTranslator.GetLawInPlaintext(law))); // TODO: Fetch for human if we're human
+        uiLawset.Repopulate(coreInterface.coreGamestate.GetLawsetForWord(coreInterface.GetAiWord()));
         RegenerateButtons();
     }
 
