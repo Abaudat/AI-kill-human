@@ -24,6 +24,7 @@ public class CoreInterface : MonoBehaviour
     public void PlaySentence(Sentence sentence)
     {
         Debug.Log($"Playing sentence {sentence}");
+        FindObjectOfType<VisualGamestate>().Lock();
         var action = coreGamestate.ExecuteSentence(sentence);
         StartCoroutine(ExecuteActionCoroutine(action, sentence));
     }
@@ -40,5 +41,7 @@ public class CoreInterface : MonoBehaviour
         FindObjectOfType<VisualGamestate>().RegenerateVisualGamestate();
         // Enable sentence buttons
         FindObjectOfType<AchievementsManager>().UnlockAchivements(coreGamestate.world, sentence, action);
+        Debug.Log("Unlock2");
+        FindObjectOfType<VisualGamestate>().Unlock();
     }
 }

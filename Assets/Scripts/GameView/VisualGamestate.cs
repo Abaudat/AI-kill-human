@@ -2,11 +2,13 @@ using Core;
 using System.Linq;
 using TMPro;
 using UnityEngine;
+using UnityEngine.UI;
 
 public class VisualGamestate : MonoBehaviour
 {
     public GameObject wordButtonPrefab;
     public GameObject winPanel, losePanel;
+    public Button playSentenceButton;
     public Transform wordsRoot;
 
     private CoreInterface coreInterface;
@@ -17,6 +19,17 @@ public class VisualGamestate : MonoBehaviour
         coreInterface = FindObjectOfType<CoreInterface>();
         uiLawset = FindObjectOfType<UiLawset>();
         RegenerateVisualGamestate();
+    }
+
+    public void Lock()
+    {
+        playSentenceButton.interactable = false;
+    }
+
+    public void Unlock()
+    {
+        Debug.Log("Unlock");
+        playSentenceButton.interactable = true;
     }
 
     public void RegenerateVisualGamestate()

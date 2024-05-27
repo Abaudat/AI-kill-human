@@ -3411,6 +3411,7 @@ MonoBehaviour:
   wordButtonPrefab: {fileID: 8912579227923532091, guid: 311d1b85291985a44b33c9ca87a3f1c1, type: 3}
   winPanel: {fileID: 951461157}
   losePanel: {fileID: 1349209323}
+  playSentenceButton: {fileID: 1688675395}
   wordsRoot: {fileID: 801934027}
 --- !u!1 &1123806612
 GameObject:
