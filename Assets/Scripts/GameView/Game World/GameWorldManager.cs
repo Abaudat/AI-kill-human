@@ -12,6 +12,9 @@ public class GameWorldManager : MonoBehaviour
 
     private GlobalSound globalSound;
 
+    private static readonly Vector2 ALICE_START_POSITION = new Vector2(-9, 0);
+    private static readonly Vector2 AI_START_POSITION = new Vector2(0, 0);
+
     private void Awake()
     {
         globalSound = FindObjectOfType<GlobalSound>();
@@ -23,8 +26,8 @@ public class GameWorldManager : MonoBehaviour
         {
             RemoveEntityForWord(word);
         }
-        CreateEntityForWord(CommonWords.SELF_AI, RandomPositionInScreen());
-        CreateEntityForWord(CommonWords.ALICE, RandomPositionInScreen());
+        CreateEntityForWord(CommonWords.SELF_AI, AI_START_POSITION);
+        CreateEntityForWord(CommonWords.ALICE, ALICE_START_POSITION);
     }
 
     public IEnumerator ApplyAction(Action action)

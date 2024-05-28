@@ -28,7 +28,6 @@ public class VisualGamestate : MonoBehaviour
 
     public void Unlock()
     {
-        Debug.Log("Unlock");
         playSentenceButton.interactable = true;
     }
 
