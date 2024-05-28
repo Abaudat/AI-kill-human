@@ -33,7 +33,7 @@ public class Achievement : MonoBehaviour, IPointerEnterHandler, IPointerExitHand
         if (hoverTime > 0.5f)
         {
             tooltip.gameObject.SetActive(true);
-            tooltip.PopulateAndMove(achivementName, isUnlocked ? achivementDescription : "???", image.sprite, isUnlocked, transform.position);
+            tooltip.PopulateAndMove(achivementName, isUnlocked ? achivementDescription : "???", image.sprite, isUnlocked, GetComponent<RectTransform>());
         }
     }
 
