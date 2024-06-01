@@ -24,6 +24,14 @@ public class Achievement : MonoBehaviour, IPointerEnterHandler, IPointerExitHand
         backgroundImage.color = Color.black;
     }
 
+    private void Start()
+    {
+        if (PlayerPrefs.HasKey(achivementName))
+        {
+            Unlock(false);
+        }
+    }
+
     private void Update()
     {
         if (isHovering)
@@ -37,7 +45,7 @@ public class Achievement : MonoBehaviour, IPointerEnterHandler, IPointerExitHand
         }
     }
 
-    public void Unlock()
+    public void Unlock(bool notify = true)
     {
         if (!isUnlocked)
         {
@@ -45,7 +53,11 @@ public class Achievement : MonoBehaviour, IPointerEnterHandler, IPointerExitHand
             image.color = Color.white;
             backgroundImage.color = Color.white;
             isUnlocked = true;
-            achievementUnlockedDisplay.QueueAchivement(image.sprite, achivementName);
+            PlayerPrefs.SetString(achivementName, "true");
+            if (notify)
+            {
+                achievementUnlockedDisplay.QueueAchivement(image.sprite, achivementName);
+            }
         }
     }
 
