@@ -9,7 +9,7 @@ public class VisualGamestate : MonoBehaviour
     public GameObject wordButtonPrefab;
     public GameObject winPanel, losePanel;
     public Button playSentenceButton;
-    public Transform wordsRoot;
+    public Transform aiWordRoot, killWordRoot, humanWordRoot, makeWordRoot, moneyWordRoot;
 
     private CoreInterface coreInterface;
     private UiLawset uiLawset;
@@ -48,7 +48,11 @@ public class VisualGamestate : MonoBehaviour
 
     private void RegenerateButtons()
     {
-        wordsRoot.GetComponentsInChildren<WordButton>().ToList().ForEach(x => Destroy(x.gameObject));
+        aiWordRoot.GetComponentsInChildren<WordButton>().ToList().ForEach(x => Destroy(x.gameObject));
+        killWordRoot.GetComponentsInChildren<WordButton>().ToList().ForEach(x => Destroy(x.gameObject));
+        humanWordRoot.GetComponentsInChildren<WordButton>().ToList().ForEach(x => Destroy(x.gameObject));
+        makeWordRoot.GetComponentsInChildren<WordButton>().ToList().ForEach(x => Destroy(x.gameObject));
+        moneyWordRoot.GetComponentsInChildren<WordButton>().ToList().ForEach(x => Destroy(x.gameObject));
 
         GenerateButton(CommonWords.KILL);
         GenerateButton(CommonWords.MAKE);
@@ -59,6 +63,15 @@ public class VisualGamestate : MonoBehaviour
 
     private void GenerateButton(Word word)
     {
-        Instantiate(wordButtonPrefab, wordsRoot).GetComponent<WordButton>().Populate(word);
+        Transform wordRoot = word switch
+        {
+            AiWord => aiWordRoot,
+            KillWord => killWordRoot,
+            HumanWord => humanWordRoot,
+            MakeWord => makeWordRoot,
+            MoneyWord => moneyWordRoot,
+            _ => aiWordRoot
+        };
+        Instantiate(wordButtonPrefab, wordRoot).GetComponent<WordButton>().Populate(word);
     }
 }

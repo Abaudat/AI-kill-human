@@ -11,7 +11,7 @@ public class UiLawset : MonoBehaviour
 
     public void Repopulate(Lawset lawset)
     {
-        foreach (Law law in lawToUiMapping.Keys)
+        foreach (Law law in lawToUiMapping.Keys.ToArray())
         {
             if (!lawset.laws.Contains(law))
             {
