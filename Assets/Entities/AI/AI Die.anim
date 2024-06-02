@@ -168,4 +168,11 @@ AnimationClip:
   m_EulerEditorCurves: []
   m_HasGenericRootTransform: 0
   m_HasMotionFloatCurves: 0
-  m_Events: []
+  m_Events:
+  - time: 0
+    functionName: PlayOneShot
+    data: 
+    objectReferenceParameter: {fileID: 8300000, guid: 2d8909e84572b8c4fa6d2ab1fa64fd18, type: 3}
+    floatParameter: 0
+    intParameter: 0
+    messageOptions: 0
