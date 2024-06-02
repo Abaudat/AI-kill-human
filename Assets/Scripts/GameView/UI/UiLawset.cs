@@ -15,7 +15,7 @@ public class UiLawset : MonoBehaviour
         {
             if (!lawset.laws.Contains(law))
             {
-                Destroy(lawToUiMapping[law]);
+                Destroy(lawToUiMapping[law].gameObject);
                 lawToUiMapping.Remove(law);
             }
         }

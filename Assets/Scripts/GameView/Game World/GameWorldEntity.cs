@@ -65,10 +65,10 @@ public class GameWorldEntity : MonoBehaviour
         bool wasEverRightAnimation = false;
         yield return new WaitUntil(() => {
             wasEverRightAnimation |= animator.GetCurrentAnimatorStateInfo(0).IsName(trigger);
-            Debug.Log($"Is right anim ({trigger}): wasEver = {wasEverRightAnimation}, isOther = {!animator.GetCurrentAnimatorStateInfo(0).IsName(trigger)}");
+            //Debug.Log($"Is right anim ({trigger}): wasEver = {wasEverRightAnimation}, isOther = {!animator.GetCurrentAnimatorStateInfo(0).IsName(trigger)}");
             return wasEverRightAnimation && (!animator.GetCurrentAnimatorStateInfo(0).IsName(trigger) || animator.GetCurrentAnimatorStateInfo(0).normalizedTime >= 1);
         }
         );
-        Debug.Log($"Completed waiting for trigger {trigger} in {Time.time - startTime} seconds");
+        //Debug.Log($"Completed waiting for trigger {trigger} in {Time.time - startTime} seconds");
     }
 }
