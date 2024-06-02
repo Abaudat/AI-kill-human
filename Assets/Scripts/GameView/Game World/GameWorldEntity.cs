@@ -8,13 +8,6 @@ public class GameWorldEntity : MonoBehaviour
     public Animator animator;
     public TMP_Text nameplateText;
 
-    private GlobalSound globalSound;
-
-    private void Awake()
-    {
-        globalSound = FindObjectOfType<GlobalSound>();
-    }
-
     public void Populate(Word word)
     {
         nameplateText.text = word.ToString();
@@ -27,7 +20,6 @@ public class GameWorldEntity : MonoBehaviour
 
     public IEnumerator PlayAndWaitDisallowedAnimation()
     {
-        globalSound.PlayDisallowed();
         yield return StartCoroutine(PlayAndWait("Disallowed"));
     }
 

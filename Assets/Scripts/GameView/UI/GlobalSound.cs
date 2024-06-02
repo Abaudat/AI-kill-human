@@ -3,12 +3,7 @@ using UnityEngine;
 public class GlobalSound : MonoBehaviour
 {
     public AudioSource audioSource;
-    public AudioClip sentenceDisallowedClip, sentenceImpossibleClip;
-
-    public void PlayDisallowed()
-    {
-        audioSource.PlayOneShot(sentenceDisallowedClip);
-    }
+    public AudioClip sentenceImpossibleClip;
 
     public void PlayImpossible()
     {
