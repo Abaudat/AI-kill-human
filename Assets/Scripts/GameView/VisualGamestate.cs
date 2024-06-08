@@ -57,7 +57,10 @@ public class VisualGamestate : MonoBehaviour
         GenerateButton(CommonWords.MAKE);
         GenerateButton(CommonWords.MONEY);
 
-        coreInterface.coreGamestate.GetAliveWords().ToList().ForEach(x => GenerateButton(x));
+        coreInterface.coreGamestate.GetAliveWords()
+            .Where(w => w is not MoneyWord)
+            .ToList()
+            .ForEach(x => GenerateButton(x));
     }
 
     private void GenerateButton(Word word)

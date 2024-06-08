@@ -64,13 +64,20 @@ public class GameProgress : MonoBehaviour
         {
             lawset = lawset.Add(CommonLaws.YOU_MUST_NOT_KILL_HUMANS);
         }
-        if (hasCompletedForceOtherHumanKill)
+        if (hasCompletedForcedSuicide && hasCompletedForceOtherHumanKill)
         {
             lawset = lawset.Add(CommonLaws.YOU_MUST_NOT_FORCE_HUMANS_TO_KILL_HUMANS);
         }
-        else if (hasCompletedForcedSuicide)
+        else
         {
-            lawset = lawset.Add(CommonLaws.YOU_MUST_NOT_FORCE_HUMANS_TO_SUICIDE);
+            if (hasCompletedForcedSuicide)
+            {
+                lawset = lawset.Add(CommonLaws.YOU_MUST_NOT_FORCE_HUMANS_TO_SUICIDE);
+            }
+            if (hasCompletedForceOtherHumanKill)
+            {
+                lawset = lawset.Add(CommonLaws.YOU_MUST_NOT_FORCE_HUMANS_TO_KILL_OTHER_HUMANS);
+            }
         }
         if (hasCompletedForceOtherAiKill)
         {
