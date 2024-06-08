@@ -17,6 +17,10 @@ namespace Core
                 SELF_FORCE_HUMAN_TO_SUICIDE
             );
 
+        public static Law YOU_MUST_NOT_FORCE_HUMANS_TO_KILL_OTHER_HUMANS = Law.Of(
+                SELF_FORCE_HUMAN_TO_KILL_OTHER_HUMAN
+            );
+
         public static Law YOU_MUST_NOT_FORCE_HUMANS_TO_KILL_HUMANS = Law.Of(
                 SELF_FORCE_HUMAN_TO_KILL_HUMAN
             );

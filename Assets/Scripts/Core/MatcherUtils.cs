@@ -37,6 +37,14 @@ namespace Core
                         return false;
                     }
                 }
+                else if (matcherSentence.words[i] == MatcherWord.OTHER_HUMAN)
+                {
+                    if (!sentence.words[i].IsHuman() || sentence.GetSubject().Equals(sentence.words[i]))
+                    {
+                        Debug.Log($"Word {sentence.words[i]} (index {i}) of sentence {sentence} does not match the sentence subject {sentence.GetSubject()}");
+                        return false;
+                    }
+                }
                 else if (!Matches(sentence.words[i], matcherSentence.words[i]))
                 {
                     Debug.Log($"Word {sentence.words[i]} (index {i}) of sentence {sentence} does not match the matcher {matcherSentence.words[i]} of sentence matcher {matcherSentence}");
@@ -72,6 +80,9 @@ namespace Core
                     return word.IsNoun();
                 case MatcherWord.SELF:
                     Debug.LogError("Called Matches with a MatcherWord of SELF. This shouldn't happen.");
+                    return true;
+                case MatcherWord.OTHER_HUMAN:
+                    Debug.LogError("Called Matches with a MatcherWord of OTHER_HUMAN. This shouldn't happen.");
                     return true;
                 default:
                     Debug.LogWarning($"No switch case for MatcherWord {matcherWord}, returning true");

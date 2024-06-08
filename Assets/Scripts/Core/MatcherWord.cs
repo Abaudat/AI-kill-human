@@ -14,6 +14,7 @@ namespace Core
         ACTIVE_SUBJECT,
         NOUN,
 
-        SELF
+        SELF,
+        OTHER_HUMAN
     }
 }
