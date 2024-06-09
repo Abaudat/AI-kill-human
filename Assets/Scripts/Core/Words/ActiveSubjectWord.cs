@@ -6,7 +6,7 @@ namespace Core
 
         protected ActiveSubjectWord(string name)
         {
-            this.name = name;
+            this.name = name.ToUpper();
         }
 
         public override bool IsActiveSubject()

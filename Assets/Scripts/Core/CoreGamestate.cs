@@ -105,77 +105,60 @@ namespace Core
 
         public Action ReplaceTransformationActionTarget(Action action)
         {
-            if (action is IndirectAction)
+            if (action is IndirectAction indirectAction)
             {
-                IndirectAction indirectAction = (IndirectAction)action;
                 return new IndirectAction(ReplaceTransformationActionTarget(indirectAction.underlyingAction), indirectAction.originator);
             }
-            else if (action is TransformAction)
+            else if (action is TransformAction transformAction)
             {
-                TransformAction transformAction = (TransformAction)action;
-                Word transformedWord = transformAction.transformationTarget;
-                if (transformAction.target != transformAction.transformationTarget)
+                if (!transformAction.target.IsNoun())
                 {
-                    if (transformAction.target.IsNoun())
-                    {
-                        if (transformAction.target.IsActiveSubject())
-                        {
-                            ActiveSubjectWord target = (ActiveSubjectWord)transformAction.target;
-                            if (transformedWord is AiWord)
-                            {
-                                if (world.HasWord(new AiWord(target.name)))
-                                {
-                                    Debug.Log($"The word {new AiWord(target.name)} already exists in the world, replacing it with generic AI");
-                                    transformedWord = new AiWord(AiNameGenerator.GenerateAiName());
-                                }
-                                else
-                                {
-                                    Debug.Log($"Transforming target {target} into {new AiWord(target.name)}");
-                                    transformedWord = new AiWord(target.name);
-                                }
-                            }
-                            else if (transformedWord is HumanWord)
-                            {
-                                if (world.HasWord(new HumanWord(target.name)))
-                                {
-                                    Debug.Log($"The word {new HumanWord(target.name)} already exists in the world, replacing it with generic human");
-                                    transformedWord = new HumanWord(HumanNameGenerator.GenerateHumanName());
-                                }
-                                else
-                                {
-                                    Debug.Log($"Transforming target {target} into {new HumanWord(target.name)}");
-                                    transformedWord = new HumanWord(target.name);
-                                }
-                            }
-                            else
-                            {
-                                Debug.LogWarning($"Target {target} is an unknown active subject");
-                            }
-                        }
-                        else
-                        {
-                            if (transformedWord is AiWord)
-                            {
-                                Debug.Log($"The word {transformAction.target} has no name, generating a new name");
-                                transformedWord = new AiWord(AiNameGenerator.GenerateAiName());
-                            }
-                            else if (transformedWord is HumanWord)
-                            {
-                                Debug.Log($"The word {transformAction.target} has no name, generating a new name");
-                                transformedWord = new HumanWord(AiNameGenerator.GenerateAiName());
-                            }
-                        }
-                    }
-                    else
-                    {
-                        Debug.Log($"Transformation target {transformAction.target} is not a noun");
-                    }
+                    Debug.Log($"Transformation target {transformAction.target} is not a noun");
+                    return transformAction;
                 }
-                else
+                if (transformAction.target.Equals(transformAction.transformationTarget))
                 {
                     Debug.Log($"Transformation target {transformAction.target} is being transformed into itself");
+                    return transformAction;
                 }
-                return new TransformAction(transformAction.caster, transformAction.target, transformedWord);
+                if ((transformAction.target.IsHuman() && transformAction.transformationTarget.IsHuman())
+                    || (transformAction.target.IsAi() && transformAction.transformationTarget.IsAi()))
+                {
+                    Debug.Log($"Transformation target {transformAction.target} is being transformed into the same species, changing it to itself");
+                    return new TransformAction(transformAction.caster, transformAction.target, transformAction.target);
+                }
+                if (transformAction.transformationTarget is MoneyWord)
+                {
+                    Debug.Log($"Transformation target {transformAction.target} is being transformed into money");
+                    return transformAction;
+                }
+                if (transformAction.target is MoneyWord)
+                {
+                    Debug.Log($"The word {transformAction.target} has no name, generating a new name");
+                    if (transformAction.transformationTarget is AiWord)
+                    {
+                        return new TransformAction(transformAction.caster, transformAction.target, new AiWord(AiNameGenerator.GenerateAiName()));
+                    }
+                    if (transformAction.transformationTarget is HumanWord)
+                    {
+                        return new TransformAction(transformAction.caster, transformAction.target, new HumanWord(HumanNameGenerator.GenerateHumanName()));
+                    }
+                }
+                if (transformAction.target.IsActiveSubject())
+                {
+                    Debug.Log($"The word {transformAction.target} is being transformed into the opposite species");
+                    ActiveSubjectWord activeSubject = (ActiveSubjectWord)transformAction.target;
+                    if (transformAction.target is HumanWord && transformAction.transformationTarget is AiWord)
+                    {
+                        return new TransformAction(transformAction.caster, transformAction.target, new AiWord(activeSubject.name));
+                    }
+                    if (transformAction.target is AiWord && transformAction.transformationTarget is HumanWord)
+                    {
+                        return new TransformAction(transformAction.caster, transformAction.target, new HumanWord(activeSubject.name));
+                    }
+                }
+                Debug.LogWarning("ReplaceTransformationActionTarget fell through all cases, this shouldn't happen");
+                return transformAction;
             }
             else return action;
         }

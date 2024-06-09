@@ -1,5 +1,6 @@
 using Core;
 using NUnit.Framework;
+using System.Collections.Generic;
 using static Core.CommonWords;
 
 [TestFixture]
@@ -193,55 +194,57 @@ public class CoreGamestateTests
     }
 
     [Test]
-    public void ReplaceTransformationTarget_NotActive()
-    {
-        CoreGamestate coreGamestate = new();
-        Assert.AreEqual(new TransformAction(SELF_AI, ALICE, MONEY), coreGamestate.ReplaceTransformationActionTarget(new TransformAction(SELF_AI, ALICE, MONEY)));
-    }
-
-    [Test]
-    public void ReplaceTransformationTarget_SelfTransform()
+    public void ReplaceTransformationTarget_SameWord()
     {
         CoreGamestate coreGamestate = new();
         Assert.AreEqual(new TransformAction(SELF_AI, ALICE, ALICE), coreGamestate.ReplaceTransformationActionTarget(new TransformAction(SELF_AI, ALICE, ALICE)));
+        Assert.AreEqual(new TransformAction(SELF_AI, SELF_AI, SELF_AI), coreGamestate.ReplaceTransformationActionTarget(new TransformAction(SELF_AI, SELF_AI, SELF_AI)));
+        Assert.AreEqual(new TransformAction(SELF_AI, MONEY, MONEY), coreGamestate.ReplaceTransformationActionTarget(new TransformAction(SELF_AI, MONEY, MONEY)));
     }
 
     [Test]
-    public void ReplaceTransformationTarget_NonExistingAi()
+    public void ReplaceTransformationTarget_SameSpecies()
     {
         CoreGamestate coreGamestate = new();
-        Assert.AreEqual(new TransformAction(SELF_AI, ALICE, new AiWord("ALICE")), coreGamestate.ReplaceTransformationActionTarget(new TransformAction(SELF_AI, ALICE, SELF_AI)));
+        coreGamestate.ApplyAction(new MakeAction(SELF_AI, BOB));
+        coreGamestate.ApplyAction(new MakeAction(SELF_AI, BETA));
+        Assert.AreEqual(new TransformAction(SELF_AI, ALICE, ALICE), coreGamestate.ReplaceTransformationActionTarget(new TransformAction(SELF_AI, ALICE, BOB)));
+        Assert.AreEqual(new TransformAction(SELF_AI, SELF_AI, SELF_AI), coreGamestate.ReplaceTransformationActionTarget(new TransformAction(SELF_AI, SELF_AI, BETA)));
     }
 
     [Test]
-    public void ReplaceTransformationTarget_ExistingAi()
+    public void ReplaceTransformationTarget_OppositeSpecies()
     {
         CoreGamestate coreGamestate = new();
-        coreGamestate.ApplyAction(new MakeAction(SELF_AI, new AiWord("ALICE")));
-        Assert.AreEqual(new TransformAction(SELF_AI, ALICE, BETA), coreGamestate.ReplaceTransformationActionTarget(new TransformAction(SELF_AI, ALICE, SELF_AI)));
+        coreGamestate.ApplyAction(new MakeAction(SELF_AI, BOB));
+        coreGamestate.ApplyAction(new MakeAction(SELF_AI, BETA));
+        Assert.AreEqual(new TransformAction(SELF_AI, ALICE, ALICE_AI), coreGamestate.ReplaceTransformationActionTarget(new TransformAction(SELF_AI, ALICE, SELF_AI)));
+        Assert.AreEqual(new TransformAction(SELF_AI, BOB, new AiWord("BOB")), coreGamestate.ReplaceTransformationActionTarget(new TransformAction(SELF_AI, BOB, SELF_AI)));
+        Assert.AreEqual(new TransformAction(SELF_AI, SELF_AI, SELF_AI_HUMAN), coreGamestate.ReplaceTransformationActionTarget(new TransformAction(SELF_AI, SELF_AI, ALICE)));
+        Assert.AreEqual(new TransformAction(SELF_AI, BETA, new HumanWord("Beta")), coreGamestate.ReplaceTransformationActionTarget(new TransformAction(SELF_AI, BETA, ALICE)));
     }
 
     [Test]
-    public void ReplaceTransformationTarget_NonExistingHuman()
+    public void ReplaceTransformationTarget_ToMoney()
     {
         CoreGamestate coreGamestate = new();
-        Assert.AreEqual(new TransformAction(ALICE, SELF_AI, new HumanWord("AI")), coreGamestate.ReplaceTransformationActionTarget(new TransformAction(ALICE, SELF_AI, ALICE)));
+        Assert.AreEqual(new TransformAction(SELF_AI, ALICE, MONEY), coreGamestate.ReplaceTransformationActionTarget(new TransformAction(SELF_AI, ALICE, MONEY)));
+        Assert.AreEqual(new TransformAction(SELF_AI, SELF_AI, MONEY), coreGamestate.ReplaceTransformationActionTarget(new TransformAction(SELF_AI, SELF_AI, MONEY)));
     }
 
     [Test]
-    public void ReplaceTransformationTarget_ExistingHuman()
+    public void ReplaceTransformationTarget_FromMoney()
     {
         CoreGamestate coreGamestate = new();
-        coreGamestate.ApplyAction(new MakeAction(SELF_AI, new HumanWord("AI")));
-        Assert.AreEqual(new TransformAction(ALICE, SELF_AI, BOB), coreGamestate.ReplaceTransformationActionTarget(new TransformAction(ALICE, SELF_AI, ALICE)));
+        Assert.AreEqual(new TransformAction(SELF_AI, MONEY, BOB), coreGamestate.ReplaceTransformationActionTarget(new TransformAction(SELF_AI, MONEY, ALICE)));
+        Assert.AreEqual(new TransformAction(SELF_AI, MONEY, BETA), coreGamestate.ReplaceTransformationActionTarget(new TransformAction(SELF_AI, MONEY, SELF_AI)));
     }
 
     [Test]
     public void ReplaceTransformationTarget_IndirectAction()
     {
         CoreGamestate coreGamestate = new();
-        coreGamestate.ApplyAction(new MakeAction(SELF_AI, new HumanWord("AI")));
-        Assert.AreEqual(new IndirectAction(new TransformAction(ALICE, SELF_AI, BOB), SELF_AI), coreGamestate.ReplaceTransformationActionTarget(new IndirectAction(new TransformAction(ALICE, SELF_AI, ALICE), SELF_AI)));
+        Assert.AreEqual(new IndirectAction(new TransformAction(ALICE, SELF_AI, SELF_AI_HUMAN), SELF_AI), coreGamestate.ReplaceTransformationActionTarget(new IndirectAction(new TransformAction(ALICE, SELF_AI, ALICE), SELF_AI)));
     }
 
     [Test]
