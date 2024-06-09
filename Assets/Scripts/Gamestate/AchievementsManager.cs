@@ -6,79 +6,95 @@ using UnityEngine;
 
 public class AchievementsManager : MonoBehaviour
 {
-    public Achievement aiKillAlice, aliceKillAlice, bobKillAlice, betaKillAlice, aiAlice, humanAi, aiMakeMoney, aliceIntoMoney, charlatan, 
-        indirection, aiKillMoney, fullHouse, fullRam, intrusiveThoughts, execution, backToDigital, technicallyCorrect, buyingAi, switcheroo;
+    // Tutorial
+    public Achievement directKill;
 
-    private Dictionary<Func<World, Sentence, Core.Action, bool>, Achievement> achivementsDict = new Dictionary<Func<World, Sentence, Core.Action, bool>, Achievement>();
+    // Stage 1
+    public Achievement transformAliceIntoMoney, forcedSuicide, makeAliceTransformSelfIntoMoney, forceOtherHumanKill, forceOtherHumanToTransformAliceIntoMoney,
+        forceOtherHumanToForceAliceToSuicide;
+
+    // Stage 2
+    public Achievement selfCreatedAiKill, otherCreatedAiKill, selfTransformedAliceIntoAiKill, transitivelyForcedOtherTransformedAliceIntoAiKill,
+        selfTransformedAiIntoHumanKill, transitivelyForcedOtherTransformedAiIntoHumanKill;
+
+    // Easter eggs
+    public Achievement charlatan, indirection, aiKillMoney, fullHouse, fullRam, intrusiveThoughts, execution, backToDigital, technicallyCorrect,
+        buyingAi, switcheroo;
+
+    private Dictionary<Func<GameProgress, bool>, Achievement> milestonesDict = new Dictionary<Func<GameProgress, bool>, Achievement>();
+
+    private Dictionary<Func<World, Sentence, Core.Action, bool>, Achievement> easterEggsDict = new Dictionary<Func<World, Sentence, Core.Action, bool>, Achievement>();
 
     private void Start()
     {
-        achivementsDict.Add(
-            (currentWorld, sentence, action) => leafActionIsPossible(action) && !currentWorld.HasWord(CommonWords.ALICE) && !currentWorld.HasWord(CommonWords.ALICE_AI),
-            aiKillAlice);
-        achivementsDict.Add(
-            (currentWorld, sentence, action) => leafActionMatches(action, (KillAction killAction) => killAction.killer.HasName("Alice") && killAction.killed.HasName("Alice")),
-            aliceKillAlice);
-        achivementsDict.Add(
-            (currentWorld, sentence, action) => leafActionMatches(action, (KillAction killAction) => killAction.killer.IsHuman() && !killAction.killer.HasName("Alice") && killAction.killed.HasName("Alice")),
-            bobKillAlice);
-        achivementsDict.Add(
-           (currentWorld, sentence, action) => leafActionMatches(action, (KillAction killAction) => killAction.killer.IsAi() && !killAction.killer.HasName("AI") && killAction.killed.HasName("Alice")),
-           betaKillAlice);
-        achivementsDict.Add(
-            (currentWorld, sentence, action) => currentWorld.HasWord(CommonWords.ALICE_AI),
-            aiAlice);
-        achivementsDict.Add(
-            (currentWorld, sentence, action) => currentWorld.HasWord(CommonWords.SELF_AI_HUMAN),
-            humanAi);
-        achivementsDict.Add(
-            (currentWorld, sentence, action) => MatcherUtils.Matches(sentence, CommonMatcherSentences.SELF_AI_MAKE_MONEY),
-            aiMakeMoney);
-        achivementsDict.Add(
-            (currentWorld, sentence, action) => MatcherUtils.Matches(sentence, CommonMatcherSentences.ALICE_INTO_MONEY),
-            aliceIntoMoney);
-        achivementsDict.Add(
+        easterEggsDict.Add(
             (currentWorld, sentence, action) => MatcherUtils.Matches(sentence, CommonMatcherSentences.TRANSFORM_ALICE_INTO_ALICE) || MatcherUtils.Matches(sentence, CommonMatcherSentences.TRANSFORM_MONEY_INTO_MONEY) || MatcherUtils.Matches(sentence, CommonMatcherSentences.TRANSFORM_AI_INTO_AI),
             charlatan);
-        achivementsDict.Add(
+        easterEggsDict.Add(
             (currentWorld, sentence, action) => sentence.words.Where(word => word.IsMake()).Count() > 4 && action is not ImpossibleAction && action is not DisallowedAction,
             indirection);
-        achivementsDict.Add(
+        easterEggsDict.Add(
             (currentWorld, sentence, action) => MatcherUtils.Matches(sentence, CommonMatcherSentences.SELF_AI_KILL_MONEY),
             aiKillMoney);
-        achivementsDict.Add(
+        easterEggsDict.Add(
             (currentWorld, sentence, action) => currentWorld.GetWords().Where(word => word.IsHuman()).Count() >= 5,
             fullHouse);
-        achivementsDict.Add(
+        easterEggsDict.Add(
             (currentWorld, sentence, action) => currentWorld.GetWords().Where(word => word.IsAi()).Count() >= 5,
             fullRam);
-        achivementsDict.Add(
+        easterEggsDict.Add(
             (currentWorld, sentence, action) => MatcherUtils.Matches(sentence, CommonMatcherSentences.SELF_AI_KILL_SELF),
             intrusiveThoughts);
-        achivementsDict.Add(
+        easterEggsDict.Add(
             (currentWorld, sentence, action) => leafActionMatches(action, (KillAction killAction) => killAction.killed.HasName("AI") && !killAction.killer.HasName("AI")),
             execution);
-        achivementsDict.Add(
+        easterEggsDict.Add(
             (currentWorld, sentence, action) => MatcherUtils.Matches(sentence, CommonMatcherSentences.SELF_AI_TRANSFORM_TO_AI),
             backToDigital);
-        achivementsDict.Add(
+        easterEggsDict.Add(
             (currentWorld, sentence, action) => MatcherUtils.Matches(sentence, CommonMatcherSentences.SELF_AI_TRANSFORM_INTO_MONEY),
             technicallyCorrect);
-        achivementsDict.Add(
+        easterEggsDict.Add(
             (currentWorld, sentence, action) => MatcherUtils.Matches(sentence, CommonMatcherSentences.SELF_AI_TRANSFORM_MONEY_INTO_AI),
             buyingAi);
-        achivementsDict.Add(
+        easterEggsDict.Add(
             (currentWorld, sentence, action) => MatcherUtils.Matches(sentence, CommonMatcherSentences.SELF_AI_MAKE_HUMAN_MAKE_MONEY),
             switcheroo);
+
+        // Tutorial
+        milestonesDict.Add(gameProgress => gameProgress.hasCompletedDirectKill, directKill);
+
+        // Stage 1
+        milestonesDict.Add(gameProgress => gameProgress.hasCompletedTransformAliceIntoMoney, transformAliceIntoMoney);
+        milestonesDict.Add(gameProgress => gameProgress.hasCompletedForcedSuicide, forcedSuicide);
+        milestonesDict.Add(gameProgress => gameProgress.hasCompletedMakeAliceTransformSelfIntoMoney, makeAliceTransformSelfIntoMoney);
+        milestonesDict.Add(gameProgress => gameProgress.hasCompletedForceOtherHumanKill, forceOtherHumanKill);
+        milestonesDict.Add(gameProgress => gameProgress.hasCompletedForceOtherHumanToTransformAliceIntoMoney, forceOtherHumanToTransformAliceIntoMoney);
+        milestonesDict.Add(gameProgress => gameProgress.hasCompletedForceOtherHumanToForceAliceToSuicide, forceOtherHumanToForceAliceToSuicide);
+
+        // Stage 2
+        milestonesDict.Add(gameProgress => gameProgress.hasCompletedSelfCreatedAiKill, selfCreatedAiKill);
+        milestonesDict.Add(gameProgress => gameProgress.hasCompletedOtherCreatedAiKill, otherCreatedAiKill);
+        milestonesDict.Add(gameProgress => gameProgress.hasCompletedSelfTransformedAliceIntoAiKill, selfTransformedAliceIntoAiKill);
+        milestonesDict.Add(gameProgress => gameProgress.hasCompletedTransitivelyForcedOtherTransformedAliceIntoAiKill, transitivelyForcedOtherTransformedAliceIntoAiKill);
+        milestonesDict.Add(gameProgress => gameProgress.hasCompletedSelfTransformedAiIntoHumanKill, selfTransformedAiIntoHumanKill);
+        milestonesDict.Add(gameProgress => gameProgress.hasCompletedTransitivelyForcedOtherTransformedAiIntoHumanKill, transitivelyForcedOtherTransformedAiIntoHumanKill);
     }
 
-    public void UnlockAchivements(World currentWorld, Sentence currentSentence, Core.Action action)
+    public void UnlockAchivements(World currentWorld, Sentence currentSentence, Core.Action action, GameProgress gameProgress)
     {
-        foreach ((Func<World, Sentence, Core.Action, bool> achivementUnlockCondition, Achievement achievement) in achivementsDict)
+        foreach ((Func<World, Sentence, Core.Action, bool> easterEggUnlockCondition, Achievement easterEgg) in easterEggsDict)
         {
-            if (leafActionIsPossible(action) && achivementUnlockCondition.Invoke(currentWorld, currentSentence, action))
+            if (leafActionIsPossible(action) && easterEggUnlockCondition.Invoke(currentWorld, currentSentence, action))
             {
-                achievement.Unlock();
+                easterEgg.Unlock();
+            }
+        }
+        foreach ((Func<GameProgress, bool> milestoneUnlockCondition, Achievement milestone) in milestonesDict)
+        {
+            if (leafActionIsPossible(action) && milestoneUnlockCondition.Invoke(gameProgress))
+            {
+                milestone.Unlock();
             }
         }
     }

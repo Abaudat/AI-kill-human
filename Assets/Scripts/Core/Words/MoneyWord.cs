@@ -2,6 +2,16 @@ namespace Core
 {
     public class MoneyWord : NounWord
     {
+        public MoneyWord() : base()
+        {
+
+        }
+
+        public MoneyWord(Word creator) : base(creator)
+        {
+
+        }
+
         public override string ToString()
         {
             return "MONEY";

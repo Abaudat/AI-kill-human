@@ -6,6 +6,10 @@ namespace Core
         {
         }
 
+        public AiWord(string name, Word creator) : base(name, creator)
+        {
+        }
+
         public override bool IsAi()
         {
             return true;

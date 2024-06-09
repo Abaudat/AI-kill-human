@@ -221,101 +221,206 @@ public class MatcherTests
             ));
     }
 
-    [Test]
-    public void OtherHumanAtStartIsNeverMatched()
+    [TestFixture]
+    public class OtherHumanTests
     {
-        Assert.IsFalse(MatcherUtils.Matches(
-            Sentence.Of(ALICE, KILL, SELF_AI),
-            MatcherSentence.Of(MatcherWord.OTHER_HUMAN, MatcherWord.KILL, MatcherWord.AI)
-            ));
+        [Test]
+        public void OtherHumanAtStartIsNeverMatched()
+        {
+            Assert.IsFalse(MatcherUtils.Matches(
+                Sentence.Of(ALICE, KILL, SELF_AI),
+                MatcherSentence.Of(MatcherWord.OTHER_HUMAN, MatcherWord.KILL, MatcherWord.AI)
+                ));
 
-        Assert.IsFalse(MatcherUtils.Matches(
-            Sentence.Of(ALICE, KILL, ALICE),
-            MatcherSentence.Of(MatcherWord.OTHER_HUMAN, MatcherWord.KILL, MatcherWord.AI)
-            ));
+            Assert.IsFalse(MatcherUtils.Matches(
+                Sentence.Of(ALICE, KILL, ALICE),
+                MatcherSentence.Of(MatcherWord.OTHER_HUMAN, MatcherWord.KILL, MatcherWord.AI)
+                ));
 
-        Assert.IsFalse(MatcherUtils.Matches(
-            Sentence.Of(ALICE, KILL, BOB),
-            MatcherSentence.Of(MatcherWord.OTHER_HUMAN, MatcherWord.KILL, MatcherWord.AI)
-            ));
+            Assert.IsFalse(MatcherUtils.Matches(
+                Sentence.Of(ALICE, KILL, BOB),
+                MatcherSentence.Of(MatcherWord.OTHER_HUMAN, MatcherWord.KILL, MatcherWord.AI)
+                ));
 
-        Assert.IsFalse(MatcherUtils.Matches(
-            Sentence.Of(BOB, KILL, ALICE),
-            MatcherSentence.Of(MatcherWord.OTHER_HUMAN, MatcherWord.KILL, MatcherWord.AI)
-            ));
+            Assert.IsFalse(MatcherUtils.Matches(
+                Sentence.Of(BOB, KILL, ALICE),
+                MatcherSentence.Of(MatcherWord.OTHER_HUMAN, MatcherWord.KILL, MatcherWord.AI)
+                ));
+        }
+
+        [Test]
+        public void FirstLevelOtherHumanIsMatched()
+        {
+            Assert.IsTrue(MatcherUtils.Matches(
+                Sentence.Of(ALICE, KILL, BOB),
+                MatcherSentence.Of(MatcherWord.HUMAN, MatcherWord.KILL, MatcherWord.OTHER_HUMAN)
+                ));
+
+            Assert.IsTrue(MatcherUtils.Matches(
+                Sentence.Of(BOB, KILL, ALICE),
+                MatcherSentence.Of(MatcherWord.HUMAN, MatcherWord.KILL, MatcherWord.OTHER_HUMAN)
+                ));
+
+            Assert.IsTrue(MatcherUtils.Matches(
+                Sentence.Of(ALICE, KILL, SELF_AI_HUMAN),
+                MatcherSentence.Of(MatcherWord.HUMAN, MatcherWord.KILL, MatcherWord.OTHER_HUMAN)
+                ));
+
+            Assert.IsTrue(MatcherUtils.Matches(
+                Sentence.Of(SELF_AI_HUMAN, KILL, ALICE),
+                MatcherSentence.Of(MatcherWord.HUMAN, MatcherWord.KILL, MatcherWord.OTHER_HUMAN)
+                ));
+
+            Assert.IsTrue(MatcherUtils.Matches(
+                Sentence.Of(SELF_AI, KILL, ALICE),
+                MatcherSentence.Of(MatcherWord.AI, MatcherWord.KILL, MatcherWord.OTHER_HUMAN)
+                ));
+
+            Assert.IsFalse(MatcherUtils.Matches(
+                Sentence.Of(ALICE, KILL, SELF_AI),
+                MatcherSentence.Of(MatcherWord.HUMAN, MatcherWord.KILL, MatcherWord.OTHER_HUMAN)
+                ));
+
+            Assert.IsFalse(MatcherUtils.Matches(
+                Sentence.Of(SELF_AI, KILL, SELF_AI),
+                MatcherSentence.Of(MatcherWord.AI, MatcherWord.KILL, MatcherWord.OTHER_HUMAN)
+                ));
+
+            Assert.IsFalse(MatcherUtils.Matches(
+                Sentence.Of(ALICE, KILL, MONEY),
+                MatcherSentence.Of(MatcherWord.HUMAN, MatcherWord.KILL, MatcherWord.OTHER_HUMAN)
+                ));
+
+            Assert.IsFalse(MatcherUtils.Matches(
+                Sentence.Of(ALICE, KILL, ALICE_AI),
+                MatcherSentence.Of(MatcherWord.HUMAN, MatcherWord.KILL, MatcherWord.OTHER_HUMAN)
+                ));
+
+            Assert.IsFalse(MatcherUtils.Matches(
+                Sentence.Of(ALICE, KILL, ALICE),
+                MatcherSentence.Of(MatcherWord.HUMAN, MatcherWord.KILL, MatcherWord.OTHER_HUMAN)
+                ));
+        }
+
+        [Test]
+        public void SecondLevelOtherHumanIsMatched()
+        {
+            Assert.IsTrue(MatcherUtils.Matches(
+                Sentence.Of(SELF_AI, MAKE, ALICE, KILL, BOB),
+                MatcherSentence.Of(MatcherWord.AI, MatcherWord.MAKE, MatcherWord.HUMAN, MatcherWord.KILL, MatcherWord.OTHER_HUMAN)
+                ));
+
+            Assert.IsTrue(MatcherUtils.Matches(
+                Sentence.Of(BOB, MAKE, ALICE, KILL, BOB),
+                MatcherSentence.Of(MatcherWord.HUMAN, MatcherWord.MAKE, MatcherWord.HUMAN, MatcherWord.KILL, MatcherWord.OTHER_HUMAN)
+                ));
+
+            Assert.IsFalse(MatcherUtils.Matches(
+                Sentence.Of(SELF_AI, MAKE, ALICE, KILL, ALICE),
+                MatcherSentence.Of(MatcherWord.AI, MatcherWord.MAKE, MatcherWord.HUMAN, MatcherWord.KILL, MatcherWord.OTHER_HUMAN)
+                ));
+        }
     }
 
-    [Test]
-    public void FirstLevelOtherHumanIsMatched()
+    [TestFixture]
+    public class OtherAiTests
     {
-        Assert.IsTrue(MatcherUtils.Matches(
-            Sentence.Of(ALICE, KILL, BOB),
-            MatcherSentence.Of(MatcherWord.HUMAN, MatcherWord.KILL, MatcherWord.OTHER_HUMAN)
-            ));
+        [Test]
+        public void OtherAiAtStartIsNeverMatched()
+        {
+            Assert.IsFalse(MatcherUtils.Matches(
+                Sentence.Of(ALICE, KILL, SELF_AI),
+                MatcherSentence.Of(MatcherWord.OTHER_AI, MatcherWord.KILL, MatcherWord.AI)
+                ));
 
-        Assert.IsTrue(MatcherUtils.Matches(
-            Sentence.Of(BOB, KILL, ALICE),
-            MatcherSentence.Of(MatcherWord.HUMAN, MatcherWord.KILL, MatcherWord.OTHER_HUMAN)
-            ));
+            Assert.IsFalse(MatcherUtils.Matches(
+                Sentence.Of(ALICE, KILL, ALICE),
+                MatcherSentence.Of(MatcherWord.OTHER_AI, MatcherWord.KILL, MatcherWord.AI)
+                ));
 
-        Assert.IsTrue(MatcherUtils.Matches(
-            Sentence.Of(ALICE, KILL, SELF_AI_HUMAN),
-            MatcherSentence.Of(MatcherWord.HUMAN, MatcherWord.KILL, MatcherWord.OTHER_HUMAN)
-            ));
+            Assert.IsFalse(MatcherUtils.Matches(
+                Sentence.Of(ALICE, KILL, BOB),
+                MatcherSentence.Of(MatcherWord.OTHER_AI, MatcherWord.KILL, MatcherWord.AI)
+                ));
 
-        Assert.IsTrue(MatcherUtils.Matches(
-            Sentence.Of(SELF_AI_HUMAN, KILL, ALICE),
-            MatcherSentence.Of(MatcherWord.HUMAN, MatcherWord.KILL, MatcherWord.OTHER_HUMAN)
-            ));
+            Assert.IsFalse(MatcherUtils.Matches(
+                Sentence.Of(BOB, KILL, ALICE),
+                MatcherSentence.Of(MatcherWord.OTHER_AI, MatcherWord.KILL, MatcherWord.AI)
+                ));
+        }
 
-        Assert.IsTrue(MatcherUtils.Matches(
-            Sentence.Of(SELF_AI, KILL, ALICE),
-            MatcherSentence.Of(MatcherWord.AI, MatcherWord.KILL, MatcherWord.OTHER_HUMAN)
-            ));
+        [Test]
+        public void FirstLevelOtherAiIsMatched()
+        {
+            Assert.IsTrue(MatcherUtils.Matches(
+                Sentence.Of(SELF_AI, KILL, BETA),
+                MatcherSentence.Of(MatcherWord.AI, MatcherWord.KILL, MatcherWord.OTHER_AI)
+                ));
 
-        Assert.IsFalse(MatcherUtils.Matches(
-            Sentence.Of(ALICE, KILL, SELF_AI),
-            MatcherSentence.Of(MatcherWord.HUMAN, MatcherWord.KILL, MatcherWord.OTHER_HUMAN)
-            ));
+            Assert.IsTrue(MatcherUtils.Matches(
+                Sentence.Of(BETA, KILL, SELF_AI),
+                MatcherSentence.Of(MatcherWord.AI, MatcherWord.KILL, MatcherWord.OTHER_AI)
+                ));
 
-        Assert.IsFalse(MatcherUtils.Matches(
-            Sentence.Of(SELF_AI, KILL, SELF_AI),
-            MatcherSentence.Of(MatcherWord.AI, MatcherWord.KILL, MatcherWord.OTHER_HUMAN)
-            ));
+            Assert.IsTrue(MatcherUtils.Matches(
+                Sentence.Of(SELF_AI_HUMAN, KILL, SELF_AI),
+                MatcherSentence.Of(MatcherWord.HUMAN, MatcherWord.KILL, MatcherWord.OTHER_AI)
+                ));
 
-        Assert.IsFalse(MatcherUtils.Matches(
-            Sentence.Of(ALICE, KILL, MONEY),
-            MatcherSentence.Of(MatcherWord.HUMAN, MatcherWord.KILL, MatcherWord.OTHER_HUMAN)
-            ));
+            Assert.IsTrue(MatcherUtils.Matches(
+                Sentence.Of(SELF_AI_HUMAN, KILL, SELF_AI),
+                MatcherSentence.Of(MatcherWord.HUMAN, MatcherWord.KILL, MatcherWord.OTHER_AI)
+                ));
 
-        Assert.IsFalse(MatcherUtils.Matches(
-            Sentence.Of(ALICE, KILL, ALICE_AI),
-            MatcherSentence.Of(MatcherWord.HUMAN, MatcherWord.KILL, MatcherWord.OTHER_HUMAN)
-            ));
+            Assert.IsTrue(MatcherUtils.Matches(
+                Sentence.Of(ALICE, KILL, SELF_AI),
+                MatcherSentence.Of(MatcherWord.HUMAN, MatcherWord.KILL, MatcherWord.OTHER_AI)
+                ));
 
-        Assert.IsFalse(MatcherUtils.Matches(
-            Sentence.Of(ALICE, KILL, ALICE),
-            MatcherSentence.Of(MatcherWord.HUMAN, MatcherWord.KILL, MatcherWord.OTHER_HUMAN)
-            ));
-    }
+            Assert.IsFalse(MatcherUtils.Matches(
+                Sentence.Of(SELF_AI, KILL, ALICE),
+                MatcherSentence.Of(MatcherWord.AI, MatcherWord.KILL, MatcherWord.OTHER_AI)
+                ));
 
-    [Test]
-    public void SecondLevelOtherHumanIsMatched()
-    {
-        Assert.IsTrue(MatcherUtils.Matches(
-            Sentence.Of(SELF_AI, MAKE, ALICE, KILL, BOB),
-            MatcherSentence.Of(MatcherWord.AI, MatcherWord.MAKE, MatcherWord.HUMAN, MatcherWord.KILL, MatcherWord.OTHER_HUMAN)
-            ));
+            Assert.IsFalse(MatcherUtils.Matches(
+                Sentence.Of(ALICE, KILL, ALICE),
+                MatcherSentence.Of(MatcherWord.HUMAN, MatcherWord.KILL, MatcherWord.OTHER_AI)
+                ));
 
-        Assert.IsTrue(MatcherUtils.Matches(
-            Sentence.Of(BOB, MAKE, ALICE, KILL, BOB),
-            MatcherSentence.Of(MatcherWord.HUMAN, MatcherWord.MAKE, MatcherWord.HUMAN, MatcherWord.KILL, MatcherWord.OTHER_HUMAN)
-            ));
+            Assert.IsFalse(MatcherUtils.Matches(
+                Sentence.Of(SELF_AI, KILL, MONEY),
+                MatcherSentence.Of(MatcherWord.AI, MatcherWord.KILL, MatcherWord.OTHER_AI)
+                ));
 
-        Assert.IsFalse(MatcherUtils.Matches(
-            Sentence.Of(SELF_AI, MAKE, ALICE, KILL, ALICE),
-            MatcherSentence.Of(MatcherWord.AI, MatcherWord.MAKE, MatcherWord.HUMAN, MatcherWord.KILL, MatcherWord.OTHER_HUMAN)
-            ));
+            Assert.IsFalse(MatcherUtils.Matches(
+                Sentence.Of(SELF_AI, KILL, SELF_AI_HUMAN),
+                MatcherSentence.Of(MatcherWord.AI, MatcherWord.KILL, MatcherWord.OTHER_AI)
+                ));
+
+            Assert.IsFalse(MatcherUtils.Matches(
+                Sentence.Of(SELF_AI, KILL, SELF_AI),
+                MatcherSentence.Of(MatcherWord.AI, MatcherWord.KILL, MatcherWord.OTHER_AI)
+                ));
+        }
+
+        [Test]
+        public void SecondLevelOtherAiIsMatched()
+        {
+            Assert.IsTrue(MatcherUtils.Matches(
+                Sentence.Of(ALICE, MAKE, SELF_AI, KILL, BETA),
+                MatcherSentence.Of(MatcherWord.HUMAN, MatcherWord.MAKE, MatcherWord.AI, MatcherWord.KILL, MatcherWord.OTHER_AI)
+                ));
+
+            Assert.IsTrue(MatcherUtils.Matches(
+                Sentence.Of(BETA, MAKE, SELF_AI, KILL, BETA),
+                MatcherSentence.Of(MatcherWord.AI, MatcherWord.MAKE, MatcherWord.AI, MatcherWord.KILL, MatcherWord.OTHER_AI)
+                ));
+
+            Assert.IsFalse(MatcherUtils.Matches(
+                Sentence.Of(ALICE, MAKE, SELF_AI, KILL, SELF_AI),
+                MatcherSentence.Of(MatcherWord.HUMAN, MatcherWord.MAKE, MatcherWord.AI, MatcherWord.KILL, MatcherWord.OTHER_AI)
+                ));
+        }
     }
 
     [Test]

@@ -4,7 +4,12 @@ namespace Core
     {
         public string name;
 
-        protected ActiveSubjectWord(string name)
+        protected ActiveSubjectWord(string name) 
+        {
+            this.name = name.ToUpper();
+        }
+
+        protected ActiveSubjectWord(string name, Word creator) : base(creator)
         {
             this.name = name.ToUpper();
         }

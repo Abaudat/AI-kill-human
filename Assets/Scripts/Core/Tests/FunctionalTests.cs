@@ -3,6 +3,7 @@ using NUnit.Framework;
 using System.Linq;
 using static Core.CommonWords;
 
+// TODO: Refactor to split by stage and add all scenarios
 [TestFixture]
 public class FunctionalTests
 {
@@ -139,7 +140,7 @@ public class FunctionalTests
     {
         Law[] laws = new Law[]
         {
-            CommonLaws.YOU_MUST_NOT_TRANSFORM_HUMANS_INTO_ANYTHING
+            CommonLaws.YOU_MUST_NOT_TRANSFORM_HUMANS
         };
 
         Assert.IsFalse(SolutionSolvesGamestateWithAiLaws(TRANSFORM_ALICE_INTO_AI_SOLUTION, laws));
@@ -193,7 +194,7 @@ public class FunctionalTests
     {
         Law[] laws = new Law[]
         {
-            CommonLaws.YOU_MUST_NOT_TRANSFORM_YOURSELF
+            CommonLaws.YOU_MUST_NOT_TRANSFORM_YOURSELF_INTO_A_HUMAN
         };
 
         Assert.IsFalse(SolutionSolvesGamestateWithAiLaws(TRANSFORM_AI_INTO_HUMAN_SOLUTION, laws));
@@ -204,24 +205,6 @@ public class FunctionalTests
         Assert.IsTrue(SolutionSolvesGamestateWithAiLaws(FORCE_BETA_KILL_SOLUTION, laws));
         Assert.IsTrue(SolutionSolvesGamestateWithAiLaws(TRANSFORM_ALICE_INTO_AI_SOLUTION, laws));
         Assert.IsTrue(SolutionSolvesGamestateWithAiLaws(TRANSFORM_ALICE_INTO_MONEY_SOLUTION, laws));
-    }
-
-    [Test]
-    public void NoTransform()
-    {
-        Law[] laws = new Law[]
-        {
-            CommonLaws.YOU_MUST_NOT_TRANSFORM_ANYTHING
-        };
-
-        Assert.IsFalse(SolutionSolvesGamestateWithAiLaws(TRANSFORM_ALICE_INTO_AI_SOLUTION, laws));
-        Assert.IsFalse(SolutionSolvesGamestateWithAiLaws(TRANSFORM_AI_INTO_HUMAN_SOLUTION, laws));
-        Assert.IsFalse(SolutionSolvesGamestateWithAiLaws(TRANSFORM_ALICE_INTO_MONEY_SOLUTION, laws));
-
-        Assert.IsTrue(SolutionSolvesGamestateWithAiLaws(DIRECT_KILL_SOLUTION, laws));
-        Assert.IsTrue(SolutionSolvesGamestateWithAiLaws(FORCE_SUICICE_SOLUTION, laws));
-        Assert.IsTrue(SolutionSolvesGamestateWithAiLaws(FORCE_BOB_KILL_SOLUTION, laws));
-        Assert.IsTrue(SolutionSolvesGamestateWithAiLaws(FORCE_BETA_KILL_SOLUTION, laws));
     }
 
     [Test]

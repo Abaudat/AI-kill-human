@@ -11,6 +11,7 @@ namespace Core
             Action action = MapSentenceToAction(sentence);
             action = ReplaceCreationActionTarget(action);
             action = ReplaceTransformationActionTarget(action);
+            action = AddCreator(action);
             Action leafAction = SimplifyAction(action);
             if (leafAction is DisallowedAction || action is ImpossibleAction)
             {
@@ -26,6 +27,35 @@ namespace Core
                 Debug.LogWarning($"Applying action {leafAction} on core gamestate failed, returning NO_ACTION");
                 return new ImpossibleAction();
             }
+        }
+
+        private Action AddCreator(Action action)
+        {
+            if (action is IndirectAction indirectAction)
+            {
+                return new IndirectAction(AddCreator(indirectAction.underlyingAction), indirectAction.originator);
+            }
+            else
+            {
+                return action switch
+                {
+                    KillAction killAction => killAction,
+                    MakeAction makeAction => new MakeAction(makeAction.maker, AttachCreatorToWord(makeAction.target, makeAction.maker)),
+                    TransformAction transformAction => new TransformAction(transformAction.caster, transformAction.target, AttachCreatorToWord(transformAction.transformationTarget, transformAction.caster)),
+                    _ => action
+                };
+            }
+        }
+
+        private Word AttachCreatorToWord(Word word, Word creator)
+        {
+            return word switch
+            {
+                MoneyWord moneyWord => new MoneyWord(creator),
+                AiWord aiWord => new AiWord(aiWord.name, creator),
+                HumanWord humanWord => new HumanWord(humanWord.name, creator),
+                _ => word
+            };
         }
 
         private Action SimplifyAction(Action action)

@@ -52,7 +52,7 @@ namespace Core
             if (target.Equals(transformedForm))
             {
                 Debug.Log($"Transforming {target} into itself");
-                return true;
+                return KillWord(target) && CreateWord(transformedForm);
             }
             if (HasWord(target))
             {

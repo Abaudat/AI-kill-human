@@ -6,13 +6,17 @@ public class CurrentSentenceManager : MonoBehaviour
 {
     public TMP_Text sentenceVisualText;
 
-    public Sentence currentSentence; // TODO: Change self if we're human
+    public Sentence currentSentence;
 
     private CoreInterface coreInterface;
 
     private void Awake()
     {
         coreInterface = FindObjectOfType<CoreInterface>();
+    }
+
+    private void Start()
+    {
         ResetSentence();
     }
 

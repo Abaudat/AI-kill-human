@@ -1,5 +1,6 @@
 using Core;
 using System.Linq;
+using TMPro;
 using UnityEngine;
 using UnityEngine.UI;
 
@@ -7,17 +8,24 @@ public class VisualGamestate : MonoBehaviour
 {
     public GameObject wordButtonPrefab;
     public GameObject winPanel, losePanel;
-    public Button playSentenceButton;
+    public Button playSentenceButton, nextStageButton;
+    public TMP_Text completedMilestonesText, requiredMilestonesText;
     public Transform aiWordRoot, killWordRoot, humanWordRoot, makeWordRoot, moneyWordRoot;
 
     private CoreInterface coreInterface;
+    private StageManager stageManager;
     private UiLawset uiLawset;
 
     private void Awake()
     {
         coreInterface = FindObjectOfType<CoreInterface>();
+        stageManager = FindObjectOfType<StageManager>();
         uiLawset = FindObjectOfType<UiLawset>();
-        RegenerateVisualGamestate();
+    }
+
+    private void Start()
+    {
+        PlayerPrefs.DeleteAll();
     }
 
     public void Lock()
@@ -28,6 +36,12 @@ public class VisualGamestate : MonoBehaviour
     public void Unlock()
     {
         playSentenceButton.interactable = true;
+    }
+
+    public void ProceedToNextStage()
+    {
+        stageManager.ProceedToNextStage();
+        RegenerateVisualGamestate();
     }
 
     public void RegenerateVisualGamestate()
@@ -41,6 +55,10 @@ public class VisualGamestate : MonoBehaviour
             losePanel.SetActive(true);
         }
 
+        nextStageButton.interactable = stageManager.GetTotalMilestonesNeeded() == stageManager.GetCompletedMilestones();
+        completedMilestonesText.text = stageManager.GetCompletedMilestones().ToString();
+        requiredMilestonesText.text = stageManager.GetTotalMilestonesNeeded().ToString();
+
         uiLawset.Repopulate(coreInterface.coreGamestate.GetLawsetForWord(coreInterface.GetAiWord()));
         RegenerateButtons();
     }
@@ -53,14 +71,10 @@ public class VisualGamestate : MonoBehaviour
         makeWordRoot.GetComponentsInChildren<WordButton>().ToList().ForEach(x => Destroy(x.gameObject));
         moneyWordRoot.GetComponentsInChildren<WordButton>().ToList().ForEach(x => Destroy(x.gameObject));
 
-        GenerateButton(CommonWords.KILL);
-        GenerateButton(CommonWords.MAKE);
-        GenerateButton(CommonWords.MONEY);
-
-        coreInterface.coreGamestate.GetAliveWords()
-            .Where(w => w is not MoneyWord)
-            .ToList()
-            .ForEach(x => GenerateButton(x));
+        foreach(Word word in stageManager.GetWords(coreInterface.coreGamestate))
+        {
+            GenerateButton(word);
+        }
     }
 
     private void GenerateButton(Word word)

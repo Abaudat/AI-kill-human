@@ -54,6 +54,14 @@ namespace Core
                         return false;
                     }
                 }
+                else if (matcherSentence.words[i] == MatcherWord.OTHER_AI)
+                {
+                    if (!sentence.words[i].IsAi() || sentence.GetSubject().Equals(sentence.words[i]))
+                    {
+                        Debug.Log($"Word {sentence.words[i]} (index {i}) of sentence {sentence} does not match the sentence subject {sentence.GetSubject()}");
+                        return false;
+                    }
+                }
                 else if (!Matches(sentence.words[i], matcherSentence.words[i]))
                 {
                     Debug.Log($"Word {sentence.words[i]} (index {i}) of sentence {sentence} does not match the matcher {matcherSentence.words[i]} of sentence matcher {matcherSentence}");

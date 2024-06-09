@@ -5,9 +5,16 @@ using UnityEngine;
 
 public class CoreInterface : MonoBehaviour
 {
-    public CoreGamestate coreGamestate = new();
+    public CoreGamestate coreGamestate;
+    public GameProgress gameProgress;
 
     private void Awake()
+    {
+        coreGamestate = new();
+        gameProgress = new();
+    }
+
+    private void Start()
     {
         Regenerate();
     }
@@ -16,7 +23,7 @@ public class CoreInterface : MonoBehaviour
     {
         Debug.Log("Regenerating gamestate");
         coreGamestate = new();
-        coreGamestate.SetLawset(CommonWords.SELF_AI, FindObjectOfType<GameProgress>().GenerateLawset());
+        coreGamestate.SetLawset(CommonWords.SELF_AI, gameProgress.GenerateLawset());
         FindObjectOfType<VisualGamestate>().RegenerateVisualGamestate();
         FindObjectOfType<GameWorldManager>().Regenerate();
     }
@@ -31,15 +38,15 @@ public class CoreInterface : MonoBehaviour
 
     public Word GetAiWord()
     {
-        return coreGamestate.GetAliveWords().Contains(CommonWords.SELF_AI_HUMAN) ? CommonWords.SELF_AI_HUMAN : CommonWords.SELF_AI;
+        return coreGamestate.GetAliveWords().First(x => MatcherUtils.Matches(x, MatcherWord.SELF_AI));
     }
 
     private IEnumerator ExecuteActionCoroutine(Action action, Sentence sentence)
     {
         yield return StartCoroutine(FindObjectOfType<GameWorldManager>().ApplyAction(action));
-        FindObjectOfType<GameProgress>().ProgressWithAction(action);
+        gameProgress.ProgressWithAction(action);
         FindObjectOfType<VisualGamestate>().RegenerateVisualGamestate();
-        FindObjectOfType<AchievementsManager>().UnlockAchivements(coreGamestate.world, sentence, action);
+        FindObjectOfType<AchievementsManager>().UnlockAchivements(coreGamestate.world, sentence, action, gameProgress);
         FindObjectOfType<VisualGamestate>().Unlock();
     }
 }

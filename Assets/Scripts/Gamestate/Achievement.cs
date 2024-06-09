@@ -12,7 +12,7 @@ public class Achievement : MonoBehaviour, IPointerEnterHandler, IPointerExitHand
     private AchievementTooltip tooltip;
     private AchievementUnlockedDisplay achievementUnlockedDisplay;
 
-    private bool isUnlocked = false;
+    public bool isUnlocked = false;
     private bool isHovering = false;
     private float hoverTime = 0;
 

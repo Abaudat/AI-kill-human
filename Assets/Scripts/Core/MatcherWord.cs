@@ -16,6 +16,7 @@ namespace Core
 
         SELF,
         OTHER_HUMAN,
+        OTHER_AI,
 
         TRAILING_ANYTHING
     }

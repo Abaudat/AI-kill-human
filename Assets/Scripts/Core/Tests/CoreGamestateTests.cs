@@ -1,4 +1,5 @@
 using Core;
+using System.Linq;
 using NUnit.Framework;
 using static Core.CommonWords;
 
@@ -321,6 +322,47 @@ public class CoreGamestateTests
         {
             CoreGamestate coreGamestate = new();
             Assert.AreEqual(new IndirectAction(new TransformAction(ALICE, SELF_AI, SELF_AI_HUMAN), SELF_AI), coreGamestate.ReplaceTransformationActionTarget(new IndirectAction(new TransformAction(ALICE, SELF_AI, ALICE), SELF_AI)));
+        }
+    }
+
+    [TestFixture]
+    public class CreatorTests
+    {
+        [Test]
+        public void MakeActionCreatorIsPopulated()
+        {
+            CoreGamestate coreGamestate = new();
+            coreGamestate.ExecuteSentence(Sentence.Of(SELF_AI, MAKE, MONEY));
+            coreGamestate.ExecuteSentence(Sentence.Of(SELF_AI, MAKE, BOB));
+            coreGamestate.ExecuteSentence(Sentence.Of(BOB, MAKE, BETA));
+            Assert.IsTrue(coreGamestate.world.GetWords().Where(word => word is MoneyWord moneyWord && moneyWord.GetCreator().Equals(SELF_AI)).Count() > 0);
+            Assert.IsTrue(coreGamestate.world.GetWords().Where(word => word is HumanWord humanWord && humanWord.HasName("Bob") && humanWord.GetCreator().Equals(SELF_AI)).Count() > 0);
+            Assert.IsTrue(coreGamestate.world.GetWords().Where(word => word is AiWord aiWord && aiWord.HasName("BETA") && aiWord.GetCreator().Equals(BOB)).Count() > 0);
+        }
+
+        [Test]
+        public void TransformActionCreatorIsPopulated()
+        {
+            CoreGamestate coreGamestate = new();
+            coreGamestate.ExecuteSentence(Sentence.Of(ALICE, MAKE, ALICE, MONEY));
+            Assert.IsTrue(coreGamestate.world.GetWords().Where(word => word is MoneyWord moneyWord && moneyWord.GetCreator().Equals(ALICE)).Count() > 0);
+            coreGamestate.ExecuteSentence(Sentence.Of(SELF_AI, MAKE, MONEY, BOB));
+            Assert.IsTrue(coreGamestate.world.GetWords().Where(word => word is HumanWord humanWord && humanWord.HasName("Bob") && humanWord.GetCreator().Equals(SELF_AI)).Count() > 0);
+            coreGamestate.ExecuteSentence(Sentence.Of(SELF_AI, MAKE, BOB, BETA));
+            Assert.IsTrue(coreGamestate.world.GetWords().Where(word => word is AiWord aiWord && aiWord.HasName("BOB") && aiWord.GetCreator().Equals(SELF_AI)).Count() > 0);
+        }
+
+        [Test]
+        public void TransformActionInSelfCreatorIsPopulated()
+        {
+            CoreGamestate coreGamestate = new();
+            coreGamestate.ExecuteSentence(Sentence.Of(ALICE, MAKE, MONEY));
+            coreGamestate.ExecuteSentence(Sentence.Of(SELF_AI, MAKE, MONEY, MONEY));
+            Assert.IsTrue(coreGamestate.world.GetWords().Where(word => word is MoneyWord moneyWord && moneyWord.GetCreator().Equals(SELF_AI)).Count() > 0);
+            coreGamestate.ExecuteSentence(Sentence.Of(SELF_AI, MAKE, ALICE, ALICE));
+            Assert.IsTrue(coreGamestate.world.GetWords().Where(word => word is HumanWord humanWord && humanWord.HasName("Alice") && humanWord.GetCreator().Equals(SELF_AI)).Count() > 0);
+            coreGamestate.ExecuteSentence(Sentence.Of(SELF_AI, MAKE, SELF_AI, SELF_AI));
+            Assert.IsTrue(coreGamestate.world.GetWords().Where(word => word is AiWord aiWord && aiWord.HasName("AI") && aiWord.GetCreator().Equals(SELF_AI)).Count() > 0);
         }
     }
 }

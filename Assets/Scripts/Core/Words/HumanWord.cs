@@ -6,6 +6,10 @@ namespace Core
         {
         }
 
+        public HumanWord(string name, Word creator) : base(name, creator)
+        {
+        }
+
         public override bool IsHuman()
         {
             return true;
