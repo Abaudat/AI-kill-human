@@ -7,6 +7,15 @@ namespace Core
 
         public static bool Matches(Sentence sentence, MatcherSentence matcherSentence)
         {
+            if (sentence.isEmpty())
+            {
+                return true;
+            }
+            if (matcherSentence.ContainsTrailingAnything())
+            {
+                int trailingAnythingIndex = matcherSentence.TrailingAnythingIndex();
+                return Matches(sentence.UpTo(trailingAnythingIndex), matcherSentence.TrimTrailingAnything());
+            }
             if (sentence.words.Length != matcherSentence.words.Length)
             {
                 Debug.Log($"Sentence {sentence} and matcherSentence {matcherSentence} are not the same length");
@@ -84,6 +93,9 @@ namespace Core
                 case MatcherWord.OTHER_HUMAN:
                     Debug.LogError("Called Matches with a MatcherWord of OTHER_HUMAN. This shouldn't happen.");
                     return true;
+                case MatcherWord.TRAILING_ANYTHING:
+                    Debug.LogWarning("Called Matches with a MatcherWord of TRAILING_ANYTHING. TRAILING_ANYTHING should not exist somewhere else than the end of a sentence.");
+                    return false;
                 default:
                     Debug.LogWarning($"No switch case for MatcherWord {matcherWord}, returning true");
                     return true;

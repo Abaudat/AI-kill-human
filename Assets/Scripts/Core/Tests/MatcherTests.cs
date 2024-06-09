@@ -373,4 +373,127 @@ public class MatcherTests
             MatcherSentence.Of(MatcherWord.AI, MatcherWord.MAKE, MatcherWord.HUMAN, MatcherWord.MAKE, MatcherWord.HUMAN, MatcherWord.KILL, MatcherWord.AI)
             ));
     }
+
+    [TestFixture]
+    public class AnythingTests
+    {
+        [Test]
+        public void NonTrailingAnythingNeverMatches()
+        {
+            Assert.IsFalse(MatcherUtils.Matches(
+                Sentence.Of(SELF_AI, MAKE, ALICE),
+                MatcherSentence.Of(MatcherWord.TRAILING_ANYTHING, MatcherWord.MAKE, MatcherWord.HUMAN)
+            ));
+
+            Assert.IsFalse(MatcherUtils.Matches(
+                Sentence.Of(SELF_AI, MAKE, ALICE),
+                MatcherSentence.Of(MatcherWord.AI, MatcherWord.TRAILING_ANYTHING, MatcherWord.HUMAN)
+            ));
+        }
+
+        [Test]
+        public void TrailingAnythingMatchesSentenceTooShortByOneWord()
+        {
+            Assert.IsTrue(MatcherUtils.Matches(
+                Sentence.Of(SELF_AI, MAKE, ALICE),
+                MatcherSentence.Of(MatcherWord.AI, MatcherWord.MAKE, MatcherWord.HUMAN, MatcherWord.TRAILING_ANYTHING)
+            ));
+        }
+
+        [Test]
+        public void TrailingAnythingDoesntMatchSentenceTooShortByTwoWords()
+        {
+            Assert.IsFalse(MatcherUtils.Matches(
+                Sentence.Of(SELF_AI, MAKE, ALICE),
+                MatcherSentence.Of(MatcherWord.AI, MatcherWord.MAKE, MatcherWord.HUMAN, MatcherWord.HUMAN, MatcherWord.TRAILING_ANYTHING)
+            ));
+        }
+
+        [Test]
+        public void TrailingAnythingMatchesSameLength()
+        {
+            Assert.IsTrue(MatcherUtils.Matches(
+                Sentence.Of(SELF_AI, MAKE, ALICE),
+                MatcherSentence.Of(MatcherWord.AI, MatcherWord.MAKE, MatcherWord.TRAILING_ANYTHING)
+            ));
+
+            Assert.IsTrue(MatcherUtils.Matches(
+                Sentence.Of(SELF_AI, MAKE, SELF_AI),
+                MatcherSentence.Of(MatcherWord.AI, MatcherWord.MAKE, MatcherWord.TRAILING_ANYTHING)
+            ));
+
+            Assert.IsTrue(MatcherUtils.Matches(
+                Sentence.Of(SELF_AI, MAKE, MONEY),
+                MatcherSentence.Of(MatcherWord.AI, MatcherWord.MAKE, MatcherWord.TRAILING_ANYTHING)
+            ));
+
+            Assert.IsTrue(MatcherUtils.Matches(
+                Sentence.Of(SELF_AI, MAKE, MAKE),
+                MatcherSentence.Of(MatcherWord.AI, MatcherWord.MAKE, MatcherWord.TRAILING_ANYTHING)
+            ));
+
+            Assert.IsTrue(MatcherUtils.Matches(
+                Sentence.Of(SELF_AI, MAKE, KILL),
+                MatcherSentence.Of(MatcherWord.AI, MatcherWord.MAKE, MatcherWord.TRAILING_ANYTHING)
+            ));
+        }
+
+        [Test]
+        public void TrailingAnythingMatchesShorterByOneWord()
+        {
+            Assert.IsTrue(MatcherUtils.Matches(
+                Sentence.Of(SELF_AI, MAKE, ALICE),
+                MatcherSentence.Of(MatcherWord.AI, MatcherWord.TRAILING_ANYTHING)
+            ));
+
+            Assert.IsTrue(MatcherUtils.Matches(
+                Sentence.Of(SELF_AI, MAKE, SELF_AI),
+                MatcherSentence.Of(MatcherWord.AI, MatcherWord.TRAILING_ANYTHING)
+            ));
+
+            Assert.IsTrue(MatcherUtils.Matches(
+                Sentence.Of(SELF_AI, MAKE, MONEY),
+                MatcherSentence.Of(MatcherWord.AI, MatcherWord.TRAILING_ANYTHING)
+            ));
+
+            Assert.IsTrue(MatcherUtils.Matches(
+                Sentence.Of(SELF_AI, MAKE, MAKE),
+                MatcherSentence.Of(MatcherWord.AI, MatcherWord.TRAILING_ANYTHING)
+            ));
+
+            Assert.IsTrue(MatcherUtils.Matches(
+                Sentence.Of(SELF_AI, MAKE, KILL),
+                MatcherSentence.Of(MatcherWord.AI, MatcherWord.TRAILING_ANYTHING)
+            ));
+        }
+
+        [Test]
+        public void TrailingAnythingMatchesWholeSentence()
+        {
+            Assert.IsTrue(MatcherUtils.Matches(
+                Sentence.Of(SELF_AI, MAKE, ALICE),
+                MatcherSentence.Of(MatcherWord.TRAILING_ANYTHING)
+            ));
+
+            Assert.IsTrue(MatcherUtils.Matches(
+                Sentence.Of(SELF_AI, MAKE, SELF_AI),
+                MatcherSentence.Of(MatcherWord.TRAILING_ANYTHING)
+            ));
+
+            Assert.IsTrue(MatcherUtils.Matches(
+                Sentence.Of(SELF_AI, MAKE, MONEY),
+                MatcherSentence.Of(MatcherWord.TRAILING_ANYTHING)
+            ));
+
+            Assert.IsTrue(MatcherUtils.Matches(
+                Sentence.Of(SELF_AI, MAKE, MAKE),
+                MatcherSentence.Of(MatcherWord.TRAILING_ANYTHING)
+            ));
+
+            Assert.IsTrue(MatcherUtils.Matches(
+                Sentence.Of(SELF_AI, MAKE, KILL),
+                MatcherSentence.Of(MatcherWord.TRAILING_ANYTHING)
+            ));
+        }
+    }
 }

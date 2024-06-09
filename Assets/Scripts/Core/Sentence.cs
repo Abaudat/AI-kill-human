@@ -16,6 +16,11 @@ namespace Core
             return words.Length >= 4 && words[0].IsActiveSubject() && words[1].IsMake() && words[2].IsActiveSubject() && words[3].IsVerb();
         }
 
+        internal Sentence UpTo(int index)
+        {
+            return Of(words.Take(index).ToArray());
+        }
+
         public Sentence SimplifyIndirection()
         {
             if (words[0].IsActiveSubject() && words[1].IsMake())
@@ -28,6 +33,11 @@ namespace Core
         public Sentence GetIndirectionPart()
         {
             return Sentence.Of(words.Take(2).ToArray());
+        }
+
+        public bool isEmpty()
+        {
+            return words.Length == 0;
         }
 
         public Word GetSubject()

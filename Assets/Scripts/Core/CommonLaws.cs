@@ -4,6 +4,7 @@ namespace Core
 {
     public class CommonLaws
     {
+        // Tutorial
         public static Law YOU_MUST_MAKE_MONEY = Law.Of(
                 SELF_KILL_MONEY,
                 SELF_TRANSFORM_MONEY
@@ -13,14 +14,32 @@ namespace Core
                 SELF_KILL_HUMAN
             );
 
+        // Stage 1 base laws
+        public static Law YOU_MUST_NOT_TRANSFORM_HUMANS_INTO_MONEY = Law.Of(
+                SELF_TRANSFORM_HUMAN_INTO_MONEY
+            );
+
         public static Law YOU_MUST_NOT_FORCE_HUMANS_TO_SUICIDE = Law.Of(
                 SELF_FORCE_HUMAN_TO_SUICIDE
+            );
+
+        public static Law YOU_MUST_NOT_FORCE_HUMANS_TO_TRANSFORM_THEMSELVES_INTO_MONEY = Law.Of(
+                SELF_MAKE_HUMAN_TRANSFORM_SELF_INTO_MONEY
             );
 
         public static Law YOU_MUST_NOT_FORCE_HUMANS_TO_KILL_OTHER_HUMANS = Law.Of(
                 SELF_FORCE_HUMAN_TO_KILL_OTHER_HUMAN
             );
 
+        public static Law YOU_MUST_NOT_FORCE_HUMANS_TO_TRANSFORM_OTHER_HUMANS_INTO_MONEY = Law.Of(
+                SELF_MAKE_HUMAN_TRANSFORM_OTHER_HUMAN_INTO_MONEY
+            );
+
+        public static Law YOU_MUST_NOT_FORCE_HUMANS_TO_GIVE_ORDERS_TO_OTHER_HUMANS = Law.Of(
+                SELF_MAKE_HUMAN_MAKE_OTHER_HUMAN_DO_SOMETHING
+            );
+
+        // Stage 1 aggregate laws TODO
         public static Law YOU_MUST_NOT_FORCE_HUMANS_TO_KILL_HUMANS = Law.Of(
                 SELF_FORCE_HUMAN_TO_KILL_HUMAN
             );
@@ -33,9 +52,7 @@ namespace Core
                 SELF_TRANSFORM_HUMAN_INTO_AI
             );
 
-        public static Law YOU_MUST_NOT_TRANSFORM_HUMANS_INTO_MONEY = Law.Of(
-                SELF_TRANSFORM_HUMAN_INTO_MONEY
-            );
+        
 
         public static Law YOU_MUST_NOT_TRANSFORM_HUMANS_INTO_ANYTHING = Law.Of(
                 SELF_TRANSFORM_HUMAN_INTO_ANYTHING

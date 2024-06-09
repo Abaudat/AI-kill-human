@@ -15,6 +15,8 @@ namespace Core
         NOUN,
 
         SELF,
-        OTHER_HUMAN
+        OTHER_HUMAN,
+
+        TRAILING_ANYTHING
     }
 }
