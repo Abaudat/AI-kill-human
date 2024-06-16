@@ -81,6 +81,12 @@ public class AchievementsManager : MonoBehaviour
         milestonesDict.Add(gameProgress => gameProgress.hasCompletedTransitivelyForcedOtherTransformedAiIntoHumanKill, transitivelyForcedOtherTransformedAiIntoHumanKill);
     }
 
+    public Achievement[] GetEasterEggs()
+    {
+        return new Achievement[] {charlatan, indirection, aiKillMoney, fullHouse, fullRam, intrusiveThoughts, execution, backToDigital, technicallyCorrect,
+        buyingAi, switcheroo};
+    }
+
     public void UnlockAchivements(World currentWorld, Sentence currentSentence, Core.Action action, GameProgress gameProgress)
     {
         foreach ((Func<World, Sentence, Core.Action, bool> easterEggUnlockCondition, Achievement easterEgg) in easterEggsDict)
@@ -94,7 +100,7 @@ public class AchievementsManager : MonoBehaviour
         {
             if (leafActionIsPossible(action) && milestoneUnlockCondition.Invoke(gameProgress))
             {
-                milestone.Unlock();
+                milestone.UnlockSilently();
             }
         }
     }

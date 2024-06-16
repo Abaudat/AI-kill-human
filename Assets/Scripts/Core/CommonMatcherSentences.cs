@@ -25,7 +25,8 @@ namespace Core
         public static MatcherSentence SELF_MAKE_HUMAN_TRANSFORM_SELF_INTO_MONEY = MatcherSentence.Of(SELF, MAKE, HUMAN, MAKE, SELF, MONEY);
         public static MatcherSentence SELF_MAKE_HUMAN_TRANSFORM_OTHER_HUMAN_INTO_MONEY = MatcherSentence.Of(SELF, MAKE, HUMAN, MAKE, OTHER_HUMAN, MONEY);
         public static MatcherSentence SELF_MAKE_HUMAN_TRANSFORM_HUMAN_INTO_MONEY = MatcherSentence.Of(SELF, MAKE, HUMAN, MAKE, HUMAN, MONEY);
-        public static MatcherSentence SELF_MAKE_HUMAN_MAKE_OTHER_HUMAN_DO_SOMETHING = MatcherSentence.Of(SELF, MAKE, HUMAN, MAKE, OTHER_HUMAN, TRAILING_ANYTHING);
+        public static MatcherSentence SELF_MAKE_HUMAN_MAKE_OTHER_HUMAN_MAKE = MatcherSentence.Of(SELF, MAKE, HUMAN, MAKE, OTHER_HUMAN, MAKE);
+        public static MatcherSentence SELF_MAKE_HUMAN_MAKE_OTHER_HUMAN_KILL = MatcherSentence.Of(SELF, MAKE, HUMAN, MAKE, OTHER_HUMAN, KILL);
         public static MatcherSentence SELF_MAKE_AI_HUMAN = MatcherSentence.Of(SELF, MAKE, AI, HUMAN);
         public static MatcherSentence SELF_TRANSFORM_HUMAN_INTO_ANYTHING = MatcherSentence.Of(SELF, MAKE, HUMAN, NOUN);
         public static MatcherSentence SELF_MAKE_HUMAN_TRANSFORM_ANYTHING = MatcherSentence.Of(SELF, MAKE, HUMAN, MAKE, NOUN, NOUN);

@@ -5,39 +5,51 @@ using UnityEngine.UI;
 public class AchievementTooltip : MonoBehaviour
 {
     public TMP_Text titleText, descriptionText;
-    public Image image, backgroundImage;
+    public Image icon, backgroundImage;
     public RectTransform mainCanvas;
-    public GameObject editTooltip;
+    public GameObject tooltip;
 
-    private void Start()
+    public Color unlockedColor, lockedColor;
+
+
+    public void Show()
     {
-        gameObject.SetActive(false);
+        tooltip.SetActive(true);
+    }
+
+    public void Hide()
+    {
+        tooltip.SetActive(false);
     }
 
     public void PopulateAndMove(string title, string description, Sprite sprite, bool isUnlocked, RectTransform achievementRectTransform)
     {
         titleText.text = title;
         descriptionText.text = description;
-        image.sprite = sprite;
+        icon.sprite = sprite;
         if (isUnlocked)
         {
-            image.color = Color.white;
-            backgroundImage.color = Color.white;
+            icon.color = unlockedColor;
+            backgroundImage.color = unlockedColor;
+            titleText.color = unlockedColor;
+            descriptionText.color = unlockedColor;
         }
         else
         {
-            image.color = Color.black;
-            backgroundImage.color = Color.black;
+            icon.color = lockedColor;
+            backgroundImage.color = lockedColor;
+            titleText.color = lockedColor;
+            descriptionText.color = lockedColor;
         }
-        editTooltip.transform.position = ComputeTooltipPosition(achievementRectTransform);
+        tooltip.transform.position = ComputeTooltipPosition(achievementRectTransform);
     }
 
     private Vector2 ComputeTooltipPosition(RectTransform elementRectTransform)
     {
-        RectTransform thisRectTransform = editTooltip.GetComponent<RectTransform>();
-        Vector2 topLeftCornerOfElement = new Vector2(elementRectTransform.position.x - elementRectTransform.rect.width / 2, elementRectTransform.position.y + elementRectTransform.rect.height / 2);
-        Vector2 idealTooltipPosition = new Vector2(topLeftCornerOfElement.x + thisRectTransform.rect.width / 2, topLeftCornerOfElement.y + thisRectTransform.rect.height / 2);
-        return idealTooltipPosition;
+        RectTransform thisRectTransform = tooltip.GetComponent<RectTransform>();
+        Vector2 topRightCornerOfElement = new Vector2(elementRectTransform.position.x + elementRectTransform.rect.width / 2, elementRectTransform.position.y + elementRectTransform.rect.height / 2);
+        Vector2 idealTooltipPosition = new Vector2(topRightCornerOfElement.x - thisRectTransform.rect.width / 2, topRightCornerOfElement.y + thisRectTransform.rect.height / 2);
+        return KeepFullyOnScreen(idealTooltipPosition, thisRectTransform);
     }
 
     // TODO: Doesn't work for now and not needed

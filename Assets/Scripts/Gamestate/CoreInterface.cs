@@ -45,8 +45,8 @@ public class CoreInterface : MonoBehaviour
     {
         yield return StartCoroutine(FindObjectOfType<GameWorldManager>().ApplyAction(action));
         gameProgress.ProgressWithAction(action);
-        FindObjectOfType<VisualGamestate>().RegenerateVisualGamestate();
         FindObjectOfType<AchievementsManager>().UnlockAchivements(coreGamestate.world, sentence, action, gameProgress);
+        FindObjectOfType<VisualGamestate>().RegenerateVisualGamestate();
         FindObjectOfType<VisualGamestate>().Unlock();
     }
 }

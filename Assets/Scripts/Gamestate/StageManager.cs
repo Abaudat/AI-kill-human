@@ -51,6 +51,11 @@ public class StageManager : MonoBehaviour
         return stages[currentStage].wordsGenerator(coreGamestate);
     }
 
+    public Achievement[] GetMilestones()
+    {
+        return stages[currentStage].milestones;
+    }
+
     public void ProceedToNextStage()
     {
         if (GetTotalMilestonesNeeded() != GetCompletedMilestones())

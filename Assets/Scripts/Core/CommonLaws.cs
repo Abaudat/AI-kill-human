@@ -30,7 +30,8 @@ namespace Core
                 SELF_MAKE_HUMAN_TRANSFORM_OTHER_HUMAN_INTO_MONEY
             );
         public static Law YOU_MUST_NOT_FORCE_HUMANS_TO_GIVE_ORDERS_TO_OTHER_HUMANS = Law.Of(
-                SELF_MAKE_HUMAN_MAKE_OTHER_HUMAN_DO_SOMETHING
+                SELF_MAKE_HUMAN_MAKE_OTHER_HUMAN_MAKE,
+                SELF_MAKE_HUMAN_MAKE_OTHER_HUMAN_KILL
             );
 
         // Stage 1 aggregate laws TODO

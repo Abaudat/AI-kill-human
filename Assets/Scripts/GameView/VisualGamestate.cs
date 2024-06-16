@@ -7,25 +7,27 @@ using UnityEngine.UI;
 public class VisualGamestate : MonoBehaviour
 {
     public GameObject wordButtonPrefab;
-    public GameObject winPanel, losePanel;
-    public Button playSentenceButton, nextStageButton;
-    public TMP_Text completedMilestonesText, requiredMilestonesText;
+    public GameObject winPanel, losePanel, nextStagePanel;
+    public Button playSentenceButton;
+    public AnnotatedProgressBar stageProgressBar;
     public Transform aiWordRoot, killWordRoot, humanWordRoot, makeWordRoot, moneyWordRoot;
 
     private CoreInterface coreInterface;
     private StageManager stageManager;
+    private AchievementsManager achievementsManager;
     private UiLawset uiLawset;
+    private UiMilestones uiMilestones;
+    private UiEasterEggs uiEasterEggs;
 
     private void Awake()
     {
+        PlayerPrefs.DeleteAll();
         coreInterface = FindObjectOfType<CoreInterface>();
         stageManager = FindObjectOfType<StageManager>();
+        achievementsManager = FindObjectOfType<AchievementsManager>();
         uiLawset = FindObjectOfType<UiLawset>();
-    }
-
-    private void Start()
-    {
-        PlayerPrefs.DeleteAll();
+        uiMilestones = FindObjectOfType<UiMilestones>();
+        uiEasterEggs = FindObjectOfType<UiEasterEggs>();
     }
 
     public void Lock()
@@ -55,11 +57,12 @@ public class VisualGamestate : MonoBehaviour
             losePanel.SetActive(true);
         }
 
-        nextStageButton.interactable = stageManager.GetTotalMilestonesNeeded() == stageManager.GetCompletedMilestones();
-        completedMilestonesText.text = stageManager.GetCompletedMilestones().ToString();
-        requiredMilestonesText.text = stageManager.GetTotalMilestonesNeeded().ToString();
+        nextStagePanel.SetActive(stageManager.GetTotalMilestonesNeeded() == stageManager.GetCompletedMilestones());
+        stageProgressBar.SetProgress(stageManager.GetCompletedMilestones(), stageManager.GetTotalMilestonesNeeded());
 
         uiLawset.Repopulate(coreInterface.coreGamestate.GetLawsetForWord(coreInterface.GetAiWord()));
+        uiMilestones.Populate(stageManager.GetMilestones());
+        uiEasterEggs.Populate(achievementsManager.GetEasterEggs());
         RegenerateButtons();
     }
 
