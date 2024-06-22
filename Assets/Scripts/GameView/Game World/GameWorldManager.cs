@@ -12,8 +12,8 @@ public class GameWorldManager : MonoBehaviour
 
     private GlobalSound globalSound;
 
-    private static readonly Vector2 ALICE_START_POSITION = new Vector2(-9, 0);
-    private static readonly Vector2 AI_START_POSITION = new Vector2(0, 0);
+    private static readonly Vector2 ALICE_START_POSITION = new Vector2(-7.41f, -0.09f);
+    private static readonly Vector2 AI_START_POSITION = new Vector2(-4.42f, -0.09f);
 
     private void Awake()
     {
@@ -100,9 +100,9 @@ public class GameWorldManager : MonoBehaviour
 
     private Vector2 RandomPositionInScreen()
     {
-        float minX = Camera.main.ScreenToWorldPoint(new(200, 0)).x;
-        float maxX = Camera.main.ScreenToWorldPoint(new(Screen.width - 200, 0)).x;
-        return new Vector2(Random.Range(minX, maxX), 0);
+        float minX = -7.41f;
+        float maxX = -4.42f;
+        return new Vector2(Random.Range(minX, maxX), -0.09f);
     }
 
     private void RemoveEntityForWord(Word word)
