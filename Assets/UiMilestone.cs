@@ -1,4 +1,3 @@
-using TMPro;
 using UnityEngine;
 using UnityEngine.UI;
 using UnityEngine.EventSystems;
@@ -6,7 +5,6 @@ using UnityEngine.EventSystems;
 public class UiMilestone : MonoBehaviour, IPointerEnterHandler, IPointerExitHandler
 {
     public Image icon;
-    public TMP_Text milestoneText;
     public Animator animator;
 
     private AchievementTooltip tooltip;
@@ -24,7 +22,6 @@ public class UiMilestone : MonoBehaviour, IPointerEnterHandler, IPointerExitHand
     {
         this.achievement = achievement;
         icon.sprite = achievement.icon;
-        milestoneText.text = achievement.achivementName;
         if (achievement.isUnlocked)
         {
             animator.SetTrigger("Unlock");
