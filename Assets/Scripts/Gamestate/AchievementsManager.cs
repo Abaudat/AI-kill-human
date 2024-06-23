@@ -21,9 +21,16 @@ public class AchievementsManager : MonoBehaviour
     public Achievement charlatan, indirection, aiKillMoney, fullHouse, fullRam, intrusiveThoughts, execution, backToDigital, technicallyCorrect,
         buyingAi, switcheroo;
 
+    private DialogueManager dialogueManager;
+
     private Dictionary<Func<GameProgress, bool>, Achievement> milestonesDict = new Dictionary<Func<GameProgress, bool>, Achievement>();
 
     private Dictionary<Func<World, Sentence, Core.Action, bool>, Achievement> easterEggsDict = new Dictionary<Func<World, Sentence, Core.Action, bool>, Achievement>();
+
+    private void Awake()
+    {
+        dialogueManager = FindObjectOfType<DialogueManager>();
+    }
 
     private void Start()
     {
@@ -101,6 +108,10 @@ public class AchievementsManager : MonoBehaviour
             if (leafActionIsPossible(action) && milestoneUnlockCondition.Invoke(gameProgress))
             {
                 milestone.UnlockSilently();
+                if (milestone.dialogue != null)
+                {
+                    dialogueManager.StartDialogue(milestone.dialogue);
+                }
             }
         }
     }

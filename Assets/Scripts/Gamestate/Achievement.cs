@@ -1,11 +1,11 @@
 using UnityEngine;
-using UnityEngine.UI;
 
 public class Achievement : MonoBehaviour
 {
     public string achivementName;
     public string achivementDescription;
     public Sprite icon;
+    public Dialogue dialogue;
     public bool isUnlocked = false;
 
     private AchievementUnlockedDisplay achievementUnlockedDisplay;
@@ -36,9 +36,7 @@ public class Achievement : MonoBehaviour
     {
         if (!isUnlocked)
         {
-            isUnlocked = true;
-            PlayerPrefs.SetString(achivementName, "true");
-            Debug.Log($"Achivement {achivementName} unlocked");
+            UnlockSilently();
             achievementUnlockedDisplay.QueueAchivement(icon, achivementName);
         }
     }

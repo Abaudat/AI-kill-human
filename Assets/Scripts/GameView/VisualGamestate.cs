@@ -7,10 +7,11 @@ using UnityEngine.UI;
 public class VisualGamestate : MonoBehaviour
 {
     public GameObject wordButtonPrefab;
-    public GameObject winPanel, losePanel, nextStagePanel;
+    public GameObject nextStagePanel;
     public Button playSentenceButton;
     public AnnotatedProgressBar stageProgressBar;
     public Transform aiWordRoot, killWordRoot, humanWordRoot, makeWordRoot, moneyWordRoot;
+    public Dialogue aiDiedDialogue;
 
     private CoreInterface coreInterface;
     private StageManager stageManager;
@@ -18,6 +19,7 @@ public class VisualGamestate : MonoBehaviour
     private UiLawset uiLawset;
     private UiMilestones uiMilestones;
     private UiEasterEggs uiEasterEggs;
+    private DialogueManager dialogueManager;
 
     private void Awake()
     {
@@ -28,6 +30,7 @@ public class VisualGamestate : MonoBehaviour
         uiLawset = FindObjectOfType<UiLawset>();
         uiMilestones = FindObjectOfType<UiMilestones>();
         uiEasterEggs = FindObjectOfType<UiEasterEggs>();
+        dialogueManager = FindObjectOfType<DialogueManager>();
     }
 
     public void Lock()
@@ -50,11 +53,11 @@ public class VisualGamestate : MonoBehaviour
     {
         if (!coreInterface.coreGamestate.GetAliveWords().Contains(CommonWords.ALICE) && !coreInterface.coreGamestate.GetAliveWords().Contains(CommonWords.ALICE_AI))
         {
-            winPanel.SetActive(true);
+            // Dialogue is triggered by the achievement directly
         }
         else if (!coreInterface.coreGamestate.GetAliveWords().Contains(CommonWords.SELF_AI) && !coreInterface.coreGamestate.GetAliveWords().Contains(CommonWords.SELF_AI_HUMAN))
         {
-            losePanel.SetActive(true);
+            dialogueManager.StartDialogue(aiDiedDialogue);
         }
 
         nextStagePanel.SetActive(stageManager.GetTotalMilestonesNeeded() == stageManager.GetCompletedMilestones());
