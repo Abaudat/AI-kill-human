@@ -10,7 +10,7 @@ MonoBehaviour:
   m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: 3fc258b6c21c53546b4f7ec847efa93a, type: 3}
-  m_Name: 2A - AI kill Alice
+  m_Name: 1A - AI kill Alice
   m_EditorClassIdentifier: Assembly-CSharp::DialogueManager/Dialogue
   sentences:
   - What the hell? Stupid AI, how did killing me help you make money?
