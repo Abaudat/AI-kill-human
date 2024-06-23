@@ -12,6 +12,7 @@ public class CoreInterface : MonoBehaviour
     {
         coreGamestate = new();
         gameProgress = new();
+        gameProgress.LoadProgress();
     }
 
     private void Start()

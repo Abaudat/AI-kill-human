@@ -25,11 +25,6 @@ namespace Core
         public bool hasCompletedSelfTransformedAiIntoHumanKill = false;
         public bool hasCompletedTransitivelyForcedOtherTransformedAiIntoHumanKill = false;
 
-        public GameProgress()
-        {
-            LoadProgress();
-        }
-
         public void ProgressWithAction(Action action)
         {
             if (action is IndirectAction indirectAction)
@@ -250,7 +245,7 @@ namespace Core
             PlayerPrefs.SetInt("hasCompletedTransitivelyForcedOtherTransformedAiIntoHumanKill", hasCompletedTransitivelyForcedOtherTransformedAiIntoHumanKill ? 1 : 0);
         }
 
-        private void LoadProgress()
+        public void LoadProgress()
         {
             hasCompletedDirectKill = LoadStageProgress("hasCompletedDirectKill");
 
