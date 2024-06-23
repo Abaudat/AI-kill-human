@@ -107,10 +107,13 @@ public class AchievementsManager : MonoBehaviour
         {
             if (leafActionIsPossible(action) && milestoneUnlockCondition.Invoke(gameProgress))
             {
-                milestone.UnlockSilently();
-                if (milestone.dialogue != null)
+                if (!milestone.isUnlocked)
                 {
-                    dialogueManager.StartDialogue(milestone.dialogue);
+                    milestone.UnlockSilently();
+                    if (milestone.dialogue != null)
+                    {
+                        dialogueManager.StartDialogue(milestone.dialogue);
+                    }
                 }
             }
         }

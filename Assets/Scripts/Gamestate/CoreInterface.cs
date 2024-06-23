@@ -46,7 +46,14 @@ public class CoreInterface : MonoBehaviour
         yield return StartCoroutine(FindObjectOfType<GameWorldManager>().ApplyAction(action));
         gameProgress.ProgressWithAction(action);
         FindObjectOfType<AchievementsManager>().UnlockAchivements(coreGamestate.world, sentence, action, gameProgress);
-        FindObjectOfType<VisualGamestate>().RegenerateVisualGamestate();
+        if (!coreGamestate.GetAliveWords().Contains(CommonWords.ALICE) && !coreGamestate.GetAliveWords().Contains(CommonWords.ALICE_AI))
+        {
+            Regenerate();
+        }
+        else
+        {
+            FindObjectOfType<VisualGamestate>().RegenerateVisualGamestate();
+        }
         FindObjectOfType<VisualGamestate>().Unlock();
     }
 }

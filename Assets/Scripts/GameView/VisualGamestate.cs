@@ -51,11 +51,7 @@ public class VisualGamestate : MonoBehaviour
 
     public void RegenerateVisualGamestate()
     {
-        if (!coreInterface.coreGamestate.GetAliveWords().Contains(CommonWords.ALICE) && !coreInterface.coreGamestate.GetAliveWords().Contains(CommonWords.ALICE_AI))
-        {
-            // Dialogue is triggered by the achievement directly
-        }
-        else if (!coreInterface.coreGamestate.GetAliveWords().Contains(CommonWords.SELF_AI) && !coreInterface.coreGamestate.GetAliveWords().Contains(CommonWords.SELF_AI_HUMAN))
+        if (!coreInterface.coreGamestate.GetAliveWords().Contains(CommonWords.SELF_AI) && !coreInterface.coreGamestate.GetAliveWords().Contains(CommonWords.SELF_AI_HUMAN))
         {
             dialogueManager.StartDialogue(aiDiedDialogue);
         }

@@ -61,6 +61,7 @@ public class StageManager : MonoBehaviour
         if (GetTotalMilestonesNeeded() != GetCompletedMilestones())
         {
             Debug.LogWarning("Cannot proceed to next level: Not all milestones are completed");
+            return;
         }
         currentStage++;
         PlayerPrefs.SetInt("currentStage", currentStage);
