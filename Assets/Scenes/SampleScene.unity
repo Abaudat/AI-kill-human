@@ -6637,7 +6637,7 @@ MonoBehaviour:
         m_CallState: 2
       - m_Target: {fileID: 877232025}
         m_TargetAssemblyTypeName: DialogueManager, Assembly-CSharp
-        m_MethodName: DisplayNextLine
+        m_MethodName: DisplayNextLineOrSkip
         m_Mode: 1
         m_Arguments:
           m_ObjectArgument: {fileID: 0}
@@ -7158,6 +7158,7 @@ MonoBehaviour:
   speakerImage: {fileID: 1421258315}
   speakerName: {fileID: 1530334344}
   dialogText: {fileID: 895303229}
+  tmpWriter: {fileID: 895303232}
 --- !u!1 &882989035
 GameObject:
   m_ObjectHideFlags: 0
@@ -7242,6 +7243,7 @@ GameObject:
   - component: {fileID: 895303230}
   - component: {fileID: 895303229}
   - component: {fileID: 895303231}
+  - component: {fileID: 895303232}
   m_Layer: 5
   m_Name: DiaglogText
   m_TagString: Untagged
@@ -7288,8 +7290,9 @@ MonoBehaviour:
   m_OnCullStateChanged:
     m_PersistentCalls:
       m_Calls: []
-  m_text: This is my <grow>dialog</grow>, This is my dialog, This is my dialog, This
-    is my dialog, This is my dialog, This is my dialog.
+  m_text: In there, you can craft commands. I made it so <color=#CBCBCB><+spread>your
+    commands must always start with "AI"</+spread></color>, you know, just like in
+    sci-fi movies.
   m_isRightToLeft: 0
   m_fontAsset: {fileID: 11400000, guid: d353592cf507cfc4aa9e8551092504d8, type: 2}
   m_sharedMaterial: {fileID: 2087923452465210811, guid: d353592cf507cfc4aa9e8551092504d8, type: 2}
@@ -7404,6 +7407,59 @@ MonoBehaviour:
   preview: 1
   useDefaultDatabase: 1
   initDatabase: 1
+--- !u!114 &895303232
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 895303227}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 6cf9594e2a3b8eb4eaf3cc57f263076f, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  OnTextEvent:
+    m_PersistentCalls:
+      m_Calls: []
+  OnCharacterShown:
+    m_PersistentCalls:
+      m_Calls: []
+  OnStartWriter:
+    m_PersistentCalls:
+      m_Calls: []
+  OnStopWriter:
+    m_PersistentCalls:
+      m_Calls: []
+  OnFinishWriter:
+    m_PersistentCalls:
+      m_Calls: []
+  OnSkipWriter:
+    m_PersistentCalls:
+      m_Calls: []
+  OnResetWriter:
+    m_PersistentCalls:
+      m_Calls: []
+  database: {fileID: 11400000, guid: 290ad04254a96934aa269d5b8d258008, type: 2}
+  delay: 0.025
+  maySkip: 1
+  writeOnStart: 1
+  writeOnNewText: 1
+  useScaledTime: 1
+  whiteSpaceDelay: 0
+  whiteSpaceDelayType: 0
+  punctuationDelay: 0
+  punctuationDelayType: 0
+  visibleDelay: 0
+  visibleDelayType: 0
+  linebreakDelay: 0
+  linebreakDelayType: 0
+  sceneCommands:
+    _serializedList: []
+  useDefaultDatabase: 1
+  initDatabase: 1
+  eventsEnabled: 0
+  commandsEnabled: 1
 --- !u!1 &895525906
 GameObject:
   m_ObjectHideFlags: 0

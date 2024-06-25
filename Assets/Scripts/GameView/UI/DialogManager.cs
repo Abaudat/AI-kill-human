@@ -1,4 +1,5 @@
 using System.Collections.Generic;
+using TMPEffects.Components;
 using TMPro;
 using UnityEngine;
 using UnityEngine.UI;
@@ -8,17 +9,30 @@ public class DialogueManager : MonoBehaviour
     public GameObject dialoguePanel;
     public RawImage speakerImage;
     public TMP_Text speakerName, dialogText;
+    public TMPWriter tmpWriter;
 
     private Queue<string> remainingSentences = new Queue<string>();
 
     public void StartDialogue(Dialogue dialogue)
     {
         dialoguePanel.SetActive(true);
-        dialogue.sentences.ForEach(sentence => remainingSentences.Enqueue(sentence));
+        dialogue.GetSentences().ForEach(sentence => remainingSentences.Enqueue(sentence));
         DisplayNextLine();
     }
 
-    public void DisplayNextLine()
+    public void DisplayNextLineOrSkip()
+    {
+        if (tmpWriter.IsWriting)
+        {
+            tmpWriter.SkipWriter(false);
+        }
+        else
+        {
+            DisplayNextLine();
+        }
+    }
+
+    private void DisplayNextLine()
     {
         if (remainingSentences.Count > 0)
         {
