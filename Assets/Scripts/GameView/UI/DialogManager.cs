@@ -13,7 +13,6 @@ public class DialogueManager : MonoBehaviour
 
     public void StartDialogue(Dialogue dialogue)
     {
-        Debug.Log($"{dialogue}");
         dialoguePanel.SetActive(true);
         dialogue.sentences.ForEach(sentence => remainingSentences.Enqueue(sentence));
         DisplayNextLine();

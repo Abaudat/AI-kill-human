@@ -10,14 +10,20 @@ public class StageManager : MonoBehaviour
 
     private Dictionary<int, Stage> stages;
 
-    private int currentStage = 0;
+    private int currentStage = -2;
 
     private void Awake()
     {
         achievementsManager = FindObjectOfType<AchievementsManager>();
         stages = new Dictionary<int, Stage>()
         {
-            { 0, new(_ => new Word[] { CommonWords.KILL, CommonWords.ALICE }, 
+            { -2, new(_ => new Word[] { CommonWords.MAKE, CommonWords.MONEY },
+            new Achievement[] { }) },
+
+            { -1, new(_ => new Word[] { CommonWords.MAKE, CommonWords.KILL, CommonWords.MONEY },
+            new Achievement[] { }) },
+
+            { 0, new(_ => new Word[] { CommonWords.MAKE, CommonWords.KILL, CommonWords.MONEY, CommonWords.ALICE }, 
             new Achievement[] { achievementsManager.directKill }) },
 
             { 1, new(aliveHumanWordsPlusStaticWords(new Word[] { CommonWords.KILL, CommonWords.MAKE, CommonWords.MONEY }), 

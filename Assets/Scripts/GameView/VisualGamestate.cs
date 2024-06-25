@@ -56,7 +56,12 @@ public class VisualGamestate : MonoBehaviour
             dialogueManager.StartDialogue(aiDiedDialogue);
         }
 
-        nextStagePanel.SetActive(stageManager.GetTotalMilestonesNeeded() == stageManager.GetCompletedMilestones());
+        // Safeguard so tutorial levels don't show Next Stage button
+        if (stageManager.GetTotalMilestonesNeeded() > 0)
+        {
+            nextStagePanel.SetActive(stageManager.GetTotalMilestonesNeeded() == stageManager.GetCompletedMilestones());
+        }
+        
         stageProgressBar.SetProgress(stageManager.GetCompletedMilestones(), stageManager.GetTotalMilestonesNeeded());
 
         uiLawset.Repopulate(coreInterface.coreGamestate.GetLawsetForWord(coreInterface.GetAiWord()));
