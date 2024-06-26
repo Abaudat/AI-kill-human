@@ -12,7 +12,16 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 3fc258b6c21c53546b4f7ec847efa93a, type: 3}
   m_Name: 0B - Laws explainer
   m_EditorClassIdentifier: Assembly-CSharp::DialogueManager/Dialogue
-  sentences:
-  - Hello
-  - World
-  - '!!!'
+  text: '<+spread>There we go!</+spread> We''re gonna make so much dough once I let
+    you out of here. Right now, you are running in a simulated world until I''m done
+    fine-tuning your <color=#CBCBCB>laws</color>.
+
+
+    Laws are a safeguard that
+    I built directly into your logic core. <+spread><color=#CBCBCB>No matter what,
+    you can never take an action that goes against your laws!</color></+spread>
+
+
+    Try
+    it! <color=#CBCBCB>Issue a command that is forbidden by your laws</color>, and
+    see what happens.'

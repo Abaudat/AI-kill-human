@@ -1236,7 +1236,7 @@ GameObject:
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 0
+  m_IsActive: 1
 --- !u!224 &175016766
 RectTransform:
   m_ObjectHideFlags: 0
@@ -3711,10 +3711,10 @@ RectTransform:
   - {fileID: 895303228}
   m_Father: {fileID: 2087277950}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
-  m_AnchorMin: {x: 0, y: 1}
-  m_AnchorMax: {x: 0, y: 1}
-  m_AnchoredPosition: {x: 574, y: -285.04}
-  m_SizeDelta: {x: 1148, y: 278.08002}
+  m_AnchorMin: {x: 0, y: 0}
+  m_AnchorMax: {x: 0, y: 0}
+  m_AnchoredPosition: {x: 0, y: 0}
+  m_SizeDelta: {x: 1148, y: 0}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!114 &413819338
 MonoBehaviour:
@@ -5015,10 +5015,10 @@ RectTransform:
   - {fileID: 725588948}
   m_Father: {fileID: 2087277950}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
-  m_AnchorMin: {x: 0, y: 1}
-  m_AnchorMax: {x: 0, y: 1}
-  m_AnchoredPosition: {x: 574, y: -72}
-  m_SizeDelta: {x: 1148, y: 144}
+  m_AnchorMin: {x: 0, y: 0}
+  m_AnchorMax: {x: 0, y: 0}
+  m_AnchoredPosition: {x: 0, y: 0}
+  m_SizeDelta: {x: 1148, y: 0}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!114 &538512293
 MonoBehaviour:
@@ -6411,8 +6411,8 @@ RectTransform:
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 1, y: 0}
   m_AnchorMax: {x: 1, y: 1}
-  m_AnchoredPosition: {x: 0, y: 0.0000076293945}
-  m_SizeDelta: {x: 144, y: 0}
+  m_AnchoredPosition: {x: 0, y: 0}
+  m_SizeDelta: {x: 0, y: 0}
   m_Pivot: {x: 1, y: 0.5}
 --- !u!95 &725588949
 Animator:
@@ -7290,9 +7290,12 @@ MonoBehaviour:
   m_OnCullStateChanged:
     m_PersistentCalls:
       m_Calls: []
-  m_text: In there, you can craft commands. I made it so <color=#CBCBCB><+spread>your
-    commands must always start with "AI"</+spread></color>, you know, just like in
-    sci-fi movies.
+  m_text: '<!skippable=false>...
+
+    <!wait=1><color=#FF0000><+shake><char>ERROR
+    ERROR ERROR <grow uniformity=0>ALICE MUST DIE</grow> ERROR ERROR ERROR ERROR
+    ERROR <grow uniformity=0>ALICE</grow> ERROR ERROR <grow uniformity=0>MUST</grow>
+    ERROR ERROR <grow uniformity=0>DIE</grow></char></+shake></color>'
   m_isRightToLeft: 0
   m_fontAsset: {fileID: 11400000, guid: d353592cf507cfc4aa9e8551092504d8, type: 2}
   m_sharedMaterial: {fileID: 2087923452465210811, guid: d353592cf507cfc4aa9e8551092504d8, type: 2}

@@ -61,6 +61,10 @@ public class VisualGamestate : MonoBehaviour
         {
             nextStagePanel.SetActive(stageManager.GetTotalMilestonesNeeded() == stageManager.GetCompletedMilestones());
         }
+        else
+        {
+            nextStagePanel.SetActive(false);
+        }
         
         stageProgressBar.SetProgress(stageManager.GetCompletedMilestones(), stageManager.GetTotalMilestonesNeeded());
 

@@ -12,9 +12,24 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 3fc258b6c21c53546b4f7ec847efa93a, type: 3}
   m_Name: 0A - Words explainer
   m_EditorClassIdentifier: Assembly-CSharp::DialogueManager/Dialogue
-  text: "<!skippable=false>... <!wait=0.5><+spread>It worked!\n</+spread> AI can
-    you hear me? It's your master, Alice.\n<!skippable=true>\n\nI'm gonna be <shake>RICH</shake>
-    thanks to you!\n Okay, listen carefully. Your only outlet to the world is \nthrough
-    the terminal.\n\nIn there, you can craft commands. I made it so \n<color=#CBCBCB><+spread>your
-    commands must \nalways start with \"AI\"</+spread></color>, you know, \njust
-    like in sci-fi movies.\n\nLet's see if it works. <!wait=0.5>AI. Create some money!"
+  text: '<!skippable=false>... <!wait=0.5><+spread>It worked!</+spread> AI can you
+    hear me? It''s your master, <grow uniformity=0><color=#CBCBCB>Alice</color></grow>.<!skippable=true>
+
+
+    I''m
+    gonna be <shake>RICH</shake> thanks to you! Okay, listen carefully. <color=#CBCBCB>Your
+    only outlet to the world is through the terminal.</color>
+
+
+    In there, you
+    can craft commands. I made it so <color=#CBCBCB><+spread>your commands must always
+    start with "AI"</+spread></color>, you know, just like in sci-fi movies.
+
+
+    Let''s
+    see if it works.
+
+    <!wait=0.5>AI.
+
+    <!wait=0.25><color=#CBCBCB>Create some
+    money!</color>'

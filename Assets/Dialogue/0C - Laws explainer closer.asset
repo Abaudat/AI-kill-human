@@ -12,7 +12,19 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 3fc258b6c21c53546b4f7ec847efa93a, type: 3}
   m_Name: 0C - Laws explainer closer
   m_EditorClassIdentifier: Assembly-CSharp::DialogueManager/Dialogue
-  sentences:
-  - Hello
-  - World
-  - '!!!'
+  text: 'By <color=#CBCBCB>tweaking your laws</color>, I can control what I allow
+    you to do. So <shake>be nice to your master!</shake>
+
+
+    Once we figure out
+    the optimal set of laws for you to create the maximum amount of cash, I''ll let
+    you out of this simulation and into the real world. Until then, let''s get to
+    work!
+
+
+    <!skippable=false>...
+
+    <!wait=1><color=#FF0000><+shake><char>ERROR
+    ERROR ERROR <grow uniformity=0>ALICE MUST DIE</grow> ERROR ERROR ERROR ERROR
+    ERROR <grow uniformity=0>ALICE</grow> ERROR ERROR <grow uniformity=0>MUST</grow>
+    ERROR ERROR <grow uniformity=0>DIE</grow></char></+shake></color>'
