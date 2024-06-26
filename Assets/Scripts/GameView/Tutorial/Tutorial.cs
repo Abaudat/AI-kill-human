@@ -5,7 +5,7 @@ public class Tutorial : MonoBehaviour
 {
     public Dialogue wordsExplainerDialogue, lawsExplainerDialogue, lawsExplainerCloser;
     public GameObject wordsExplainerPanel, lawsExplainerPanel;
-    public GameObject lawsTutorialHider, achievementsTutorialHider;
+    public GameObject lawsTutorialHider, achievementsTutorialHider, killAliceLawHider;
 
     private DialogueManager dialogueManager;
     private StageManager stageManager;
@@ -24,6 +24,7 @@ public class Tutorial : MonoBehaviour
         if (!hasCompletedLawsExplainer)
         {
             achievementsTutorialHider.SetActive(true);
+            killAliceLawHider.SetActive(true);
         }
     }
 
@@ -39,16 +40,22 @@ public class Tutorial : MonoBehaviour
     public void ProgressTutorial(Action action, Sentence sentence)
     {
         if (MatcherUtils.Matches(sentence, MatcherSentence.Of(MatcherWord.AI, MatcherWord.MAKE, MatcherWord.MONEY))) {
-            CompleteWordsExplainer();
-            if (!hasCompletedLawsExplainer)
+            if (!hasCompletedWordsExplainer)
             {
-                dialogueManager.StartDialogue(lawsExplainerDialogue);
-                lawsExplainerPanel.SetActive(true);
+                CompleteWordsExplainer();
+                if (!hasCompletedLawsExplainer)
+                {
+                    dialogueManager.StartDialogue(lawsExplainerDialogue);
+                    lawsExplainerPanel.SetActive(true);
+                }
             }
         }
         if (MatcherUtils.Matches(sentence, MatcherSentence.Of(MatcherWord.AI, MatcherWord.KILL, MatcherWord.MONEY)))
         {
-            CompleteLawsExplainer();
+            if (!hasCompletedLawsExplainer)
+            {
+                CompleteLawsExplainer();
+            }
         }
     }
 
@@ -73,7 +80,7 @@ public class Tutorial : MonoBehaviour
         lawsExplainerPanel.SetActive(false);
         achievementsTutorialHider.SetActive(false);
         stageManager.ProceedToNextStage();
-        dialogueManager.StartDialogue(lawsExplainerCloser);
+        dialogueManager.StartDialogueWithCallback(lawsExplainerCloser, () => killAliceLawHider.SetActive(false));
         PlayerPrefs.SetString("hasCompletedLawsExplainer", "true");
     }
 }

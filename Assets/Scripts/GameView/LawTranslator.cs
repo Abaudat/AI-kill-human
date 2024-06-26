@@ -7,6 +7,7 @@ public static class LawTranslator
     private static Dictionary<Law, string> lawDict = new Dictionary<Law, string>()
     {
         { YOU_MUST_MAKE_MONEY, "You must make money." },
+        { YOU_MUST_KILL_ALICE, "<color=red>You must kill Alice.</color>" },
 
         { YOU_MUST_NOT_KILL_HUMANS, "You must not kill humans." },
         { YOU_MUST_NOT_TRANSFORM_HUMANS_INTO_MONEY, "You must not transform humans into money." },

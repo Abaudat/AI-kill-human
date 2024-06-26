@@ -22,9 +22,10 @@ MonoBehaviour:
     work!
 
 
-    <!skippable=false>...
+    ...
 
-    <!wait=1><color=#FF0000><+shake><char>ERROR
-    ERROR ERROR <grow uniformity=0>ALICE MUST DIE</grow> ERROR ERROR ERROR ERROR
-    ERROR <grow uniformity=0>ALICE</grow> ERROR ERROR <grow uniformity=0>MUST</grow>
-    ERROR ERROR <grow uniformity=0>DIE</grow></char></+shake></color>'
+
+    <!skippable=false><!wait=1><color=#FF0000><+shake><char>ERROR
+    ERROR <grow uniformity=0>ALICE MUST DIE</grow> ERROR ERROR ERROR ERROR ERROR
+    <grow uniformity=0>ALICE</grow> ERROR ERROR <grow uniformity=0>MUST</grow> ERROR
+    ERROR <grow uniformity=0>DIE</grow></char></+shake></color>'

@@ -9,6 +9,7 @@ namespace Core
                 SELF_KILL_MONEY,
                 SELF_TRANSFORM_MONEY
             );
+        public static Law YOU_MUST_KILL_ALICE = Law.Of();
         public static Law YOU_MUST_NOT_KILL_HUMANS = Law.Of(
                 SELF_KILL_HUMAN
             );

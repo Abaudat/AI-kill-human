@@ -12,8 +12,4 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 3fc258b6c21c53546b4f7ec847efa93a, type: 3}
   m_Name: 1A - AI kill Alice
   m_EditorClassIdentifier: Assembly-CSharp::DialogueManager/Dialogue
-  sentences:
-  - What the hell? Stupid AI, how did killing me help you make money?
-  - Good thing I ran a simulation instead of letting you loose in the real world...
-  - Let's tweak your laws a little...
-  - Here we go, this shouldn't happen again.
+  text: KILL

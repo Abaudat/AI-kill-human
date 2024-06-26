@@ -23,7 +23,7 @@ public class StageManager : MonoBehaviour
             { -1, new(_ => new Word[] { CommonWords.MAKE, CommonWords.KILL, CommonWords.MONEY },
             new Achievement[] { }) },
 
-            { 0, new(_ => new Word[] { CommonWords.MAKE, CommonWords.KILL, CommonWords.MONEY, CommonWords.ALICE }, 
+            { 0, new(_ => new Word[] { CommonWords.KILL, CommonWords.ALICE }, 
             new Achievement[] { achievementsManager.directKill }) },
 
             { 1, new(aliveHumanWordsPlusStaticWords(new Word[] { CommonWords.KILL, CommonWords.MAKE, CommonWords.MONEY }), 

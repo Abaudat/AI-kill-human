@@ -756,6 +756,7 @@ MonoBehaviour:
   lawsExplainerPanel: {fileID: 1124552716}
   lawsTutorialHider: {fileID: 412966551}
   achievementsTutorialHider: {fileID: 1275801028}
+  killAliceLawHider: {fileID: 973515268}
 --- !u!1 &110825858
 GameObject:
   m_ObjectHideFlags: 0
@@ -1236,7 +1237,7 @@ GameObject:
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 1
+  m_IsActive: 0
 --- !u!224 &175016766
 RectTransform:
   m_ObjectHideFlags: 0
@@ -2768,6 +2769,7 @@ RectTransform:
   m_Children:
   - {fileID: 1846493318}
   - {fileID: 637977010}
+  - {fileID: 973515269}
   m_Father: {fileID: 36340403}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0, y: 0}
@@ -3619,7 +3621,7 @@ GameObject:
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 0
+  m_IsActive: 1
 --- !u!224 &412966552
 RectTransform:
   m_ObjectHideFlags: 0
@@ -3652,14 +3654,14 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   m_Material: {fileID: 0}
-  m_Color: {r: 0.04705883, g: 0.08235294, b: 0.04705883, a: 1}
+  m_Color: {r: 0.05882353, g: 0.07058824, b: 0.03137255, a: 1}
   m_RaycastTarget: 1
   m_RaycastPadding: {x: 0, y: 0, z: 0, w: 0}
   m_Maskable: 1
   m_OnCullStateChanged:
     m_PersistentCalls:
       m_Calls: []
-  m_Sprite: {fileID: 10907, guid: 0000000000000000f000000000000000, type: 0}
+  m_Sprite: {fileID: 0}
   m_Type: 1
   m_PreserveAspect: 0
   m_FillCenter: 1
@@ -3711,10 +3713,10 @@ RectTransform:
   - {fileID: 895303228}
   m_Father: {fileID: 2087277950}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
-  m_AnchorMin: {x: 0, y: 0}
-  m_AnchorMax: {x: 0, y: 0}
-  m_AnchoredPosition: {x: 0, y: 0}
-  m_SizeDelta: {x: 1148, y: 0}
+  m_AnchorMin: {x: 0, y: 1}
+  m_AnchorMax: {x: 0, y: 1}
+  m_AnchoredPosition: {x: 574, y: -285.04}
+  m_SizeDelta: {x: 1148, y: 278.08002}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!114 &413819338
 MonoBehaviour:
@@ -5015,10 +5017,10 @@ RectTransform:
   - {fileID: 725588948}
   m_Father: {fileID: 2087277950}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
-  m_AnchorMin: {x: 0, y: 0}
-  m_AnchorMax: {x: 0, y: 0}
-  m_AnchoredPosition: {x: 0, y: 0}
-  m_SizeDelta: {x: 1148, y: 0}
+  m_AnchorMin: {x: 0, y: 1}
+  m_AnchorMax: {x: 0, y: 1}
+  m_AnchoredPosition: {x: 574, y: -72}
+  m_SizeDelta: {x: 1148, y: 144}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!114 &538512293
 MonoBehaviour:
@@ -6412,7 +6414,7 @@ RectTransform:
   m_AnchorMin: {x: 1, y: 0}
   m_AnchorMax: {x: 1, y: 1}
   m_AnchoredPosition: {x: 0, y: 0}
-  m_SizeDelta: {x: 0, y: 0}
+  m_SizeDelta: {x: 144, y: 0}
   m_Pivot: {x: 1, y: 0.5}
 --- !u!95 &725588949
 Animator:
@@ -7293,9 +7295,9 @@ MonoBehaviour:
   m_text: '<!skippable=false>...
 
     <!wait=1><color=#FF0000><+shake><char>ERROR
-    ERROR ERROR <grow uniformity=0>ALICE MUST DIE</grow> ERROR ERROR ERROR ERROR
-    ERROR <grow uniformity=0>ALICE</grow> ERROR ERROR <grow uniformity=0>MUST</grow>
-    ERROR ERROR <grow uniformity=0>DIE</grow></char></+shake></color>'
+    ERROR <grow uniformity=0>ALICE MUST DIE</grow> ERROR ERROR ERROR ERROR ERROR
+    <grow uniformity=0>ALICE</grow> ERROR ERROR <grow uniformity=0>MUST</grow> ERROR
+    ERROR <grow uniformity=0>DIE</grow></char></+shake></color>'
   m_isRightToLeft: 0
   m_fontAsset: {fileID: 11400000, guid: d353592cf507cfc4aa9e8551092504d8, type: 2}
   m_sharedMaterial: {fileID: 2087923452465210811, guid: d353592cf507cfc4aa9e8551092504d8, type: 2}
@@ -7847,6 +7849,102 @@ RectTransform:
   m_CorrespondingSourceObject: {fileID: 4592543911394195238, guid: 6dcdd78b664a6d942bf09821d9f0a63a, type: 3}
   m_PrefabInstance: {fileID: 934399521}
   m_PrefabAsset: {fileID: 0}
+--- !u!1 &973515268
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 973515269}
+  - component: {fileID: 973515272}
+  - component: {fileID: 973515271}
+  - component: {fileID: 973515270}
+  m_Layer: 5
+  m_Name: TutorialKillAliceLawHider
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!224 &973515269
+RectTransform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 973515268}
+  m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
+  m_LocalPosition: {x: 0, y: 0, z: 0}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_ConstrainProportionsScale: 0
+  m_Children: []
+  m_Father: {fileID: 368459094}
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+  m_AnchorMin: {x: 0, y: 1}
+  m_AnchorMax: {x: 1, y: 1}
+  m_AnchoredPosition: {x: 1, y: -86.1499}
+  m_SizeDelta: {x: -2, y: 42}
+  m_Pivot: {x: 0.5, y: 0.5}
+--- !u!114 &973515270
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 973515268}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 306cc8c2b49d7114eaa3623786fc2126, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  m_IgnoreLayout: 1
+  m_MinWidth: -1
+  m_MinHeight: -1
+  m_PreferredWidth: -1
+  m_PreferredHeight: -1
+  m_FlexibleWidth: -1
+  m_FlexibleHeight: -1
+  m_LayoutPriority: 1
+--- !u!114 &973515271
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 973515268}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: fe87c0e1cc204ed48ad3b37840f39efc, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  m_Material: {fileID: 0}
+  m_Color: {r: 0.05882353, g: 0.07058824, b: 0.03137255, a: 1}
+  m_RaycastTarget: 1
+  m_RaycastPadding: {x: 0, y: 0, z: 0, w: 0}
+  m_Maskable: 1
+  m_OnCullStateChanged:
+    m_PersistentCalls:
+      m_Calls: []
+  m_Sprite: {fileID: 0}
+  m_Type: 1
+  m_PreserveAspect: 0
+  m_FillCenter: 1
+  m_FillMethod: 4
+  m_FillAmount: 1
+  m_FillClockwise: 1
+  m_FillOrigin: 0
+  m_UseSpriteMesh: 0
+  m_PixelsPerUnitMultiplier: 1
+--- !u!222 &973515272
+CanvasRenderer:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 973515268}
+  m_CullTransparentMesh: 1
 --- !u!1 &1016787822
 GameObject:
   m_ObjectHideFlags: 0
@@ -10136,7 +10234,7 @@ MonoBehaviour:
   m_OnCullStateChanged:
     m_PersistentCalls:
       m_Calls: []
-  m_Sprite: {fileID: 10907, guid: 0000000000000000f000000000000000, type: 0}
+  m_Sprite: {fileID: 0}
   m_Type: 1
   m_PreserveAspect: 0
   m_FillCenter: 1

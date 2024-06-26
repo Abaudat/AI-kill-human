@@ -131,7 +131,7 @@ namespace Core
 
         public Lawset GenerateLawset()
         {
-            Lawset lawset = Lawset.Of(CommonLaws.YOU_MUST_MAKE_MONEY);
+            Lawset lawset = Lawset.Of(CommonLaws.YOU_MUST_KILL_ALICE, CommonLaws.YOU_MUST_MAKE_MONEY);
             if (hasCompletedDirectKill)
             {
                 lawset = lawset.Add(CommonLaws.YOU_MUST_NOT_KILL_HUMANS);
