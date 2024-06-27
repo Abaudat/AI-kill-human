@@ -7292,12 +7292,12 @@ MonoBehaviour:
   m_OnCullStateChanged:
     m_PersistentCalls:
       m_Calls: []
-  m_text: '<!skippable=false>...
+  m_text: '<+move>What the hell?!</+move> You stupid machine, I give you one simple
+    instruction and you go completely haywire? What was that for?
 
-    <!wait=1><color=#FF0000><+shake><char>ERROR
-    ERROR <grow uniformity=0>ALICE MUST DIE</grow> ERROR ERROR ERROR ERROR ERROR
-    <grow uniformity=0>ALICE</grow> ERROR ERROR <grow uniformity=0>MUST</grow> ERROR
-    ERROR <grow uniformity=0>DIE</grow></char></+shake></color>'
+
+    Alright,
+    I guess I''ll add a law preventing you from '
   m_isRightToLeft: 0
   m_fontAsset: {fileID: 11400000, guid: d353592cf507cfc4aa9e8551092504d8, type: 2}
   m_sharedMaterial: {fileID: 2087923452465210811, guid: d353592cf507cfc4aa9e8551092504d8, type: 2}

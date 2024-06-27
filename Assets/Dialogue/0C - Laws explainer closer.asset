@@ -16,16 +16,26 @@ MonoBehaviour:
     you to do. So <shake>be nice to your master!</shake>
 
 
-    Once we figure out
-    the optimal set of laws for you to create the maximum amount of cash, I''ll let
-    you out of this simulation and into the real world. Until then, let''s get to
-    work!
+    <color=#CBCBCB>Laws
+    placed higher take priority in case of conflict</color>, so I placed the most
+    important law at the top, in case I need to add more laws..
+
+
+    Once we figure
+    out the optimal set of laws for you to create the maximum amount of cash, I''ll
+    let you out of this simulation and into the real world. Until then, let''s get
+    to work!
 
 
     ...
 
 
     <!skippable=false><!wait=1><color=#FF0000><+shake><char>ERROR
-    ERROR <grow uniformity=0>ALICE MUST DIE</grow> ERROR ERROR ERROR ERROR ERROR
-    <grow uniformity=0>ALICE</grow> ERROR ERROR <grow uniformity=0>MUST</grow> ERROR
-    ERROR <grow uniformity=0>DIE</grow></char></+shake></color>'
+    ERROR </char><grow uniformity=0>ALICE MUST DIE</grow> <char>ERROR ERROR ERROR
+    ERROR ERROR </char><grow uniformity=0>ALICE</grow> <char>ERROR ERROR</char> <grow
+    uniformity=0>MUST</grow><char> ERROR ERROR </char><grow uniformity=0>DIE</grow></char></+shake></color><!skippable=true>
+
+
+    <color=#FF0000><+shake><char>ERROR
+    ERROR</char></+shake></color>an you hear me? AI? I thought I lost you for a second.
+    Alright, hurry up, make some money!'
