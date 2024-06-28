@@ -78,9 +78,11 @@ public class Tutorial : MonoBehaviour
     {
         hasCompletedLawsExplainer = true;
         lawsExplainerPanel.SetActive(false);
-        achievementsTutorialHider.SetActive(false);
         stageManager.ProceedToNextStage();
-        dialogueManager.StartDialogueWithCallback(lawsExplainerCloser, () => killAliceLawHider.SetActive(false));
+        dialogueManager.StartDialogueWithCallback(lawsExplainerCloser, () => {
+            killAliceLawHider.SetActive(false);
+            achievementsTutorialHider.SetActive(false);
+        });
         PlayerPrefs.SetString("hasCompletedLawsExplainer", "true");
     }
 }

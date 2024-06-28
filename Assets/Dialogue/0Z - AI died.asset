@@ -12,6 +12,9 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 3fc258b6c21c53546b4f7ec847efa93a, type: 3}
   m_Name: 0Z - AI died
   m_EditorClassIdentifier: Assembly-CSharp::DialogueManager/Dialogue
-  sentences:
-  - Hrmh, I guess my programming was faulty... Let's restart this simulation, try
-    not to die this time!
+  text: 'You stupid AI how did you manage that?! Do you know how much it cost to
+    build you?
+
+
+    Anyway, I''m restarting the simulation. Try not to let that
+    happen again.'

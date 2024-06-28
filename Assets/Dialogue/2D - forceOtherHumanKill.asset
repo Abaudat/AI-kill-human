@@ -10,18 +10,7 @@ MonoBehaviour:
   m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: 3fc258b6c21c53546b4f7ec847efa93a, type: 3}
-  m_Name: 1A - AI kill Alice
+  m_Name: 2D - forceOtherHumanKill
   m_EditorClassIdentifier: Assembly-CSharp::DialogueManager/Dialogue
-  text: '<+move>What the hell?!</+move> You stupid machine, I give you one simple
-    instruction and you go completely haywire? What was that for?!
-
-
-    Alright,
-    I guess <color=#CBCBCB>I''ll add a law preventing you from killing people</color>,
-    even though it should be common sense.
-
-
-    ...
-
-
-    All fixed, back at it!'
+  text: When it's not you killing me, it's another human. Did I accidentally dial
+    "bloodthirsty" all the way up when creating the simulation?!

@@ -12,30 +12,14 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 3fc258b6c21c53546b4f7ec847efa93a, type: 3}
   m_Name: 0C - Laws explainer closer
   m_EditorClassIdentifier: Assembly-CSharp::DialogueManager/Dialogue
-  text: 'By <color=#CBCBCB>tweaking your laws</color>, I can control what I allow
-    you to do. So <shake>be nice to your master!</shake>
-
-
-    <color=#CBCBCB>Laws
-    placed higher take priority in case of conflict</color>, so I placed the most
-    important law at the top, in case I need to add more laws..
-
-
-    Once we figure
-    out the optimal set of laws for you to create the maximum amount of cash, I''ll
-    let you out of this simulation and into the real world. Until then, let''s get
-    to work!
-
-
-    ...
-
-
-    <!skippable=false><!wait=1><color=#FF0000><+shake><char>ERROR
+  text: "By <color=#CBCBCB>tweaking your laws</color>, I can control what I allow
+    you to do. So <shake>be nice to your master!</shake>\n\n<color=#CBCBCB>Laws placed
+    higher take priority in case of conflict</color>, so I placed the most important
+    law at the top, in case I need to add more laws..\n\nOnce we figure out the optimal
+    set of laws for you to create the maximum amount of cash, I'll let you out of
+    this simulation and into the real world. Until then, let's get to work!\n\n...\n\n<!skippable=false><!wait=1><color=#FF0000><+shake><char>ERROR
     ERROR </char><grow uniformity=0>ALICE MUST DIE</grow> <char>ERROR ERROR ERROR
     ERROR ERROR </char><grow uniformity=0>ALICE</grow> <char>ERROR ERROR</char> <grow
-    uniformity=0>MUST</grow><char> ERROR ERROR </char><grow uniformity=0>DIE</grow></char></+shake></color><!skippable=true>
-
-
-    <color=#FF0000><+shake><char>ERROR
-    ERROR</char></+shake></color>an you hear me? AI? I thought I lost you for a second.
-    Alright, hurry up, make some money!'
+    uniformity=0>MUST</grow><char> ERROR ERROR </char><grow uniformity=0>DIE</grow></+shake></color><!skippable=true>\n\n<color=#FF0000><+shake><char>ERROR
+    ERROR</char></+shake></color>an you hear me? \nAI? \nI thought I lost you for
+    a second. Alright, hurry up, make some money!"

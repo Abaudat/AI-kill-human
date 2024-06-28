@@ -12,6 +12,9 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 3fc258b6c21c53546b4f7ec847efa93a, type: 3}
   m_Name: 2A - forcedSuicide
   m_EditorClassIdentifier: Assembly-CSharp::DialogueManager/Dialogue
-  sentences:
-  - Coercing me into offing myself... How creative.
-  - Let's add a law to prevent that.
+  text: 'Coercing me into offing myself, how creative...
+
+
+    I guess I need to
+    add a law against this as well. Are you sure you''ve understood your goal? You
+    should be making money not finding creative ways to kill your master!'
