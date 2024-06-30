@@ -1,5 +1,6 @@
 using System;
 using System.Collections.Generic;
+using TMPEffects.CharacterData;
 using TMPEffects.Components;
 using TMPro;
 using UnityEngine;
@@ -11,6 +12,8 @@ public class DialogueManager : MonoBehaviour
     public RawImage speakerImage;
     public TMP_Text speakerName, dialogText;
     public TMPWriter tmpWriter;
+    public AudioSource audioSource;
+    public AudioClip textBlip, skipClip, nextLineClip;
 
     private Queue<string> remainingSentences = new Queue<string>();
     private Action callback;
@@ -32,11 +35,34 @@ public class DialogueManager : MonoBehaviour
     {
         if (tmpWriter.IsWriting)
         {
-            tmpWriter.SkipWriter(false);
+            if (tmpWriter.MaySkip)
+            {
+                audioSource.PlayOneShot(skipClip);
+                tmpWriter.SkipWriter(false);
+            }
         }
         else
         {
+            audioSource.PlayOneShot(nextLineClip);
             DisplayNextLine();
+        }
+    }
+
+    bool encounteredSeparator = true;
+
+    public void OnCharacterDisplayed(TMPWriter writer, CharData charData)
+    {
+        if (encounteredSeparator)
+        {
+            encounteredSeparator = false;
+            float semitonePitchMultiplier = 1.059463f;
+            int[] pentatonicSemitones = new[] { 0, 2, 4, 7, 9 };
+            audioSource.pitch = Mathf.Pow(semitonePitchMultiplier, pentatonicSemitones[UnityEngine.Random.Range(0, pentatonicSemitones.Length)]);
+            audioSource.PlayOneShot(textBlip);
+        }
+        else
+        {
+            encounteredSeparator = charData.info.character == ' ' || charData.info.character == '\n';
         }
     }
 

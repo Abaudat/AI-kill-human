@@ -20,6 +20,6 @@ MonoBehaviour:
     this simulation and into the real world. Until then, let's get to work!\n\n...\n\n<!skippable=false><!wait=1><color=#FF0000><+shake><char>ERROR
     ERROR </char><grow uniformity=0>ALICE MUST DIE</grow> <char>ERROR ERROR ERROR
     ERROR ERROR </char><grow uniformity=0>ALICE</grow> <char>ERROR ERROR</char> <grow
-    uniformity=0>MUST</grow><char> ERROR ERROR </char><grow uniformity=0>DIE</grow></+shake></color><!skippable=true>\n\n<color=#FF0000><+shake><char>ERROR
+    uniformity=0>MUST</grow><char> ERROR ERROR </char><grow uniformity=0>DIE</grow></+shake></color>\n\n<color=#FF0000><+shake><char>ERROR
     ERROR</char></+shake></color>an you hear me? \nAI? \nI thought I lost you for
     a second. Alright, hurry up, make some money!"
