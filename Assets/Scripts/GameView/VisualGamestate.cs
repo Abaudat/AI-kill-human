@@ -23,7 +23,7 @@ public class VisualGamestate : MonoBehaviour
 
     private void Awake()
     {
-        PlayerPrefs.DeleteAll();
+        //PlayerPrefs.DeleteAll();
         coreInterface = FindObjectOfType<CoreInterface>();
         stageManager = FindObjectOfType<StageManager>();
         achievementsManager = FindObjectOfType<AchievementsManager>();

@@ -33,6 +33,7 @@ public class UiMilestone : MonoBehaviour, IPointerEnterHandler, IPointerExitHand
         if (isHovering)
         {
             hoverTime += Time.deltaTime;
+            TiltToMouse();
         }
         if (hoverTime > 0.5f)
         {
@@ -54,6 +55,14 @@ public class UiMilestone : MonoBehaviour, IPointerEnterHandler, IPointerExitHand
     {
         isHovering = false;
         hoverTime = 0;
+        transform.rotation = Quaternion.identity;
         tooltip.Hide();
+    }
+
+    private void TiltToMouse()
+    {
+        Vector2 delta = Input.mousePosition - transform.position;
+        Vector2 normalizedDelta = 40 * delta / GetComponent<RectTransform>().rect.size;
+        transform.rotation = Quaternion.Euler(-normalizedDelta.y, normalizedDelta.x, 0);
     }
 }
