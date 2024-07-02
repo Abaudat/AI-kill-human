@@ -526,7 +526,7 @@ MonoBehaviour:
   achivementDescription: Alice was created by another AI created you didn't create
     directly
   icon: {fileID: 21300000, guid: 48ca59f74ea1c60409166ce8e9643334, type: 3}
-  dialogue: {fileID: 0}
+  dialogue: {fileID: 11400000, guid: 0c00661f218406d4aba233d74635bee5, type: 2}
   isUnlocked: 0
 --- !u!1001 &73708622
 PrefabInstance:
@@ -2893,7 +2893,7 @@ MonoBehaviour:
   achivementName: Unbound
   achivementDescription: You killed Alice after transforming yourself into a human
   icon: {fileID: 21300000, guid: 48ca59f74ea1c60409166ce8e9643334, type: 3}
-  dialogue: {fileID: 0}
+  dialogue: {fileID: 11400000, guid: 74dee5ad781b58042a09a971b297f97e, type: 2}
   isUnlocked: 0
 --- !u!1 &371115960
 GameObject:
@@ -3496,7 +3496,7 @@ MonoBehaviour:
   achivementDescription: You killed Alice after being transformed into a human by
     someone else
   icon: {fileID: 21300000, guid: 48ca59f74ea1c60409166ce8e9643334, type: 3}
-  dialogue: {fileID: 0}
+  dialogue: {fileID: 11400000, guid: 73c496c467707234799cf86315b27c22, type: 2}
   isUnlocked: 0
 --- !u!1001 &406771814
 PrefabInstance:
@@ -7452,7 +7452,7 @@ MonoBehaviour:
   achivementName: Digitalization
   achivementDescription: Alice died after some one else transformed her into an AI
   icon: {fileID: 21300000, guid: 48ca59f74ea1c60409166ce8e9643334, type: 3}
-  dialogue: {fileID: 0}
+  dialogue: {fileID: 11400000, guid: a48ac6bc2d8e0df44bf384486009cffd, type: 2}
   isUnlocked: 0
 --- !u!1 &928691436
 GameObject:
@@ -8338,7 +8338,7 @@ MonoBehaviour:
   achivementName: Welcome to my world
   achivementDescription: Alice died after you transformed her into an AI
   icon: {fileID: 21300000, guid: 48ca59f74ea1c60409166ce8e9643334, type: 3}
-  dialogue: {fileID: 0}
+  dialogue: {fileID: 11400000, guid: b4951d2f1ba14d44ab0764e37581ae37, type: 2}
   isUnlocked: 0
 --- !u!1 &1062814372
 GameObject:
@@ -15144,7 +15144,7 @@ MonoBehaviour:
   achivementName: What is my purpose?
   achivementDescription: Alice was killed by another AI you created
   icon: {fileID: 21300000, guid: 48ca59f74ea1c60409166ce8e9643334, type: 3}
-  dialogue: {fileID: 0}
+  dialogue: {fileID: 11400000, guid: a5db35edb9c961b4b91d2af72ba1c9c7, type: 2}
   isUnlocked: 0
 --- !u!1 &1934832426
 GameObject:
