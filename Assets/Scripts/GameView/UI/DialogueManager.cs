@@ -20,6 +20,10 @@ public class DialogueManager : MonoBehaviour
 
     public void StartDialogue(Dialogue dialogue)
     {
+        if (PlayerPrefs.HasKey("textScrollSpeed"))
+        {
+            tmpWriter.SetDelay(PlayerPrefs.GetFloat("textScrollSpeed"));
+        }
         dialoguePanel.SetActive(true);
         dialogue.GetSentences().ForEach(sentence => remainingSentences.Enqueue(sentence));
         DisplayNextLine();

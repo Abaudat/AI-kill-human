@@ -10,7 +10,7 @@ MonoBehaviour:
   m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: 3fc258b6c21c53546b4f7ec847efa93a, type: 3}
-  m_Name: 0Z - AI died
+  m_Name: -1Z - AI died
   m_EditorClassIdentifier: Assembly-CSharp::DialogueManager/Dialogue
   text: 'You stupid AI how did you manage that?! Do you know how much it cost to
     build you?

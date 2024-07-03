@@ -10,11 +10,7 @@ MonoBehaviour:
   m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: 3fc258b6c21c53546b4f7ec847efa93a, type: 3}
-  m_Name: 3E - selfTransformedAiIntoHumanKill
+  m_Name: -1Z - TextScrollSpeed changed
   m_EditorClassIdentifier: Assembly-CSharp::DialogueManager/Dialogue
-  text: 'Welcome to humanity I guess... I thought maybe if you turned human your
-    psychopathic tendencies would go away, how naive of me.
-
-
-    Let''s add a law
-    to force you to stay machine, it''s better for everybody.'
+  text: Was I speaking too fast for you? Or too slowly? I hope it's better now, I
+    want you to understand my orders clearly!
