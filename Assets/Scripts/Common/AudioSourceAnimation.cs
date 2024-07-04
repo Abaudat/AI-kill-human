@@ -15,6 +15,10 @@ public class AudioSourceAnimation : MonoBehaviour
     public void PlayOneShot(AudioClip audioClip)
     {
         audioSource.Stop();
+        if (PlayerPrefs.HasKey("soundVolume"))
+        {
+            audioSource.volume = PlayerPrefs.GetFloat("soundVolume");
+        }
         audioSource.PlayOneShot(audioClip);
     }
 }

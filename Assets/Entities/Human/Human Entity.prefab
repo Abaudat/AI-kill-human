@@ -252,6 +252,7 @@ GameObject:
   - component: {fileID: 2574119735221487647}
   - component: {fileID: 8353146821827238428}
   - component: {fileID: 841330330592967670}
+  - component: {fileID: 631387295350674757}
   m_Layer: 0
   m_Name: Human Entity
   m_TagString: Untagged
@@ -471,3 +472,15 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   audioSource: {fileID: 8353146821827238428}
+--- !u!114 &631387295350674757
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 4189502234517873804}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: e3f3f850bd05d584cbd81a3d44a76791, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 

@@ -1,15 +1,18 @@
 using System.Collections.Generic;
+using System.Linq;
 using TMPEffects.Components;
 using UnityEngine;
 using UnityEngine.UI;
 
 public class SettingsManager : MonoBehaviour
 {
-    public Slider textScrollSpeedSlider, musicVolumeSlider;
-    public AnnotatedSlider textScrollSpeedAnnotatedSlider, musicVolumeAnnotatedSlider;
+    public Slider textScrollSpeedSlider, musicVolumeSlider, soundVolumeSlider;
+    public AnnotatedSlider textScrollSpeedAnnotatedSlider, musicVolumeAnnotatedSlider, soundVolumeAnnotatedSlider;
     public TMPWriter tmpWriter;
     public Dialogue textScrollSpeedChangedDialogue;
     public List<AudioSource> musicAudioSources;
+    public AudioSource testAudioSource;
+    public AudioClip testAudioClip;
 
     private DialogueManager dialogueManager;
 
@@ -33,6 +36,22 @@ public class SettingsManager : MonoBehaviour
         musicAudioSources.ForEach(audioSource => audioSource.volume = volumeInDecimal);
     }
 
+    public void ChangeSoundVolume(float volumeInPercent)
+    {
+        float volumeInDecimal = volumeInPercent / 100;
+        PlayerPrefs.SetFloat("soundVolume", volumeInDecimal);
+        FindObjectsOfType<AudioSource>()
+            .Where(x => x.tag != "Music")
+            .ToList()
+            .ForEach(audioSource => audioSource.volume = volumeInDecimal);
+    }
+
+    public void ChangeSoundVolumeAndEmitTestSound(float volumeInPercent)
+    {
+        ChangeSoundVolume(volumeInPercent);
+        testAudioSource.PlayOneShot(testAudioClip);
+    }
+
     private void LoadSettings()
     {
         if (PlayerPrefs.HasKey("textScrollSpeed"))
@@ -47,6 +66,13 @@ public class SettingsManager : MonoBehaviour
             musicVolumeSlider.SetValueWithoutNotify(volumeInPercent);
             musicVolumeAnnotatedSlider.PropagateValueToAnnotation(volumeInPercent);
             ChangeMusicVolume(volumeInPercent);
+        }
+        if (PlayerPrefs.HasKey("soundVolume"))
+        {
+            float volumeInPercent = Mathf.RoundToInt(100 * PlayerPrefs.GetFloat("soundVolume"));
+            soundVolumeSlider.SetValueWithoutNotify(volumeInPercent);
+            soundVolumeAnnotatedSlider.PropagateValueToAnnotation(volumeInPercent);
+            ChangeSoundVolume(volumeInPercent);
         }
     }
 }
