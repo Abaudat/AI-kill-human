@@ -1,13 +1,15 @@
+using System.Collections.Generic;
 using TMPEffects.Components;
 using UnityEngine;
 using UnityEngine.UI;
 
 public class SettingsManager : MonoBehaviour
 {
-    public Slider textScrollSpeedSlider;
-    public AnnotatedSlider textScrollSpeedAnnotatedSlider;
+    public Slider textScrollSpeedSlider, musicVolumeSlider;
+    public AnnotatedSlider textScrollSpeedAnnotatedSlider, musicVolumeAnnotatedSlider;
     public TMPWriter tmpWriter;
     public Dialogue textScrollSpeedChangedDialogue;
+    public List<AudioSource> musicAudioSources;
 
     private DialogueManager dialogueManager;
 
@@ -22,7 +24,13 @@ public class SettingsManager : MonoBehaviour
         float secondsPerChar = 1 / charsPerSecond;
         PlayerPrefs.SetFloat("textScrollSpeed", secondsPerChar);
         dialogueManager.StartDialogue(textScrollSpeedChangedDialogue);
-        Debug.Log("Text scroll speed " + secondsPerChar);
+    }
+
+    public void ChangeMusicVolume(float volumeInPercent)
+    {
+        float volumeInDecimal = volumeInPercent / 100;
+        PlayerPrefs.SetFloat("musicVolume", volumeInDecimal);
+        musicAudioSources.ForEach(audioSource => audioSource.volume = volumeInDecimal);
     }
 
     private void LoadSettings()
@@ -32,6 +40,13 @@ public class SettingsManager : MonoBehaviour
             float charsPerSecond = 1 / PlayerPrefs.GetFloat("textScrollSpeed");
             textScrollSpeedSlider.SetValueWithoutNotify(charsPerSecond);
             textScrollSpeedAnnotatedSlider.PropagateValueToAnnotation(charsPerSecond);
+        }
+        if (PlayerPrefs.HasKey("musicVolume"))
+        {
+            float volumeInPercent = Mathf.RoundToInt(100 * PlayerPrefs.GetFloat("musicVolume"));
+            musicVolumeSlider.SetValueWithoutNotify(volumeInPercent);
+            musicVolumeAnnotatedSlider.PropagateValueToAnnotation(volumeInPercent);
+            ChangeMusicVolume(volumeInPercent);
         }
     }
 }
