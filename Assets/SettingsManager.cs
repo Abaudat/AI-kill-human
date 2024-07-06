@@ -10,8 +10,6 @@ public class SettingsManager : MonoBehaviour
     public AnnotatedSlider textScrollSpeedAnnotatedSlider, musicVolumeAnnotatedSlider, soundVolumeAnnotatedSlider;
     public TMPWriter tmpWriter;
     public List<AudioSource> musicAudioSources;
-    public AudioSource testAudioSource;
-    public AudioClip testAudioClip;
 
     private void Awake()
     {
@@ -39,12 +37,6 @@ public class SettingsManager : MonoBehaviour
             .Where(x => x.tag != "Music")
             .ToList()
             .ForEach(audioSource => audioSource.volume = volumeInDecimal);
-    }
-
-    public void ChangeSoundVolumeAndEmitTestSound(float volumeInPercent)
-    {
-        ChangeSoundVolume(volumeInPercent);
-        testAudioSource.PlayOneShot(testAudioClip);
     }
 
     private void LoadSettings()

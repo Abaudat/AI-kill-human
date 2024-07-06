@@ -2517,7 +2517,7 @@ RectTransform:
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0, y: 0}
   m_AnchorMax: {x: 0, y: 0}
-  m_AnchoredPosition: {x: 132, y: 0}
+  m_AnchoredPosition: {x: 0, y: 0}
   m_SizeDelta: {x: 0, y: 0}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!222 &295392974
@@ -8768,19 +8768,20 @@ MonoBehaviour:
     m_PersistentCalls:
       m_Calls: []
   database: {fileID: 11400000, guid: 290ad04254a96934aa269d5b8d258008, type: 2}
-  delay: 0.025
   maySkip: 1
   writeOnStart: 1
   writeOnNewText: 1
   useScaledTime: 1
-  whiteSpaceDelay: 0
-  whiteSpaceDelayType: 0
-  punctuationDelay: 0
-  punctuationDelayType: 0
-  visibleDelay: 0
-  visibleDelayType: 0
-  linebreakDelay: 0
-  linebreakDelayType: 0
+  delays:
+    delay: 0.035
+    whitespaceDelay: 0
+    whitespaceDelayType: 0
+    linebreakDelay: 0
+    linebreakDelayType: 0
+    punctuationDelay: 0
+    punctuationDelayType: 0
+    visibleDelay: 0
+    visibleDelayType: 0
   sceneCommands:
     _serializedList: []
   useDefaultDatabase: 1
@@ -10184,8 +10185,6 @@ MonoBehaviour:
   tmpWriter: {fileID: 895303232}
   musicAudioSources:
   - {fileID: 722778679}
-  testAudioSource: {fileID: 1273898343}
-  testAudioClip: {fileID: 8300000, guid: c1ff74b037c755e49b57cca452218fd2, type: 3}
 --- !u!1 &1062814372
 GameObject:
   m_ObjectHideFlags: 0
@@ -16477,6 +16476,7 @@ GameObject:
   - component: {fileID: 1761696060}
   - component: {fileID: 1761696062}
   - component: {fileID: 1761696061}
+  - component: {fileID: 1761696063}
   m_Layer: 5
   m_Name: Slider
   m_TagString: Untagged
@@ -16572,7 +16572,7 @@ MonoBehaviour:
       m_Calls:
       - m_Target: {fileID: 1047161170}
         m_TargetAssemblyTypeName: SettingsManager, Assembly-CSharp
-        m_MethodName: ChangeSoundVolumeAndEmitTestSound
+        m_MethodName: ChangeSoundVolume
         m_Mode: 0
         m_Arguments:
           m_ObjectArgument: {fileID: 0}
@@ -16594,6 +16594,20 @@ MonoBehaviour:
           m_StringArgument: 
           m_BoolArgument: 0
         m_CallState: 2
+--- !u!114 &1761696063
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1761696059}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: aeb279d85628c354b86b20c3e1141114, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  audioSource: {fileID: 1273898343}
+  testAudioClip: {fileID: 8300000, guid: c1ff74b037c755e49b57cca452218fd2, type: 3}
 --- !u!1 &1771957046
 GameObject:
   m_ObjectHideFlags: 0
@@ -18622,7 +18636,7 @@ RectTransform:
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0, y: 0}
   m_AnchorMax: {x: 0, y: 0}
-  m_AnchoredPosition: {x: 321.61, y: 0}
+  m_AnchoredPosition: {x: 0, y: 0}
   m_SizeDelta: {x: 0, y: 0}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!114 &1971023963
