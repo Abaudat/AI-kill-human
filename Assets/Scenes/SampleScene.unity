@@ -10182,7 +10182,6 @@ MonoBehaviour:
   musicVolumeAnnotatedSlider: {fileID: 526342844}
   soundVolumeAnnotatedSlider: {fileID: 1761696061}
   tmpWriter: {fileID: 895303232}
-  textScrollSpeedChangedDialogue: {fileID: 11400000, guid: a189a3c88e6f69241bafa0eb5dc837d9, type: 2}
   musicAudioSources:
   - {fileID: 722778679}
   testAudioSource: {fileID: 1273898343}
@@ -16800,6 +16799,7 @@ GameObject:
   - component: {fileID: 1778865354}
   - component: {fileID: 1778865355}
   - component: {fileID: 1778865356}
+  - component: {fileID: 1778865357}
   m_Layer: 5
   m_Name: Slider
   m_TagString: Untagged
@@ -16917,6 +16917,19 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   annotation: {fileID: 811252826}
+--- !u!114 &1778865357
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1778865353}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 43a72acb2293fe44887740df091c6ce7, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  textScrollSpeedChangedDialogue: {fileID: 11400000, guid: a189a3c88e6f69241bafa0eb5dc837d9, type: 2}
 --- !u!1 &1784415345
 GameObject:
   m_ObjectHideFlags: 0

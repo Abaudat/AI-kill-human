@@ -9,16 +9,12 @@ public class SettingsManager : MonoBehaviour
     public Slider textScrollSpeedSlider, musicVolumeSlider, soundVolumeSlider;
     public AnnotatedSlider textScrollSpeedAnnotatedSlider, musicVolumeAnnotatedSlider, soundVolumeAnnotatedSlider;
     public TMPWriter tmpWriter;
-    public Dialogue textScrollSpeedChangedDialogue;
     public List<AudioSource> musicAudioSources;
     public AudioSource testAudioSource;
     public AudioClip testAudioClip;
 
-    private DialogueManager dialogueManager;
-
     private void Awake()
     {
-        dialogueManager = FindObjectOfType<DialogueManager>();
         LoadSettings();
     }
 
@@ -26,7 +22,6 @@ public class SettingsManager : MonoBehaviour
     {
         float secondsPerChar = 1 / charsPerSecond;
         PlayerPrefs.SetFloat("textScrollSpeed", secondsPerChar);
-        dialogueManager.StartDialogue(textScrollSpeedChangedDialogue);
     }
 
     public void ChangeMusicVolume(float volumeInPercent)

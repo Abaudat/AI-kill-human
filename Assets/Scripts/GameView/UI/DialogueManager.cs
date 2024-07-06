@@ -22,7 +22,10 @@ public class DialogueManager : MonoBehaviour
     {
         if (PlayerPrefs.HasKey("textScrollSpeed"))
         {
-            tmpWriter.SetDelay(PlayerPrefs.GetFloat("textScrollSpeed"));
+            Debug.Log(tmpWriter);
+            Debug.Log(tmpWriter.DefaultDelays);
+            tmpWriter.DefaultDelays.SetDelay(PlayerPrefs.GetFloat("textScrollSpeed"));
+            Debug.Log($"Delay set to {PlayerPrefs.GetFloat("textScrollSpeed")}");
         }
         dialoguePanel.SetActive(true);
         dialogue.GetSentences().ForEach(sentence => remainingSentences.Enqueue(sentence));
