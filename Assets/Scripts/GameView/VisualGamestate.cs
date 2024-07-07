@@ -99,6 +99,6 @@ public class VisualGamestate : MonoBehaviour
             MoneyWord => moneyWordRoot,
             _ => aiWordRoot
         };
-        Instantiate(wordButtonPrefab, wordRoot).GetComponent<WordButton>().Populate(word);
+        Instantiate(wordButtonPrefab, wordRoot).GetComponentInChildren<WordButton>().Populate(word);
     }
 }
