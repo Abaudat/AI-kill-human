@@ -11,6 +11,7 @@ public class CurrentSentenceManager : MonoBehaviour
 
     public Sentence currentSentence;
 
+    private GlobalSound globalSound;
     private CoreInterface coreInterface;
 
     private List<TerminalWord> terminalWords = new List<TerminalWord>();
@@ -18,6 +19,7 @@ public class CurrentSentenceManager : MonoBehaviour
     private void Awake()
     {
         coreInterface = FindObjectOfType<CoreInterface>();
+        globalSound = FindObjectOfType<GlobalSound>();
         terminalWords = terminalWordsRoot.GetComponentsInChildren<TerminalWord>().ToList();
     }
 
@@ -30,6 +32,7 @@ public class CurrentSentenceManager : MonoBehaviour
     {
         currentSentence = currentSentence.Append(word);
         Refresh();
+        globalSound.PlayAddWordToSentence();
     }
 
     public void ResetSentence()
