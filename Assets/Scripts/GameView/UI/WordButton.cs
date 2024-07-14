@@ -10,6 +10,7 @@ public class WordButton : MonoBehaviour, IDragHandler, IBeginDragHandler, IEndDr
     public Transform child;
     public RectTransform childShadow;
     public CanvasGroup canvasGroup;
+    public Animator animator;
 
     private GlobalSound globalSound;
     private CurrentSentenceManager currentSentenceManager;
@@ -36,10 +37,11 @@ public class WordButton : MonoBehaviour, IDragHandler, IBeginDragHandler, IEndDr
         }
     }
 
-    public void Populate(Word word)
+    public void Populate(Word word, float animationOffset)
     {
         this.word = word;
         this.wordText.text = word.ToString();
+        animator.SetFloat("offset", animationOffset);
     }
 
     public void PlayWord()
@@ -54,6 +56,7 @@ public class WordButton : MonoBehaviour, IDragHandler, IBeginDragHandler, IEndDr
         child.SetParent(drawnOnTop, true);
         childShadow.offsetMin = new Vector2(childShadow.offsetMin.x, -20);
         canvasGroup.blocksRaycasts = false;
+        animator.enabled = false;
     }
 
     public void OnEndDrag(PointerEventData eventData)
@@ -65,6 +68,7 @@ public class WordButton : MonoBehaviour, IDragHandler, IBeginDragHandler, IEndDr
         child.rotation = Quaternion.identity;
         childShadow.offsetMin = new Vector2(childShadow.offsetMin.x, -10);
         canvasGroup.blocksRaycasts = true;
+        animator.enabled = true;
     }
 
     public void OnDrag(PointerEventData eventData)

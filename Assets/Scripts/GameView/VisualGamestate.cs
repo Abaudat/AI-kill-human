@@ -82,23 +82,46 @@ public class VisualGamestate : MonoBehaviour
         makeWordRoot.GetComponentsInChildren<WordButton>().ToList().ForEach(x => Destroy(x.gameObject));
         moneyWordRoot.GetComponentsInChildren<WordButton>().ToList().ForEach(x => Destroy(x.gameObject));
 
+        int numberOfAiWords = 0;
+        int numberOfKillWords = 0;
+        int numberOfHumanWords = 0;
+        int numberOfMakeWords = 0;
+        int numberOfMoneyWords = 0;
         foreach(Word word in stageManager.GetWords(coreInterface.coreGamestate))
         {
-            GenerateButton(word);
+            Transform wordRoot = aiWordRoot;
+            float animationOffset = 0;
+            if (word is AiWord)
+            {
+                wordRoot = aiWordRoot;
+                animationOffset = (0 + numberOfAiWords * 0.1f) % 1;
+                numberOfAiWords++;
+            }
+            else if (word is KillWord)
+            {
+                wordRoot = killWordRoot;
+                animationOffset = (0.2f + numberOfKillWords * 0.1f) % 1;
+                numberOfKillWords++;
+            }
+            else if (word is HumanWord)
+            {
+                wordRoot = humanWordRoot;
+                animationOffset = (0.4f + numberOfHumanWords * 0.1f) % 1;
+                numberOfHumanWords++;
+            }
+            else if (word is MakeWord)
+            {
+                wordRoot = makeWordRoot;
+                animationOffset = (0.6f + numberOfMakeWords * 0.1f) % 1;
+                numberOfMakeWords++;
+            }
+            else if (word is MoneyWord)
+            {
+                wordRoot = moneyWordRoot;
+                animationOffset = (0.8f + numberOfMoneyWords * 0.1f) % 1;
+                numberOfMoneyWords++;
+            }
+            Instantiate(wordButtonPrefab, wordRoot).GetComponentInChildren<WordButton>().Populate(word, animationOffset);
         }
-    }
-
-    private void GenerateButton(Word word)
-    {
-        Transform wordRoot = word switch
-        {
-            AiWord => aiWordRoot,
-            KillWord => killWordRoot,
-            HumanWord => humanWordRoot,
-            MakeWord => makeWordRoot,
-            MoneyWord => moneyWordRoot,
-            _ => aiWordRoot
-        };
-        Instantiate(wordButtonPrefab, wordRoot).GetComponentInChildren<WordButton>().Populate(word);
     }
 }

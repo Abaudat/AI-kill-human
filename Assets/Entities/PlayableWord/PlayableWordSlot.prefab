@@ -294,6 +294,7 @@ GameObject:
   - component: {fileID: 8207072930345561411}
   - component: {fileID: 5868122274438592532}
   - component: {fileID: 1716917733065376883}
+  - component: {fileID: 5898272267687576476}
   m_Layer: 5
   m_Name: PlayableWordSlot
   m_TagString: Untagged
@@ -345,6 +346,28 @@ MonoBehaviour:
   child: {fileID: 4164174794613336223}
   childShadow: {fileID: 1701271028727274208}
   canvasGroup: {fileID: 1914595214295043290}
+  animator: {fileID: 5898272267687576476}
+--- !u!95 &5898272267687576476
+Animator:
+  serializedVersion: 5
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 4962684583965465763}
+  m_Enabled: 1
+  m_Avatar: {fileID: 0}
+  m_Controller: {fileID: 9100000, guid: 90c7e042794c1084a99cdc205a46e26e, type: 2}
+  m_CullingMode: 0
+  m_UpdateMode: 0
+  m_ApplyRootMotion: 0
+  m_LinearVelocityBlending: 0
+  m_StabilizeFeet: 0
+  m_WarningMessage: 
+  m_HasTransformHierarchy: 1
+  m_AllowConstantClipSamplingOptimization: 1
+  m_KeepAnimatorStateOnDisable: 0
+  m_WriteDefaultValuesOnDisable: 0
 --- !u!1 &6021519349069317450
 GameObject:
   m_ObjectHideFlags: 0
