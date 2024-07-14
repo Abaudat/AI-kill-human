@@ -18,3 +18,4 @@
 - Stack other humans/AI cards
 - Fix other humans/AI names so they fit in cards
 - Limit number of words in sentence panel
+- Gitch effect on headers
