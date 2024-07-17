@@ -8,6 +8,7 @@ public class CurrentSentenceManager : MonoBehaviour
 {
     public GameObject terminalWordPrefab;
     public Transform terminalWordsRoot;
+    public Animator terminalAnimator;
 
     public Sentence currentSentence;
 
@@ -32,6 +33,7 @@ public class CurrentSentenceManager : MonoBehaviour
     {
         currentSentence = currentSentence.Append(word);
         Refresh();
+        terminalAnimator.SetTrigger("Dropped");
         globalSound.PlayAddWordToSentence();
     }
 

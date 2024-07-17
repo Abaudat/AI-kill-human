@@ -2470,7 +2470,7 @@ RectTransform:
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0, y: 0}
   m_AnchorMax: {x: 0, y: 0}
-  m_AnchoredPosition: {x: 132, y: 0}
+  m_AnchoredPosition: {x: 0, y: 0}
   m_SizeDelta: {x: 0, y: 0}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!222 &295392974
@@ -4661,6 +4661,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   terminalWordPrefab: {fileID: 7414361290044438287, guid: c0be814397a120f438e40b1256dd067f, type: 3}
   terminalWordsRoot: {fileID: 2037518610}
+  terminalAnimator: {fileID: 803557530}
 --- !u!1001 &456616966
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -18290,7 +18291,7 @@ RectTransform:
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0, y: 0}
   m_AnchorMax: {x: 0, y: 0}
-  m_AnchoredPosition: {x: 321.61, y: 0}
+  m_AnchoredPosition: {x: 0, y: 0}
   m_SizeDelta: {x: 0, y: 0}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!114 &1971023963
