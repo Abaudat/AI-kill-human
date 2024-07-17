@@ -11,7 +11,6 @@
 - Add movement to separators
 - Add movement to backgrounds
 - Add CRT shader to game view
-- Make terminal ">>" blink / add blinking "_"
 - Fix tilt jitter when hovering edge
 - Add slight random movement to playable words and milestones?
 - Add movement to "ways to kill Alice" slider (every 10s some count up?)
