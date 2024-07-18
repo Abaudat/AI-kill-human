@@ -12,5 +12,4 @@
 - Add movement to "ways to kill Alice" slider (every 10s some count up?)
 - Stack other humans/AI cards
 - Fix other humans/AI names so they fit in cards
-- Limit number of words in sentence panel
 - Gitch effect on headers
