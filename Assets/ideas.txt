@@ -4,7 +4,6 @@
 - Either move milestone popup to the left, or put it behind the milestone so we can still see it
 - Add tilting to achievements
 - Add shader to milestones/achivements with rotation as input
-- Animate next stage button
 - Add movement to separators
 - Add movement to backgrounds
 - Add CRT shader to game view

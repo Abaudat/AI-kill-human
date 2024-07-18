@@ -31,10 +31,18 @@ public class CurrentSentenceManager : MonoBehaviour
 
     public void AppendWord(Word word)
     {
-        currentSentence = currentSentence.Append(word);
-        Refresh();
-        terminalAnimator.SetTrigger("Dropped");
-        globalSound.PlayAddWordToSentence();
+        if (currentSentence.words.Length < 12)
+        {
+            currentSentence = currentSentence.Append(word);
+            Refresh();
+            terminalAnimator.SetTrigger("Dropped");
+            globalSound.PlayAddWordToSentence();
+        }
+        else
+        {
+            terminalAnimator.SetTrigger("Deny");
+            globalSound.PlayImpossible();
+        }
     }
 
     public void ResetSentence()
