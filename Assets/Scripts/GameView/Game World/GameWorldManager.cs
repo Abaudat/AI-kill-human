@@ -7,6 +7,7 @@ using UnityEngine;
 public class GameWorldManager : MonoBehaviour
 {
     public GameObject aiPrefab, humanPrefab, moneyPrefab;
+    public Animator terminalAnimator;
 
     public List<(Word, GameWorldEntity)> entities = new List<(Word, GameWorldEntity)>();
 
@@ -50,6 +51,7 @@ public class GameWorldManager : MonoBehaviour
         else if (action is ImpossibleAction)
         {
             globalSound.PlayImpossible();
+            terminalAnimator.SetTrigger("Deny");
         }
         else if (action is MakeAction)
         {

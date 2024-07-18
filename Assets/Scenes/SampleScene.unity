@@ -8178,6 +8178,7 @@ MonoBehaviour:
   aiPrefab: {fileID: 4189502234517873804, guid: e35530ad4b56cb244a0e2640a9399210, type: 3}
   humanPrefab: {fileID: 4189502234517873804, guid: fef9823676ac53743ab19b633b1b596d, type: 3}
   moneyPrefab: {fileID: 4189502234517873804, guid: 290162eb5f00ffa48ab779a9e62751d9, type: 3}
+  terminalAnimator: {fileID: 803557530}
 --- !u!1 &877232023
 GameObject:
   m_ObjectHideFlags: 0
