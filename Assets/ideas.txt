@@ -2,14 +2,13 @@
 - Animate terminal reset
 - Make UI elements closer to the camera brighter so tilting is more obvious
 - Either move milestone popup to the left, or put it behind the milestone so we can still see it
-- Add tilting to achievements
 - Add shader to milestones/achivements with rotation as input
 - Add movement to separators
 - Add movement to backgrounds
 - Add CRT shader to game view
 - Fix tilt jitter when hovering edge
-- Add slight random movement to playable words and milestones?
 - Add movement to "ways to kill Alice" slider (every 10s some count up?)
 - Stack other humans/AI cards
 - Fix other humans/AI names so they fit in cards
 - Gitch effect on headers
+- Add cursor interaction to sliders, headers, milestones, easter eggs
