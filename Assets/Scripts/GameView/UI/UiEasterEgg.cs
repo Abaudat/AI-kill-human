@@ -12,10 +12,12 @@ public class UiEasterEgg : MonoBehaviour, IPointerEnterHandler, IPointerExitHand
     private Achievement achievement;
     private bool isHovering = false;
     private float hoverTime = 0;
+    private float animationOffset;
 
     private void Awake()
     {
         tooltip = FindObjectOfType<AchievementTooltip>();
+        animationOffset = Random.value * Mathf.PI * 2;
     }
 
     public void Populate(Achievement achievement)
@@ -34,6 +36,10 @@ public class UiEasterEgg : MonoBehaviour, IPointerEnterHandler, IPointerExitHand
         {
             hoverTime += Time.deltaTime;
             TiltToMouse();
+        }
+        else
+        {
+            AnimateRotation();
         }
         if (hoverTime > 0.5f)
         {
@@ -64,5 +70,13 @@ public class UiEasterEgg : MonoBehaviour, IPointerEnterHandler, IPointerExitHand
         Vector2 delta = Input.mousePosition - transform.position;
         Vector2 normalizedDelta = 40 * delta / GetComponent<RectTransform>().rect.size;
         transform.rotation = Quaternion.Euler(-normalizedDelta.y, normalizedDelta.x, 0);
+    }
+
+    private void AnimateRotation()
+    {
+        float rotationX = 20 * Mathf.Cos(Time.time + animationOffset);
+        float rotationY = 20 * Mathf.Sin(Time.time + animationOffset);
+
+        transform.rotation = Quaternion.Euler(rotationX, rotationY, 0);
     }
 }
