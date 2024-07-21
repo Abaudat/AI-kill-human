@@ -93,6 +93,9 @@ public class VisualGamestate : MonoBehaviour
         bool shouldSpawnExtraHumansWordButton = false;
         bool shouldSpawnExtraAisWordButton = false;
 
+        float extraHumansAnimationOffset = 0;
+        float extraAisAnimationOffset = 0;
+
         foreach ((Word word, int index) in stageManager.GetWords(coreInterface.coreGamestate).Where(word => word is AiWord).Select((value, i) => (value, i)))
         {
             float animationOffset = (0 + index * 0.1f) % 1;
@@ -107,6 +110,7 @@ public class VisualGamestate : MonoBehaviour
                 shouldSpawnExtraAisWordButton = true;
                 Instantiate(wordButtonPrefab, extraAiWordRoot).GetComponentInChildren<WordButton>().Populate(word, animationOffset);
             }
+            extraAisAnimationOffset = (0 + (index + 1) * 0.1f) % 1;
         }
         foreach ((Word word, int index) in stageManager.GetWords(coreInterface.coreGamestate).Where(word => word is KillWord).Select((value, i) => (value, i)))
         {
@@ -127,6 +131,7 @@ public class VisualGamestate : MonoBehaviour
                 shouldSpawnExtraHumansWordButton = true;
                 Instantiate(wordButtonPrefab, extraHumanWordRoot).GetComponentInChildren<WordButton>().Populate(word, animationOffset);
             }
+            extraHumansAnimationOffset = (0 + (index + 1) * 0.1f) % 1;
         }
         foreach ((Word word, int index) in stageManager.GetWords(coreInterface.coreGamestate).Where(word => word is MakeWord).Select((value, i) => (value, i)))
         {
@@ -141,8 +146,16 @@ public class VisualGamestate : MonoBehaviour
 
         extraHumansWordButton.SetActive(shouldSpawnExtraHumansWordButton);
         extraHumansWordButton.transform.SetAsLastSibling();
+        if (shouldSpawnExtraHumansWordButton)
+        {
+            extraHumansWordButton.GetComponentInChildren<Animator>().SetFloat("offset", extraHumansAnimationOffset);
+        }
 
         extraAisWordButton.SetActive(shouldSpawnExtraAisWordButton);
         extraAisWordButton.transform.SetAsLastSibling();
+        if (shouldSpawnExtraAisWordButton)
+        {
+            extraAisWordButton.GetComponentInChildren<Animator>().SetFloat("offset", extraHumansAnimationOffset);
+        }
     }
 }
