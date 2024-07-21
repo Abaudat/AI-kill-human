@@ -8,7 +8,6 @@
 - Add CRT shader to game view
 - Fix tilt jitter when hovering edge
 - Add movement to "ways to kill Alice" slider (every 10s some count up?)
-- Stack other humans/AI cards
 - Fix other humans/AI names so they fit in cards
 - Gitch effect on headers
 - Add cursor interaction to sliders, headers, milestones, easter eggs

@@ -5,8 +5,8 @@ public static class AiNameGenerator
     private static string[] names = new string[]
     {
         "BETA",
-        "C-BORG",
-        "DELTOID",
+        "CBORG",
+        "DELTA",
         "ECHO",
         "FOX"
     };
