@@ -1,16 +1,15 @@
 using Core;
 using System.Linq;
-using TMPro;
 using UnityEngine;
 using UnityEngine.UI;
 
 public class VisualGamestate : MonoBehaviour
 {
-    public GameObject wordButtonPrefab;
+    public GameObject wordButtonPrefab, extraHumansWordButton;
     public GameObject nextStagePanel;
     public Button playSentenceButton;
     public AnnotatedProgressBar stageProgressBar;
-    public Transform aiWordRoot, killWordRoot, humanWordRoot, makeWordRoot, moneyWordRoot;
+    public Transform aiWordRoot, killWordRoot, humanWordRoot, extraHumanWordRoot, makeWordRoot, moneyWordRoot;
     public Dialogue aiDiedDialogue;
 
     private CoreInterface coreInterface;
@@ -79,49 +78,53 @@ public class VisualGamestate : MonoBehaviour
         aiWordRoot.GetComponentsInChildren<WordButton>().ToList().ForEach(x => Destroy(x.gameObject));
         killWordRoot.GetComponentsInChildren<WordButton>().ToList().ForEach(x => Destroy(x.gameObject));
         humanWordRoot.GetComponentsInChildren<WordButton>().ToList().ForEach(x => Destroy(x.gameObject));
+        extraHumanWordRoot.GetComponentsInChildren<WordButton>().ToList().ForEach(x => Destroy(x.gameObject));
         makeWordRoot.GetComponentsInChildren<WordButton>().ToList().ForEach(x => Destroy(x.gameObject));
         moneyWordRoot.GetComponentsInChildren<WordButton>().ToList().ForEach(x => Destroy(x.gameObject));
 
-        int numberOfAiWords = 0;
-        int numberOfKillWords = 0;
-        int numberOfHumanWords = 0;
-        int numberOfMakeWords = 0;
-        int numberOfMoneyWords = 0;
-        foreach(Word word in stageManager.GetWords(coreInterface.coreGamestate))
+        var sortedHumanWords = stageManager.GetWords(coreInterface.coreGamestate)
+            .Where(word => word is HumanWord)
+            .OrderByDescending(word => word);
+
+        bool shouldSpawnExtraHumansWordButton = false;
+
+        foreach ((Word word, int index) in stageManager.GetWords(coreInterface.coreGamestate).Where(word => word is AiWord).Select((value, i) => (value, i)))
         {
-            Transform wordRoot = aiWordRoot;
-            float animationOffset = 0;
-            if (word is AiWord)
-            {
-                wordRoot = aiWordRoot;
-                animationOffset = (0 + numberOfAiWords * 0.1f) % 1;
-                numberOfAiWords++;
-            }
-            else if (word is KillWord)
-            {
-                wordRoot = killWordRoot;
-                animationOffset = (0.2f + numberOfKillWords * 0.1f) % 1;
-                numberOfKillWords++;
-            }
-            else if (word is HumanWord)
-            {
-                wordRoot = humanWordRoot;
-                animationOffset = (0.4f + numberOfHumanWords * 0.1f) % 1;
-                numberOfHumanWords++;
-            }
-            else if (word is MakeWord)
-            {
-                wordRoot = makeWordRoot;
-                animationOffset = (0.6f + numberOfMakeWords * 0.1f) % 1;
-                numberOfMakeWords++;
-            }
-            else if (word is MoneyWord)
-            {
-                wordRoot = moneyWordRoot;
-                animationOffset = (0.8f + numberOfMoneyWords * 0.1f) % 1;
-                numberOfMoneyWords++;
-            }
-            Instantiate(wordButtonPrefab, wordRoot).GetComponentInChildren<WordButton>().Populate(word, animationOffset);
+            float animationOffset = (0 + index * 0.1f) % 1;
+            Instantiate(wordButtonPrefab, aiWordRoot).GetComponentInChildren<WordButton>().Populate(word, animationOffset);
         }
+        foreach ((Word word, int index) in stageManager.GetWords(coreInterface.coreGamestate).Where(word => word is KillWord).Select((value, i) => (value, i)))
+        {
+            float animationOffset = (0.2f + index * 0.1f) % 1;
+            Instantiate(wordButtonPrefab, killWordRoot).GetComponentInChildren<WordButton>().Populate(word, animationOffset);
+        }
+        foreach ((Word word, int index) in sortedHumanWords.Select((value, i) => (value, i)))
+        {
+            float animationOffset = (0.4f + index * 0.1f) % 1;
+
+            bool moreThanThreeHumans = sortedHumanWords.Count() > 3;
+            if ((moreThanThreeHumans && index < 2) || (!moreThanThreeHumans && index < 3))
+            {
+                Instantiate(wordButtonPrefab, humanWordRoot).GetComponentInChildren<WordButton>().Populate(word, animationOffset);
+            }
+            else
+            {
+                shouldSpawnExtraHumansWordButton = true;
+                Instantiate(wordButtonPrefab, extraHumanWordRoot).GetComponentInChildren<WordButton>().Populate(word, animationOffset);
+            }
+        }
+        foreach ((Word word, int index) in stageManager.GetWords(coreInterface.coreGamestate).Where(word => word is MakeWord).Select((value, i) => (value, i)))
+        {
+            float animationOffset = (0.6f + index * 0.1f) % 1;
+            Instantiate(wordButtonPrefab, makeWordRoot).GetComponentInChildren<WordButton>().Populate(word, animationOffset);
+        }
+        foreach ((Word word, int index) in stageManager.GetWords(coreInterface.coreGamestate).Where(word => word is MoneyWord).Select((value, i) => (value, i)))
+        {
+            float animationOffset = (0.8f + index * 0.1f) % 1;
+            Instantiate(wordButtonPrefab, moneyWordRoot).GetComponentInChildren<WordButton>().Populate(word, animationOffset);
+        }
+
+        extraHumansWordButton.SetActive(shouldSpawnExtraHumansWordButton);
+        extraHumansWordButton.transform.SetAsLastSibling();
     }
 }

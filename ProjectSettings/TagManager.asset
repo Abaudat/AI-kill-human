@@ -6,6 +6,7 @@ TagManager:
   tags:
   - Music
   - DrawnOnTop
+  - ExtraHumansPanel
   layers:
   - Default
   - TransparentFX
