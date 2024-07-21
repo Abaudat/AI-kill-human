@@ -6,6 +6,7 @@ public class UiEasterEgg : MonoBehaviour, IPointerEnterHandler, IPointerExitHand
 {
     public Image icon;
     public Animator animator;
+    public Transform iconTransform;
 
     private AchievementTooltip tooltip;
 
@@ -69,7 +70,7 @@ public class UiEasterEgg : MonoBehaviour, IPointerEnterHandler, IPointerExitHand
     {
         Vector2 delta = Input.mousePosition - transform.position;
         Vector2 normalizedDelta = 40 * delta / GetComponent<RectTransform>().rect.size;
-        transform.rotation = Quaternion.Euler(-normalizedDelta.y, normalizedDelta.x, 0);
+        iconTransform.rotation = Quaternion.Euler(-normalizedDelta.y, normalizedDelta.x, 0);
     }
 
     private void AnimateRotation()
@@ -77,6 +78,6 @@ public class UiEasterEgg : MonoBehaviour, IPointerEnterHandler, IPointerExitHand
         float rotationX = 20 * Mathf.Cos(Time.time + animationOffset);
         float rotationY = 20 * Mathf.Sin(Time.time + animationOffset);
 
-        transform.rotation = Quaternion.Euler(rotationX, rotationY, 0);
+        iconTransform.rotation = Quaternion.Euler(rotationX, rotationY, 0);
     }
 }

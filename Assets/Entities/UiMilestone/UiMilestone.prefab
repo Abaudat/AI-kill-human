@@ -385,4 +385,4 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   icon: {fileID: 3004063486695303650}
   animator: {fileID: 8112058470862797741}
-  maxTilt: {x: 45, y: 45}
+  iconTransform: {fileID: 2438829163467475959}
