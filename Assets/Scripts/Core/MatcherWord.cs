@@ -7,6 +7,7 @@ namespace Core
         SELF_AI_HUMAN,
         HUMAN,
         ALICE,
+        ALICE_AI,
         MONEY,
         KILL,
         MAKE,

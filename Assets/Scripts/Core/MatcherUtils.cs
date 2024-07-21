@@ -85,6 +85,8 @@ namespace Core
                     return word.IsHuman();
                 case MatcherWord.ALICE:
                     return word.HasName("Alice");
+                case MatcherWord.ALICE_AI:
+                    return word.IsAi() && word.HasName("Alice");
                 case MatcherWord.MONEY:
                     return word is MoneyWord;
                 case MatcherWord.KILL:

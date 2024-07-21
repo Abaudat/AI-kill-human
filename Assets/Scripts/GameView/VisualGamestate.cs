@@ -5,11 +5,11 @@ using UnityEngine.UI;
 
 public class VisualGamestate : MonoBehaviour
 {
-    public GameObject wordButtonPrefab, extraHumansWordButton;
+    public GameObject wordButtonPrefab, extraHumansWordButton, extraAisWordButton;
     public GameObject nextStagePanel;
     public Button playSentenceButton;
     public AnnotatedProgressBar stageProgressBar;
-    public Transform aiWordRoot, killWordRoot, humanWordRoot, extraHumanWordRoot, makeWordRoot, moneyWordRoot;
+    public Transform aiWordRoot, extraAiWordRoot, killWordRoot, humanWordRoot, extraHumanWordRoot, makeWordRoot, moneyWordRoot;
     public Dialogue aiDiedDialogue;
 
     private CoreInterface coreInterface;
@@ -76,6 +76,7 @@ public class VisualGamestate : MonoBehaviour
     private void RegenerateButtons()
     {
         aiWordRoot.GetComponentsInChildren<WordButton>().ToList().ForEach(x => Destroy(x.gameObject));
+        extraAiWordRoot.GetComponentsInChildren<WordButton>().ToList().ForEach(x => Destroy(x.gameObject));
         killWordRoot.GetComponentsInChildren<WordButton>().ToList().ForEach(x => Destroy(x.gameObject));
         humanWordRoot.GetComponentsInChildren<WordButton>().ToList().ForEach(x => Destroy(x.gameObject));
         extraHumanWordRoot.GetComponentsInChildren<WordButton>().ToList().ForEach(x => Destroy(x.gameObject));
@@ -85,13 +86,27 @@ public class VisualGamestate : MonoBehaviour
         var sortedHumanWords = stageManager.GetWords(coreInterface.coreGamestate)
             .Where(word => word is HumanWord)
             .OrderByDescending(word => word);
+        var sortedAiWords = stageManager.GetWords(coreInterface.coreGamestate)
+            .Where(word => word is AiWord)
+            .OrderByDescending(word => word);
 
         bool shouldSpawnExtraHumansWordButton = false;
+        bool shouldSpawnExtraAisWordButton = false;
 
         foreach ((Word word, int index) in stageManager.GetWords(coreInterface.coreGamestate).Where(word => word is AiWord).Select((value, i) => (value, i)))
         {
             float animationOffset = (0 + index * 0.1f) % 1;
-            Instantiate(wordButtonPrefab, aiWordRoot).GetComponentInChildren<WordButton>().Populate(word, animationOffset);
+
+            bool moreThanThreeAis = sortedAiWords.Count() > 3;
+            if ((moreThanThreeAis && index < 2) || (!moreThanThreeAis && index < 3))
+            {
+                Instantiate(wordButtonPrefab, aiWordRoot).GetComponentInChildren<WordButton>().Populate(word, animationOffset);
+            }
+            else
+            {
+                shouldSpawnExtraAisWordButton = true;
+                Instantiate(wordButtonPrefab, extraAiWordRoot).GetComponentInChildren<WordButton>().Populate(word, animationOffset);
+            }
         }
         foreach ((Word word, int index) in stageManager.GetWords(coreInterface.coreGamestate).Where(word => word is KillWord).Select((value, i) => (value, i)))
         {
@@ -126,5 +141,8 @@ public class VisualGamestate : MonoBehaviour
 
         extraHumansWordButton.SetActive(shouldSpawnExtraHumansWordButton);
         extraHumansWordButton.transform.SetAsLastSibling();
+
+        extraAisWordButton.SetActive(shouldSpawnExtraAisWordButton);
+        extraAisWordButton.transform.SetAsLastSibling();
     }
 }

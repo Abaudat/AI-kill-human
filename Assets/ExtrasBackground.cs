@@ -1,13 +1,14 @@
 using UnityEngine;
 using UnityEngine.EventSystems;
 
-public class ExtraHumansBackground : MonoBehaviour, IPointerClickHandler, IPointerEnterHandler
+public class ExtrasBackground : MonoBehaviour, IPointerClickHandler, IPointerEnterHandler
 {
-    public ExtraHumans extraHumans;
+    public ExtrasManager extras;
 
     public void OnPointerClick(PointerEventData eventData)
     {
-        extraHumans.Hide();
+        extras.HideExtraHumans();
+        extras.HideExtraAIs();
     }
 
     public void OnPointerEnter(PointerEventData eventData)
@@ -15,7 +16,8 @@ public class ExtraHumansBackground : MonoBehaviour, IPointerClickHandler, IPoint
         WordButton wordButton = eventData?.pointerDrag?.GetComponent<WordButton>();
         if (wordButton)
         {
-            extraHumans.Hide();
+            extras.HideExtraHumans();
+            extras.HideExtraAIs();
         }
     }
 }
