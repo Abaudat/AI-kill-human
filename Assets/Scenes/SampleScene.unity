@@ -18553,6 +18553,8 @@ MonoBehaviour:
   current: 2
   filledColor: {r: 0.92156863, g: 0.98039216, b: 0.23529412, a: 1}
   emptyColor: {r: 0.79607844, g: 0.79607844, b: 0.79607844, a: 1}
+  animationInterval: 0
+  animationLoopDelay: 10
 --- !u!222 &1790019909
 CanvasRenderer:
   m_ObjectHideFlags: 0

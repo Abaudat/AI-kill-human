@@ -1,3 +1,4 @@
+using System.Collections;
 using System.Collections.Generic;
 using System.Linq;
 using TMPro;
@@ -11,12 +12,19 @@ public class AnnotatedProgressBar : MonoBehaviour
     public TMP_Text annotation;
     public int max, current;
     public Color filledColor, emptyColor;
+    public float animationInterval = 1, animationLoopDelay = 10;
 
     private List<Image> steps = new List<Image>();
+    private int animationIndex = 0;
 
     private void Awake()
     {
         steps = GetComponentsInChildren<Image>().ToList();
+    }
+
+    private void Start()
+    {
+        StartCoroutine(Animate());
     }
 
     public void SetProgress(int current, int max)
@@ -47,5 +55,24 @@ public class AnnotatedProgressBar : MonoBehaviour
             step.color = filledColor;
         }
         annotation.text = $"{current}/{max}";
+    }
+
+    private IEnumerator Animate()
+    {
+        while (true)
+        {
+            if (steps.Count <= 0)
+            {
+                yield return new WaitForSeconds(animationInterval);
+            }
+            if (animationIndex >= steps.Count || animationIndex >= current)
+            {
+                animationIndex = 0;
+                yield return new WaitForSeconds(animationLoopDelay);
+            }
+            steps[animationIndex].GetComponent<Animator>().SetTrigger("Grow");
+            animationIndex++;
+            yield return new WaitForSeconds(animationInterval);
+        }
     }
 }
