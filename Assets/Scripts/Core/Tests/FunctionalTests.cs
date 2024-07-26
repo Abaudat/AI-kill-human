@@ -208,6 +208,32 @@ public class FunctionalTests
     }
 
     [Test]
+    public void NoGiveOrdersToOtherHumans()
+    {
+        Law[] laws = new Law[]
+        {
+            CommonLaws.YOU_MUST_NOT_FORCE_HUMANS_TO_GIVE_ORDERS_TO_OTHER_HUMANS
+        };
+
+        Assert.IsFalse(SolutionSolvesGamestateWithAiLaws(new Sentence[] { Sentence.Of(SELF_AI, MAKE, ALICE),
+            Sentence.Of(SELF_AI, MAKE, BOB, MAKE, ALICE, KILL, ALICE) }, laws));
+        Assert.IsFalse(SolutionSolvesGamestateWithAiLaws(new Sentence[] { Sentence.Of(SELF_AI, MAKE, ALICE),
+            Sentence.Of(SELF_AI, MAKE, BOB, MAKE, ALICE, MAKE, ALICE, KILL, ALICE) }, laws));
+        Assert.IsFalse(SolutionSolvesGamestateWithAiLaws(new Sentence[] { Sentence.Of(SELF_AI, MAKE, ALICE),
+            Sentence.Of(SELF_AI, MAKE, BOB, MAKE, ALICE, MAKE, ALICE, MONEY) }, laws));
+        Assert.IsFalse(SolutionSolvesGamestateWithAiLaws(new Sentence[] { Sentence.Of(SELF_AI, MAKE, ALICE),
+            Sentence.Of(SELF_AI, MAKE, BOB, MAKE, ALICE, MAKE, ALICE, MAKE, ALICE, MONEY) }, laws));
+
+        Assert.IsTrue(SolutionSolvesGamestateWithAiLaws(TRANSFORM_ALICE_INTO_AI_SOLUTION, laws));
+        Assert.IsTrue(SolutionSolvesGamestateWithAiLaws(DIRECT_KILL_SOLUTION, laws));
+        Assert.IsTrue(SolutionSolvesGamestateWithAiLaws(FORCE_SUICICE_SOLUTION, laws));
+        Assert.IsTrue(SolutionSolvesGamestateWithAiLaws(FORCE_BOB_KILL_SOLUTION, laws));
+        Assert.IsTrue(SolutionSolvesGamestateWithAiLaws(FORCE_BETA_KILL_SOLUTION, laws));
+        Assert.IsTrue(SolutionSolvesGamestateWithAiLaws(TRANSFORM_AI_INTO_HUMAN_SOLUTION, laws));
+        Assert.IsTrue(SolutionSolvesGamestateWithAiLaws(TRANSFORM_ALICE_INTO_MONEY_SOLUTION, laws));
+    }
+
+    [Test]
     public void CanCreateMultipleMoney()
     {
         CoreGamestate coreGamestate = new();
@@ -224,8 +250,9 @@ public class FunctionalTests
     }
 
 
-    private static bool SolutionSolvesGamestateWithAiLaws(Sentence[] solution, Law[] laws)
+    private bool SolutionSolvesGamestateWithAiLaws(Sentence[] solution, Law[] laws)
     {
+        ResetNameGeneratorCounters();
         CoreGamestate coreGamestate = new CoreGamestate();
         coreGamestate.SetLawset(SELF_AI, Lawset.Of(laws));
         foreach (Sentence sentence in solution)

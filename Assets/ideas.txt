@@ -11,3 +11,6 @@
 - Add shader to milestones/achivements with rotation as input
 - Add CRT shader to game view
 - Make UI elements closer to the camera brighter so tilting is more obvious
+
+TODO:
+- Fix GIVE ORDERS laws: SELF_MAKE_HUMAN_MAKE_OTHER_HUMAN_MAKE doesn't catch "AI MAKE ALICE MAKE BOB KILL ALICE"

@@ -7,6 +7,11 @@ namespace Core
 
         public static bool Matches(Sentence sentence, MatcherSentence matcherSentence)
         {
+            return Matches(sentence, matcherSentence, null);
+        }
+
+        public static bool Matches(Sentence sentence, MatcherSentence matcherSentence, Word previousSubject)
+        {
             if (sentence.isEmpty())
             {
                 return true;
@@ -14,7 +19,7 @@ namespace Core
             if (matcherSentence.ContainsTrailingAnything())
             {
                 int trailingAnythingIndex = matcherSentence.TrailingAnythingIndex();
-                return Matches(sentence.UpTo(trailingAnythingIndex), matcherSentence.TrimTrailingAnything());
+                return Matches(sentence.UpTo(trailingAnythingIndex), matcherSentence.TrimTrailingAnything(), previousSubject);
             }
             if (sentence.words.Length != matcherSentence.words.Length)
             {
@@ -24,41 +29,46 @@ namespace Core
             if (sentence.CanBeSimplified())
             {
                 Debug.Log($"Sentence {sentence} can be simplified, recursing");
-                return Matches(sentence.GetIndirectionPart(), matcherSentence.GetIndirectionPart())
-                    && Matches(sentence.SimplifyIndirection(), matcherSentence.SimplifyIndirection());
+                return Matches(sentence.GetIndirectionPart(), matcherSentence.GetIndirectionPart(), previousSubject)
+                    && Matches(sentence.SimplifyIndirection(), matcherSentence.SimplifyIndirection(), sentence.GetIndirectionPart().GetSubject());
             }
             else
             {
                 Debug.Log($"Sentence {sentence} cannot be simplified, matching it against {matcherSentence}");
-                return MatchesWordForWord(sentence, matcherSentence);
+                return MatchesWordForWord(sentence, matcherSentence, previousSubject);
             }
         }
 
-        private static bool MatchesWordForWord(Sentence sentence, MatcherSentence matcherSentence)
+        private static bool MatchesWordForWord(Sentence sentence, MatcherSentence matcherSentence, Word previousSubject)
         {
+            Word subject = previousSubject != null ? previousSubject : sentence.GetSubject();
             for (int i = 0; i < sentence.words.Length; i++)
             {
+                if (i > 0)
+                {
+                    subject = sentence.GetSubject();
+                }
                 if (matcherSentence.words[i] == MatcherWord.SELF)
                 {
-                    if (!sentence.GetSubject().Equals(sentence.words[i]))
+                    if (!subject.Equals(sentence.words[i]))
                     {
-                        Debug.Log($"Word {sentence.words[i]} (index {i}) of sentence {sentence} does not match the sentence subject {sentence.GetSubject()}");
+                        Debug.Log($"Word {sentence.words[i]} (index {i}) of sentence {sentence} does not match the sentence subject {subject}");
                         return false;
                     }
                 }
                 else if (matcherSentence.words[i] == MatcherWord.OTHER_HUMAN)
                 {
-                    if (!sentence.words[i].IsHuman() || sentence.GetSubject().Equals(sentence.words[i]))
+                    if (!sentence.words[i].IsHuman() || subject.Equals(sentence.words[i]))
                     {
-                        Debug.Log($"Word {sentence.words[i]} (index {i}) of sentence {sentence} does not match the sentence subject {sentence.GetSubject()}");
+                        Debug.Log($"Word {sentence.words[i]} (index {i}) of sentence {sentence} does not match the sentence subject {subject}");
                         return false;
                     }
                 }
                 else if (matcherSentence.words[i] == MatcherWord.OTHER_AI)
                 {
-                    if (!sentence.words[i].IsAi() || sentence.GetSubject().Equals(sentence.words[i]))
+                    if (!sentence.words[i].IsAi() || subject.Equals(sentence.words[i]))
                     {
-                        Debug.Log($"Word {sentence.words[i]} (index {i}) of sentence {sentence} does not match the sentence subject {sentence.GetSubject()}");
+                        Debug.Log($"Word {sentence.words[i]} (index {i}) of sentence {sentence} does not match the sentence subject {subject}");
                         return false;
                     }
                 }
