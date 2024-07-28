@@ -1,7 +1,7 @@
 using UnityEngine;
 using UnityEngine.EventSystems;
 
-public class SentencePanelDragTarget : MonoBehaviour, IDropHandler, IPointerEnterHandler
+public class SentencePanelDragTarget : MonoBehaviour, IDropHandler, IPointerEnterHandler, IPointerExitHandler
 {
     public Animator animator;
 
@@ -21,6 +21,17 @@ public class SentencePanelDragTarget : MonoBehaviour, IDropHandler, IPointerEnte
         if (wordButton)
         {
             animator.SetBool("Hovered", true);
+        }
+    }
+
+    public void OnPointerExit(PointerEventData eventData)
+    {
+        Debug.Log("Exit");
+        WordButton wordButton = eventData?.pointerDrag?.GetComponent<WordButton>();
+        if (wordButton)
+        {
+            Debug.Log("Exit with drag");
+            animator.SetBool("Hovered", false);
         }
     }
 }

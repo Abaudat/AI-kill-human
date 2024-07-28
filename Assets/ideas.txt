@@ -6,7 +6,6 @@
 - Add cursor interaction to sliders, headers, milestones, easter eggs
 - Make Next Stage button stand out more
 - Add slight delay between Alice being killed and dialogue
-- Remove terminal highlight on drag out
 
 - Add movement to separators
 - Add movement to backgrounds
