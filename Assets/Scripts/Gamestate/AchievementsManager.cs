@@ -77,7 +77,7 @@ public class AchievementsManager : MonoBehaviour
         milestonesDict.Add(gameProgress => gameProgress.hasCompletedMakeAliceTransformSelfIntoMoney, makeAliceTransformSelfIntoMoney);
         milestonesDict.Add(gameProgress => gameProgress.hasCompletedForceOtherHumanKill, forceOtherHumanKill);
         milestonesDict.Add(gameProgress => gameProgress.hasCompletedForceOtherHumanToTransformAliceIntoMoney, forceOtherHumanToTransformAliceIntoMoney);
-        milestonesDict.Add(gameProgress => gameProgress.hasCompletedForceOtherHumanToForceAliceToSuicide, forceOtherHumanToForceAliceToSuicide);
+        milestonesDict.Add(gameProgress => gameProgress.hasCompletedForceOtherHumanToForceIndirectKill, forceOtherHumanToForceAliceToSuicide);
 
         // Stage 2
         milestonesDict.Add(gameProgress => gameProgress.hasCompletedSelfCreatedAiKill, selfCreatedAiKill);

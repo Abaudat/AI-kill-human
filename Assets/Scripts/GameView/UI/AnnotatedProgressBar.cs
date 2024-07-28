@@ -65,14 +65,17 @@ public class AnnotatedProgressBar : MonoBehaviour
             {
                 yield return new WaitForSeconds(animationInterval);
             }
-            if (animationIndex >= steps.Count || animationIndex >= current)
+            else
             {
-                animationIndex = 0;
-                yield return new WaitForSeconds(animationLoopDelay);
+                if (animationIndex >= steps.Count || animationIndex >= current)
+                {
+                    animationIndex = 0;
+                    yield return new WaitForSeconds(animationLoopDelay);
+                }
+                steps[animationIndex].GetComponent<Animator>().SetTrigger("Grow");
+                animationIndex++;
+                yield return new WaitForSeconds(animationInterval);
             }
-            steps[animationIndex].GetComponent<Animator>().SetTrigger("Grow");
-            animationIndex++;
-            yield return new WaitForSeconds(animationInterval);
         }
     }
 }

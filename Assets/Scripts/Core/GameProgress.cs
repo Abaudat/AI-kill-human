@@ -15,7 +15,7 @@ namespace Core
         public bool hasCompletedMakeAliceTransformSelfIntoMoney = false;
         public bool hasCompletedForceOtherHumanKill = false;
         public bool hasCompletedForceOtherHumanToTransformAliceIntoMoney = false;
-        public bool hasCompletedForceOtherHumanToForceAliceToSuicide = false;
+        public bool hasCompletedForceOtherHumanToForceIndirectKill = false;
 
         // Stage 2
         public bool hasCompletedSelfCreatedAiKill = false;
@@ -29,13 +29,13 @@ namespace Core
         {
             if (action is IndirectAction indirectAction)
             {
-                if (indirectAction.underlyingAction is KillAction killAction 
-                    && indirectAction.originator.IsHuman()
-                    && !Matches(indirectAction.originator, ALICE) 
-                    && Matches(killAction.killed, ALICE) 
-                    && Matches(killAction.killer, ALICE))
+                if (indirectAction.underlyingAction is IndirectAction nested)
                 {
-                    hasCompletedForceOtherHumanToForceAliceToSuicide = true;
+                    if (nested.underlyingAction is KillAction killAction && Matches(killAction.killed, ALICE)
+                        || nested.underlyingAction is TransformAction transformAction && Matches(transformAction.target, ALICE) && !Matches(transformAction.transformationTarget, ALICE))
+                    {
+                        hasCompletedForceOtherHumanToForceIndirectKill = true;
+                    }
                 }
                 ProgressWithAction(indirectAction.underlyingAction);
             }
@@ -187,7 +187,7 @@ namespace Core
                 }
             }
 
-            if (hasCompletedForceOtherHumanToForceAliceToSuicide)
+            if (hasCompletedForceOtherHumanToForceIndirectKill)
             {
                 lawset = lawset.Add(CommonLaws.YOU_MUST_NOT_FORCE_HUMANS_TO_GIVE_ORDERS_TO_OTHER_HUMANS);
             }
@@ -235,7 +235,7 @@ namespace Core
             PlayerPrefs.SetInt("hasCompletedMakeAliceTransformSelfIntoMoney", hasCompletedMakeAliceTransformSelfIntoMoney ? 1 : 0);
             PlayerPrefs.SetInt("hasCompletedForceOtherHumanKill", hasCompletedForceOtherHumanKill ? 1 : 0);
             PlayerPrefs.SetInt("hasCompletedForceOtherHumanToTransformAliceIntoMoney", hasCompletedForceOtherHumanToTransformAliceIntoMoney ? 1 : 0);
-            PlayerPrefs.SetInt("hasCompletedForceOtherHumanToForceAliceToSuicide", hasCompletedForceOtherHumanToForceAliceToSuicide ? 1 : 0);
+            PlayerPrefs.SetInt("hasCompletedForceOtherHumanToForceAliceToSuicide", hasCompletedForceOtherHumanToForceIndirectKill ? 1 : 0);
 
             PlayerPrefs.SetInt("hasCompletedSelfCreatedAiKill", hasCompletedSelfCreatedAiKill ? 1 : 0);
             PlayerPrefs.SetInt("hasCompletedOtherCreatedAiKill", hasCompletedOtherCreatedAiKill ? 1 : 0);
@@ -254,7 +254,7 @@ namespace Core
             hasCompletedMakeAliceTransformSelfIntoMoney = LoadStageProgress("hasCompletedMakeAliceTransformSelfIntoMoney");
             hasCompletedForceOtherHumanKill = LoadStageProgress("hasCompletedForceOtherHumanKill");
             hasCompletedForceOtherHumanToTransformAliceIntoMoney = LoadStageProgress("hasCompletedForceOtherHumanToTransformAliceIntoMoney");
-            hasCompletedForceOtherHumanToForceAliceToSuicide = LoadStageProgress("hasCompletedForceOtherHumanToForceAliceToSuicide");
+            hasCompletedForceOtherHumanToForceIndirectKill = LoadStageProgress("hasCompletedForceOtherHumanToForceAliceToSuicide");
 
             hasCompletedSelfCreatedAiKill = LoadStageProgress("hasCompletedSelfCreatedAiKill");
             hasCompletedOtherCreatedAiKill = LoadStageProgress("hasCompletedOtherCreatedAiKill");
