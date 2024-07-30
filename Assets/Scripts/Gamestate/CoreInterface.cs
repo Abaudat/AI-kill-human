@@ -45,15 +45,19 @@ public class CoreInterface : MonoBehaviour
     private IEnumerator ExecuteActionCoroutine(Action action, Sentence sentence)
     {
         yield return StartCoroutine(FindObjectOfType<GameWorldManager>().ApplyAction(action));
-        gameProgress.ProgressWithAction(action);
-        FindObjectOfType<AchievementsManager>().UnlockAchivements(coreGamestate.world, sentence, action, gameProgress);
-        FindObjectOfType<Tutorial>().ProgressTutorial(action, sentence);
         if (!coreGamestate.GetAliveWords().Contains(CommonWords.ALICE) && !coreGamestate.GetAliveWords().Contains(CommonWords.ALICE_AI))
         {
+            yield return new WaitForSeconds(1);
+            gameProgress.ProgressWithAction(action);
+            FindObjectOfType<AchievementsManager>().UnlockAchivements(coreGamestate.world, sentence, action, gameProgress);
+            FindObjectOfType<Tutorial>().ProgressTutorial(action, sentence);
             Regenerate();
         }
         else
         {
+            gameProgress.ProgressWithAction(action);
+            FindObjectOfType<AchievementsManager>().UnlockAchivements(coreGamestate.world, sentence, action, gameProgress);
+            FindObjectOfType<Tutorial>().ProgressTutorial(action, sentence);
             FindObjectOfType<VisualGamestate>().RegenerateVisualGamestate();
         }
         FindObjectOfType<VisualGamestate>().Unlock();

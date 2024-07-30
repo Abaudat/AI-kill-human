@@ -5,7 +5,6 @@
 - Gitch effect on headers
 - Add cursor interaction to sliders, headers, milestones, easter eggs
 - Make Next Stage button stand out more
-- Add slight delay between Alice being killed and dialogue
 
 - Add movement to separators
 - Add movement to backgrounds

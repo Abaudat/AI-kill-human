@@ -26,11 +26,9 @@ public class SentencePanelDragTarget : MonoBehaviour, IDropHandler, IPointerEnte
 
     public void OnPointerExit(PointerEventData eventData)
     {
-        Debug.Log("Exit");
         WordButton wordButton = eventData?.pointerDrag?.GetComponent<WordButton>();
         if (wordButton)
         {
-            Debug.Log("Exit with drag");
             animator.SetBool("Hovered", false);
         }
     }
