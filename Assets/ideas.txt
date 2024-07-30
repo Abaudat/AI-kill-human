@@ -1,5 +1,4 @@
 
-- Animate terminal reset
 - Either move milestone popup to the left, or put it behind the milestone so we can still see it
 - Fix tilt jitter when hovering edge
 - Gitch effect on headers
