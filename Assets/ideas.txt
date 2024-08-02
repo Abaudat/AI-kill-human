@@ -3,6 +3,7 @@
 - Fix tilt jitter when hovering edge
 - Gitch effect on headers
 - Add cursor interaction to sliders, headers, milestones, easter eggs
+- 
 
 - Add movement to separators
 - Add movement to backgrounds
@@ -10,6 +11,3 @@
 - Add shader to milestones/achivements with rotation as input
 - Add CRT shader to game view
 - Make UI elements closer to the camera brighter so tilting is more obvious
-
-TODO:
-- Make sure Alice must die laws shows up on reload
