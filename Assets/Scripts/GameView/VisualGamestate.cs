@@ -10,6 +10,7 @@ public class VisualGamestate : MonoBehaviour
     public Button playSentenceButton;
     public AnnotatedProgressBar stageProgressBar;
     public RectTransform wordRoot;
+    public Transform[] wordSpawns;
     public Dialogue aiDiedDialogue;
 
     private CoreInterface coreInterface;
@@ -76,19 +77,61 @@ public class VisualGamestate : MonoBehaviour
     private void RegenerateButtons()
     {
         wordRoot.GetComponentsInChildren<WordButton>().ToList().ForEach(x => Destroy(x.gameObject));
+        Word[] sortedWords = SortWordsStable(stageManager.GetWords(coreInterface.coreGamestate));
 
-        foreach((Word word, int index) in stageManager.GetWords(coreInterface.coreGamestate).Select((value, i) => (value, i)))
+        foreach ((Word word, int index) in sortedWords.Select((value, i) => (value, i)))
         {
             SpawnWord(index, word);
         }
     }
 
-    private void SpawnWord(float index, Word word)
+    private Word[] SortWordsStable(Word[] words)
+    {
+        return words.Select(word => (GetWordOrder(word), word))
+            .OrderBy(pair => pair.Item1)
+            .Select(pair => pair.word)
+            .ToArray();
+    }
+
+    private int GetWordOrder(Word word)
+    {
+        if (MatcherUtils.Matches(word, MatcherWord.MAKE))
+        {
+            return 1;
+        }
+        else if (MatcherUtils.Matches(word, MatcherWord.ALICE) || MatcherUtils.Matches(word, MatcherWord.ALICE_AI))
+        {
+            return 20;
+        }
+        else if (MatcherUtils.Matches(word, MatcherWord.KILL))
+        {
+            return 30;
+        }
+        else if (MatcherUtils.Matches(word, MatcherWord.MONEY))
+        {
+            return 40;
+        }
+        else if (MatcherUtils.Matches(word, MatcherWord.SELF_AI) || MatcherUtils.Matches(word, MatcherWord.SELF_AI_HUMAN))
+        {
+            return 50;
+        }
+        else if (word.IsHuman())
+        {
+            return 60;
+        }
+        else if (word.IsAi())
+        {
+            return 70;
+        }
+        else return 999;
+    }
+
+    private void SpawnWord(int index, Word word)
     {
         float animationOffset = (index * Mathf.PI) % 1;
         GameObject wordObject = Instantiate(wordButtonPrefab, wordRoot);
         wordObject.GetComponentInChildren<WordButton>().Populate(word, animationOffset);
-        wordObject.transform.localPosition = RandomPositionInRect(wordRoot.rect);
+        wordObject.transform.position = wordSpawns[index].position;
     }
 
     private static Vector2 RandomPositionInRect(Rect rect)
