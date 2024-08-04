@@ -132,6 +132,7 @@ public class VisualGamestate : MonoBehaviour
         GameObject wordObject = Instantiate(wordButtonPrefab, wordRoot);
         wordObject.GetComponentInChildren<WordButton>().Populate(word, animationOffset);
         wordObject.transform.position = wordSpawns[index].position;
+        wordObject.transform.SetAsFirstSibling();
     }
 
     private static Vector2 RandomPositionInRect(Rect rect)
