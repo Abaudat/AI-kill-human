@@ -8,7 +8,7 @@ public class VisualGamestate : MonoBehaviour
     public GameObject wordButtonPrefab, extraHumansWordButton, extraAisWordButton;
     public GameObject nextStagePanel;
     public Button playSentenceButton;
-    public AnnotatedProgressBar stageProgressBar, handleStageProgressBar;
+    public AnnotatedProgressBar stageProgressBar;
     public RectTransform wordRoot;
     public Transform[] wordSpawns;
     public Dialogue aiDiedDialogue;
@@ -67,7 +67,6 @@ public class VisualGamestate : MonoBehaviour
         }
         
         stageProgressBar.SetProgress(stageManager.GetCompletedMilestones(), stageManager.GetTotalMilestonesNeeded());
-        handleStageProgressBar.SetProgress(stageManager.GetCompletedMilestones(), stageManager.GetTotalMilestonesNeeded());
 
         uiLawset.Repopulate(coreInterface.coreGamestate.GetLawsetForWord(coreInterface.GetAiWord()));
         uiMilestones.Populate(stageManager.GetMilestones());
