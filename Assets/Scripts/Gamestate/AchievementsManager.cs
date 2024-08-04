@@ -109,7 +109,7 @@ public class AchievementsManager : MonoBehaviour
             {
                 if (!milestone.isUnlocked)
                 {
-                    milestone.UnlockSilently();
+                    milestone.UnlockWithNotification();
                     if (milestone.dialogue != null)
                     {
                         dialogueManager.StartDialogue(milestone.dialogue);

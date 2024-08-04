@@ -22,4 +22,9 @@ public class ProgressPanelManager : MonoBehaviour
             progressPanelBackground.SetActive(true);
         }
     }
+
+    public void DisplayNotification()
+    {
+        animator.SetTrigger("Notify");
+    }
 }

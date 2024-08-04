@@ -9,10 +9,12 @@ public class Achievement : MonoBehaviour
     public bool isUnlocked = false;
 
     private AchievementUnlockedDisplay achievementUnlockedDisplay;
+    private ProgressPanelManager progressPanelManager;
 
     private void Awake()
     {
         achievementUnlockedDisplay = FindObjectOfType<AchievementUnlockedDisplay>();
+        progressPanelManager = FindObjectOfType<ProgressPanelManager>();
     }
 
     private void Start()
@@ -32,11 +34,20 @@ public class Achievement : MonoBehaviour
         }
     }
 
+    public void UnlockWithNotification()
+    {
+        if (!isUnlocked)
+        {
+            progressPanelManager.DisplayNotification();
+            UnlockSilently();
+        }
+    }
+
     public void Unlock()
     {
         if (!isUnlocked)
         {
-            UnlockSilently();
+            UnlockWithNotification();
             achievementUnlockedDisplay.QueueAchivement(icon, achivementName);
         }
     }
