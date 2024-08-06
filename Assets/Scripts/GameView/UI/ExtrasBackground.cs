@@ -7,8 +7,7 @@ public class ExtrasBackground : MonoBehaviour, IPointerClickHandler, IPointerEnt
 
     public void OnPointerClick(PointerEventData eventData)
     {
-        extras.HideExtraHumans();
-        extras.HideExtraAIs();
+        extras.HideExtras();
     }
 
     public void OnPointerEnter(PointerEventData eventData)
@@ -16,8 +15,7 @@ public class ExtrasBackground : MonoBehaviour, IPointerClickHandler, IPointerEnt
         WordButton wordButton = eventData?.pointerDrag?.GetComponent<WordButton>();
         if (wordButton)
         {
-            extras.HideExtraHumans();
-            extras.HideExtraAIs();
+            extras.HideExtras();
         }
     }
 }

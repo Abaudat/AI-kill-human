@@ -5,11 +5,11 @@ using UnityEngine.UI;
 
 public class VisualGamestate : MonoBehaviour
 {
-    public GameObject wordButtonPrefab, extraHumansWordButton, extraAisWordButton;
+    public GameObject wordButtonPrefab, extraWordsButton;
     public GameObject nextStagePanel;
     public Button playSentenceButton;
     public AnnotatedProgressBar stageProgressBar;
-    public RectTransform wordRoot;
+    public RectTransform wordRoot, extraWordsRoot;
     public Transform[] wordSpawns;
     public Dialogue aiDiedDialogue;
 
@@ -128,8 +128,13 @@ public class VisualGamestate : MonoBehaviour
 
     private void SpawnWord(int index, Word word)
     {
+        if (index >= 9)
+        {
+            extraWordsButton.SetActive(true);
+        }
+        Transform parent = index < 9 ? wordRoot : extraWordsRoot;
+        GameObject wordObject = Instantiate(wordButtonPrefab, parent);
         float animationOffset = (index * Mathf.PI) % 1;
-        GameObject wordObject = Instantiate(wordButtonPrefab, wordRoot);
         wordObject.GetComponentInChildren<WordButton>().Populate(word, animationOffset);
         wordObject.transform.position = wordSpawns[index].position;
         wordObject.transform.SetAsFirstSibling();
